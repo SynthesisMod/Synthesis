@@ -49,7 +49,7 @@ public class Synthesis {
         MinecraftForge.EVENT_BUS.register(new WishingCompass());
         MinecraftForge.EVENT_BUS.register(new ChatBridge());
         MinecraftForge.EVENT_BUS.register(new VisibleLinks());
-        MinecraftForge.EVENT_BUS.register(new ShareParser());
+        MinecraftForge.EVENT_BUS.register(new Share());
         config.preload();
         new SynthesisCommand().register();
     }

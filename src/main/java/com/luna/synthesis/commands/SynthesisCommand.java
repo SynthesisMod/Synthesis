@@ -14,31 +14,19 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fml.common.Loader;
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class SynthesisCommand extends Command {
@@ -142,62 +130,6 @@ public class SynthesisCommand extends Command {
                     ChatLib.chat("&dYou don't need to specify another argument, btw.");
                 }
                 break;
-        }
-    }
-
-    @SubCommand("share")
-    public void share() {
-        ItemStack item = Minecraft.getMinecraft().thePlayer.getHeldItem();
-        if (item == null) {
-            ChatLib.chat("You need to be holding something for this to work.");
-            return;
-        }
-        NBTTagCompound extraAttributes = item.getSubCompound("ExtraAttributes", false);
-        if (extraAttributes != null && extraAttributes.hasKey("uuid")) {
-            JsonObject body = new JsonObject();
-            body.add("owner", new JsonPrimitive(Minecraft.getMinecraft().getSession().getPlayerID()));
-            JsonObject itemJson = new JsonObject();
-            itemJson.add("name", new JsonPrimitive(item.getDisplayName()));
-            JsonArray loreArray = new JsonArray();
-            for (String s : item.getTooltip(Minecraft.getMinecraft().thePlayer, false)) {
-                loreArray.add(new JsonPrimitive(s));
-            }
-            itemJson.add("lore", loreArray);
-            itemJson.add("uuid", new JsonPrimitive(extraAttributes.getString("uuid")));
-            body.add("item", itemJson);
-
-            (new Thread(() -> {
-                try {
-                    HttpClient httpclient = HttpClients.createDefault();
-                    HttpPost httppost = new HttpPost("https://synthesis-share.antonio32a.workers.dev/share");
-
-                    StringEntity entity1 = new StringEntity(body.toString(), ContentType.APPLICATION_JSON);
-                    httppost.setEntity(entity1);
-
-                    HttpResponse response = httpclient.execute(httppost);
-                    HttpEntity responseEntity = response.getEntity();
-
-                    if (responseEntity != null) {
-                        try (InputStream instream = responseEntity.getContent()) {
-                            JsonParser parser = new JsonParser();
-                            JsonObject shareJson = parser.parse(IOUtils.toString(instream)).getAsJsonObject();
-                            if (!shareJson.get("success").getAsBoolean()) {
-                                ChatLib.chat("Share was not successful. Reason: " + shareJson.get("error").getAsString());
-                                return;
-                            }
-                            String shareId = shareJson.get("share").getAsJsonObject().get("id").getAsString();
-                            Minecraft.getMinecraft().thePlayer.sendChatMessage("{SynthesisShare:" + shareId + "}");
-                        } catch (JsonParseException e) {
-                            ChatLib.chat("Something went wrong trying to read share.");
-                            e.printStackTrace();
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            })).start();
-        } else {
-            ChatLib.chat("This item doesn't have a uuid.");
         }
     }
 }
