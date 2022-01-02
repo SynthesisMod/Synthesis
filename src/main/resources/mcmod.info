@@ -1,0 +1,16 @@
+[
+    {
+        "modid": "synthesis",
+        "name": "Synthesis",
+        "description": "Hypixel SkyBlock/general QoL mod.",
+        "version": "Alpha-v3",
+        "mcversion": "1.8.9",
+        "url": "",
+        "updateUrl": "",
+        "authorList": ["Luna, Desco"],
+        "credits": "Heart DC or The CouncilTM or E for a lot of this mod's suggestions.",
+        "logoFile": "",
+        "screenshots": [],
+        "dependencies": []
+    }
+]

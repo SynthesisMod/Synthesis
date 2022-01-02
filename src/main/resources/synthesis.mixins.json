@@ -1,0 +1,22 @@
+{
+    "compatibilityLevel": "JAVA_8",
+    "package": "com.luna.synthesis.mixins",
+    "refmap": "synthesis.mixins.refmap.json",
+    "mixins": [
+        "accessors.GuiChatAccessor",
+        "accessors.GuiContainerAccessor",
+        "accessors.GuiNewChatAccessor",
+        "accessors.ItemModelMesherAccessor",
+        "accessors.S2FPacketSetSlotAccessor",
+        "optifine.CapeUtilsMixin",
+        "patcher.ChatHandlerMixin",
+        "patcher.ImagePreviewerMixin",
+        "BlockStainedGlassPaneMixin",
+        "EntityPlayerMixin",
+        "GuiContainerMixin",
+        "GuiNewChatMixin",
+        "RenderItemMixin"
+    ],
+    "client": [],
+    "server": []
+}
