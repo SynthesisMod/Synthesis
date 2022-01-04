@@ -26,6 +26,9 @@ import org.apache.http.impl.client.HttpClients;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -38,7 +41,7 @@ public class Share {
 
     @SubscribeEvent
     public void onMessageSent(MessageSentEvent event) {
-        String message = event.getMessage();
+        String message = event.message;
         if (message.contains("[item]") || message.contains("[share]")) {
             ItemStack item = Minecraft.getMinecraft().thePlayer.getHeldItem();
             if (item == null) return;
@@ -64,33 +67,37 @@ public class Share {
 
             (new Thread(() -> {
                 try {
-                    HttpClient httpclient = HttpClients.createDefault();
-                    HttpPost httppost = new HttpPost("https://synthesis-share.antonio32a.workers.dev/share");
-
-                    StringEntity entity1 = new StringEntity(body.toString(), ContentType.APPLICATION_JSON);
-                    httppost.setEntity(entity1);
-
-                    HttpResponse response = httpclient.execute(httppost);
-                    HttpEntity responseEntity = response.getEntity();
-
-                    if (responseEntity != null) {
-                        try (InputStream instream = responseEntity.getContent()) {
-                            JsonParser parser = new JsonParser();
-                            JsonObject shareJson = parser.parse(IOUtils.toString(instream)).getAsJsonObject();
-                            if (!shareJson.get("success").getAsBoolean()) {
-                                ChatLib.chat("Share was not successful. Reason: " + shareJson.get("error").getAsString());
-                                return;
-                            }
-
-                            String shareId = shareJson.get("share").getAsJsonObject().get("id").getAsString();
-                            String share = "{SynthesisShare:" + shareId + "}";
-                            Minecraft.getMinecraft().thePlayer.sendChatMessage(message.replace("[item]", share).replace("[share]", share));
-                        } catch (JsonParseException e) {
-                            ChatLib.chat("Something went wrong trying to read share.");
-                            e.printStackTrace();
+                    URL url = new URL("https://synthesis-share.antonio32a.com/share");
+                    HttpURLConnection http = (HttpURLConnection) url.openConnection();
+                    http.setDoOutput(true);
+                    http.setDoInput(true);
+                    http.setRequestProperty("Content-Type", "application/json");
+                    http.setRequestProperty("User-Agent", "SynthesisMod");
+                    http.setRequestProperty("Accept", "application/json");
+                    http.setRequestProperty("Method", "POST");
+                    http.connect();
+                    try (OutputStream os = http.getOutputStream()) {
+                        os.write(body.toString().getBytes(StandardCharsets.UTF_8));
+                        os.close();
+                        if (http.getResponseCode() != 200) {
+                            ChatLib.chat("Something went wrong trying to upload share. Check logs maybe?");
+                            System.out.println(http.getResponseMessage());
+                            return;
                         }
+                        JsonParser parser = new JsonParser();
+                        JsonObject shareJson = parser.parse(IOUtils.toString(http.getInputStream())).getAsJsonObject();
+                        if (!shareJson.get("success").getAsBoolean()) {
+                            ChatLib.chat("Share was not successful. Reason: " + shareJson.get("error").getAsString());
+                            return;
+                        }
+
+                        String shareId = shareJson.get("share").getAsJsonObject().get("id").getAsString();
+                        String share = "{SynthesisShare:" + shareId + "}";
+                        //Can't write event.message because this is a thread
+                        Minecraft.getMinecraft().thePlayer.sendChatMessage(message.replace("[item]", share).replace("[share]", share));
                     }
                 } catch (IOException e) {
+                    ChatLib.chat("Something went wrong trying to upload share. Check logs maybe?");
                     e.printStackTrace();
                 }
             })).start();
@@ -111,10 +118,51 @@ public class Share {
                 while (matcher.find()) {
                     String shareId = matcher.group(1);
                     System.out.println("Share ID: " + shareId);
-                    // String message = event.message.getFormattedText().split(": ")[0] + ": ";
 
                     try {
-                        HttpClient httpclient = HttpClients.createDefault();
+                        URL url = new URL("https://synthesis-share.antonio32a.com/share/" + shareId);
+                        HttpURLConnection http = (HttpURLConnection) url.openConnection();
+                        http.setDoOutput(true);
+                        http.setDoInput(true);
+                        http.setRequestProperty("User-Agent", "SynthesisMod");
+                        http.setRequestProperty("Accept", "application/json");
+                        http.setRequestProperty("Method", "GET");
+                        http.connect();
+                        try (InputStream instream = http.getInputStream()) {
+                            if (http.getResponseCode() != 200) {
+                                ChatLib.chat("Something went wrong trying to read share. Check logs maybe?");
+                                System.out.println(http.getResponseMessage());
+                                return;
+                            }
+                            JsonParser parser = new JsonParser();
+                            JsonObject shareJson = parser.parse(new String(IOUtils.toByteArray(instream), StandardCharsets.UTF_8)).getAsJsonObject();
+                            if (!shareJson.get("success").getAsBoolean()) {
+                                ChatLib.chat("Share was not successful. Reason: " + shareJson.get("error").getAsString());
+                                return;
+                            }
+
+                            JsonObject shareItem = shareJson.get("share").getAsJsonObject().get("item").getAsJsonObject();
+                            String itemName = shareItem.get("name").getAsString();
+                            JsonArray itemLore = shareItem.get("lore").getAsJsonArray();
+                            boolean isItemVerified = shareJson.get("share").getAsJsonObject().get("verified").getAsBoolean();
+
+                            IChatComponent shareComponent = new ChatComponentText(
+                                    (isItemVerified ? EnumChatFormatting.GREEN + "✔ " : EnumChatFormatting.RED + "✖ ")
+                                            + EnumChatFormatting.LIGHT_PURPLE
+                                            + "[Synthesis " + itemName + EnumChatFormatting.LIGHT_PURPLE + "]"
+                            );
+
+                            AtomicReference<String> s = new AtomicReference<>("");
+                            itemLore.iterator().forEachRemaining(jsonElement -> s.set(s.get() + jsonElement.getAsString() + "\n"));
+                            String shareLore = itemName + "\n" + s.get();
+
+                            shareComponent.getChatStyle().setChatHoverEvent(new HoverEvent(
+                                    HoverEvent.Action.SHOW_TEXT,
+                                    new ChatComponentText(shareLore.substring(0, shareLore.length() - 2))
+                            ));
+                            shares.add(shareComponent);
+                        }
+                        /*HttpClient httpclient = HttpClients.createDefault();
                         HttpGet httpGet = new HttpGet("https://synthesis-share.antonio32a.workers.dev/share/" + shareId);
 
                         HttpResponse response = httpclient.execute(httpGet);
@@ -149,9 +197,9 @@ public class Share {
                                 new ChatComponentText(shareLore.substring(0, shareLore.length() - 2))
                             ));
                             shares.add(shareComponent);
-                        }
+                        }*/
                     } catch (IOException | JsonParseException e) {
-                        ChatLib.chat("Something went wrong trying to read share.");
+                        ChatLib.chat("Something went wrong trying to read share. Check logs maybe?");
                         e.printStackTrace();
                     }
                 }

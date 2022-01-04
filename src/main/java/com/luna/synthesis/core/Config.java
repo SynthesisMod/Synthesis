@@ -387,12 +387,12 @@ public class Config extends Vigilant {
 
     public Config() {
         super(new File(Synthesis.configLocation), "§dSynthesis", new JVMAnnotationPropertyCollector(), new CustomSortingBehavior());
+        initialize();
         hidePropertyIf("patcherCompactChatFix", () -> !Loader.isModLoaded("patcher"));
         hidePropertyIf("patcherCustomImagePreviewer", () -> !Loader.isModLoaded("patcher"));
         hidePropertyIf("utilitiesWishingCompassWaypoint", () -> !Loader.isModLoaded("skytils"));
         addDependency("utilitiesWishingCompassWaypoint", "utilitiesWishingCompass");
         addDependency("utilitiesBlockWishingCompass", "utilitiesWishingCompass");
         registerListener("utilitiesColorlessPanes", (z) -> Minecraft.getMinecraft().renderGlobal.loadRenderers());
-        initialize();
     }
 }

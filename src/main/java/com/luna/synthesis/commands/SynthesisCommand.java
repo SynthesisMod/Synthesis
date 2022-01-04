@@ -91,7 +91,7 @@ public class SynthesisCommand extends Command {
         switch (options) {
             case "add":
                 if (!domain.isPresent()) {
-                    ChatLib.chat("You need to specify a domain. Example: boob.li");
+                    ChatLib.chat("You need to specify a domain. Example: bigraccoon.monster");
                     return;
                 }
                 if (config.patcherCustomDomains.contains(domain.get().toLowerCase())) {
@@ -105,7 +105,7 @@ public class SynthesisCommand extends Command {
                 break;
             case "remove":
                 if (!domain.isPresent()) {
-                    ChatLib.chat("You need to specify a domain. Example: boob.li");
+                    ChatLib.chat("You need to specify a domain. Example: bigraccoon.monster");
                     return;
                 }
                 if (!config.patcherCustomDomains.contains(domain.get().toLowerCase())) {
