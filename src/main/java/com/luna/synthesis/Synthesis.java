@@ -1,5 +1,6 @@
 package com.luna.synthesis;
 
+import com.luna.synthesis.commands.CopyToClipboardCommand;
 import com.luna.synthesis.commands.SynthesisCommand;
 import com.luna.synthesis.core.Config;
 import com.luna.synthesis.events.packet.PacketEvent;
@@ -54,5 +55,6 @@ public class Synthesis {
         MinecraftForge.EVENT_BUS.register(new DungeonCleanup());
         config.preload();
         new SynthesisCommand().register();
+        new CopyToClipboardCommand().register();
     }
 }

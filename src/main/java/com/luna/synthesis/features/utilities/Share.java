@@ -1,9 +1,16 @@
 package com.luna.synthesis.features.utilities;
 
 import com.google.gson.*;
+import com.luna.synthesis.Synthesis;
+import com.luna.synthesis.core.Config;
 import com.luna.synthesis.events.MessageSentEvent;
 import com.luna.synthesis.utils.ChatLib;
+import com.luna.synthesis.utils.MixinUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,6 +20,8 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -23,6 +32,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
+import org.lwjgl.input.Mouse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,11 +48,12 @@ import java.util.regex.Pattern;
 public class Share {
 
     private final Pattern shareRegexPattern = Pattern.compile("\\{SynthesisShare:([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})}", Pattern.CASE_INSENSITIVE);
+    private final Config config = Synthesis.getInstance().getConfig();
 
     @SubscribeEvent
     public void onMessageSent(MessageSentEvent event) {
         String message = event.message;
-        if (message.contains("[item]") || message.contains("[share]")) {
+        if (message.contains(config.utilitiesShareText)) {
             ItemStack item = Minecraft.getMinecraft().thePlayer.getHeldItem();
             if (item == null) return;
             event.setCanceled(true);
@@ -81,7 +92,6 @@ public class Share {
                         os.close();
                         if (http.getResponseCode() != 200) {
                             ChatLib.chat("Something went wrong trying to upload share. Check logs maybe?");
-                            System.out.println(http.getResponseMessage());
                             return;
                         }
                         JsonParser parser = new JsonParser();
@@ -117,7 +127,6 @@ public class Share {
                 ArrayList<IChatComponent> shares = new ArrayList<>();
                 while (matcher.find()) {
                     String shareId = matcher.group(1);
-                    System.out.println("Share ID: " + shareId);
 
                     try {
                         URL url = new URL("https://synthesis-share.antonio32a.com/share/" + shareId);
@@ -131,7 +140,6 @@ public class Share {
                         try (InputStream instream = http.getInputStream()) {
                             if (http.getResponseCode() != 200) {
                                 ChatLib.chat("Something went wrong trying to read share. Check logs maybe?");
-                                System.out.println(http.getResponseMessage());
                                 return;
                             }
                             JsonParser parser = new JsonParser();
@@ -146,21 +154,27 @@ public class Share {
                             JsonArray itemLore = shareItem.get("lore").getAsJsonArray();
                             boolean isItemVerified = shareJson.get("share").getAsJsonObject().get("verified").getAsBoolean();
 
-                            IChatComponent shareComponent = new ChatComponentText(
-                                    (isItemVerified ? EnumChatFormatting.GREEN + "✔ " : EnumChatFormatting.RED + "✖ ")
-                                            + EnumChatFormatting.LIGHT_PURPLE
-                                            + "[Synthesis " + itemName + EnumChatFormatting.LIGHT_PURPLE + "]"
-                            );
+                            IChatComponent verifiedComponent = new ChatComponentText((isItemVerified ? EnumChatFormatting.GREEN + "✔ " : EnumChatFormatting.RED + "✖ "));
+                            verifiedComponent.getChatStyle().setChatHoverEvent(new HoverEvent(
+                                    HoverEvent.Action.SHOW_TEXT,
+                                    new ChatComponentText((isItemVerified ? EnumChatFormatting.GREEN + "This item is verified!\nIt exists in the API." : EnumChatFormatting.RED + "This item is not verified!\nAPI is off or the item may not exist."))
+                            ));
 
                             AtomicReference<String> s = new AtomicReference<>("");
                             itemLore.iterator().forEachRemaining(jsonElement -> s.set(s.get() + jsonElement.getAsString() + "\n"));
                             String shareLore = itemName + "\n" + s.get();
 
+                            IChatComponent shareComponent = new ChatComponentText(EnumChatFormatting.LIGHT_PURPLE
+                                    + "[Synthesis " + itemName + EnumChatFormatting.LIGHT_PURPLE + "]");
                             shareComponent.getChatStyle().setChatHoverEvent(new HoverEvent(
                                     HoverEvent.Action.SHOW_TEXT,
                                     new ChatComponentText(shareLore.substring(0, shareLore.length() - 1))
+                            )).setChatClickEvent(new ClickEvent(
+                                    ClickEvent.Action.RUN_COMMAND,
+                                    "/ctcc https://synthesis-share.antonio32a.com/share/" + shareId + "?embed"
                             ));
-                            shares.add(shareComponent);
+                            verifiedComponent.appendSibling(shareComponent);
+                            shares.add(verifiedComponent);
                         }
                     } catch (IOException | JsonParseException e) {
                         ChatLib.chat("Something went wrong trying to read share. Check logs maybe?");
@@ -181,6 +195,20 @@ public class Share {
                 Minecraft.getMinecraft().thePlayer.addChatMessage(toSend);
             })).start();
 
+        }
+    }
+
+    @SubscribeEvent
+    public void onScroll(GuiScreenEvent.MouseInputEvent.Pre event) {
+        if (!config.utilitiesShareScroll) return;
+        if (!GuiScreen.isCtrlKeyDown()) return;
+        if (!(event.gui instanceof GuiChat)) return;
+        int i = Mouse.getEventDWheel();
+        if (i != 0) {
+            IChatComponent comp = Minecraft.getMinecraft().ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
+            if (comp != null && comp.getChatStyle().getChatHoverEvent() != null && comp.getChatStyle().getChatHoverEvent().getAction() == HoverEvent.Action.SHOW_TEXT) {
+                event.setCanceled(true);
+            }
         }
     }
 }
