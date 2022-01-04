@@ -11,6 +11,7 @@ import net.minecraft.event.HoverEvent;
 import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -29,6 +30,7 @@ public class CoopCleanup {
 
     private List<String> messageQueue = new ArrayList<>();
     private boolean isDividerBlock = false;
+    private IChatComponent theMessage = null;
     private final AtomicReference<String> price = new AtomicReference<>("");
 
     @Comment("Collection tooltips. I could have used regexes for other people's contributions but they are laggy and this is invoked a lot of times per second. If there is any problem with this I'll eventually swap to regex but for now, this is decent. Also no, that Minecraft.getMinecraft().getSession().getUsername() further down is not a session stealer.")
@@ -106,9 +108,13 @@ public class CoopCleanup {
                 event.setCanceled(true);
             }
         }
-        if (event.message.getUnformattedText().startsWith("BIN Auction started for ") && !price.get().equals("")) {
-            event.message = new ChatComponentText(event.message.getFormattedText().replace("!", "") + EnumChatFormatting.YELLOW + " at " + EnumChatFormatting.GOLD + price.get() + " coins" + EnumChatFormatting.YELLOW + "!");
-            price.set("");
+        if (event.message.getUnformattedText().startsWith("BIN Auction started for ")) {
+            if (!price.get().equals("")) {
+                event.message = new ChatComponentText(event.message.getFormattedText().replace("!", "") + EnumChatFormatting.YELLOW + " at " + EnumChatFormatting.GOLD + price.get() + " coins" + EnumChatFormatting.YELLOW + "!");
+                price.set("");
+            } else {
+                theMessage = event.message;
+            }
         }
     }
 
@@ -186,6 +192,11 @@ public class CoopCleanup {
                             return false;
                         }).collect(Collectors.toList());
                         if (messageQueue.size() <= 2) messageQueue.clear();
+                        if (theMessage != null && !price.get().equals("")) {
+                            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(theMessage.getFormattedText().replace("!", "") + EnumChatFormatting.YELLOW + " at " + EnumChatFormatting.GOLD + price.get() + " coins" + EnumChatFormatting.YELLOW + "!"));
+                            theMessage = null;
+                            price.set("");
+                        }
                     } else {
                         isDividerBlock = true;
                         messageQueue.add(packet.getChatComponent().getUnformattedText());

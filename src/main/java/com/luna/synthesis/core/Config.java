@@ -346,6 +346,33 @@ public class Config extends Vigilant {
     public boolean utilitiesColorlessPanes = false;
 
     @Property(
+            type = PropertyType.TEXT,
+            name = "Share text",
+            description = "Hold an item and type the text to show the item to other Synthesis users.",
+            category = "Utilities",
+            subcategory = "Share"
+    )
+    public String utilitiesShareText = "[item]";
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Share scroll",
+            description = "Scrolling while hovering a share and holding control will not scroll the chat.",
+            category = "Utilities",
+            subcategory = "Share"
+    )
+    public boolean utilitiesShareScroll = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Share copy embed",
+            description = "Clicking on shares copies a link to clipboard, that embeds an item preview on discord.",
+            category = "Utilities",
+            subcategory = "Share"
+    )
+    public boolean utilitiesShareCopyEmbed = false;
+
+    @Property(
             type = PropertyType.SWITCH,
             name = "Better bridge message",
             description = "Reformats guild bridge messages.",
@@ -462,8 +489,10 @@ public class Config extends Vigilant {
     public Config() {
         super(new File(Synthesis.configLocation), "§dSynthesis", new JVMAnnotationPropertyCollector(), new CustomSortingBehavior());
         initialize();
+        setSubcategoryDescription("Utilities", "Share", "A simple way to show your items to other people using the mod. Hold the item, type whatever \"Share text\" is and a preview for your item will be sent.");
         hidePropertyIf("patcherCompactChatFix", () -> !Loader.isModLoaded("patcher"));
         hidePropertyIf("patcherCustomImagePreviewer", () -> !Loader.isModLoaded("patcher"));
+        hidePropertyIf("utilitiesShareScroll", () -> !Loader.isModLoaded("text_overflow_scroll"));
         hidePropertyIf("utilitiesWishingCompassWaypoint", () -> !Loader.isModLoaded("skytils"));
         addDependency("utilitiesWishingCompassWaypoint", "utilitiesWishingCompass");
         addDependency("utilitiesBlockWishingCompass", "utilitiesWishingCompass");
