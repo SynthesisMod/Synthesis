@@ -158,46 +158,10 @@ public class Share {
 
                             shareComponent.getChatStyle().setChatHoverEvent(new HoverEvent(
                                     HoverEvent.Action.SHOW_TEXT,
-                                    new ChatComponentText(shareLore.substring(0, shareLore.length() - 2))
+                                    new ChatComponentText(shareLore.substring(0, shareLore.length() - 1))
                             ));
                             shares.add(shareComponent);
                         }
-                        /*HttpClient httpclient = HttpClients.createDefault();
-                        HttpGet httpGet = new HttpGet("https://synthesis-share.antonio32a.workers.dev/share/" + shareId);
-
-                        HttpResponse response = httpclient.execute(httpGet);
-                        HttpEntity entity = response.getEntity();
-
-                        if (entity != null) {
-                            InputStream instream = entity.getContent();
-                            JsonParser parser = new JsonParser();
-                            JsonObject shareJson = parser.parse(new String(IOUtils.toByteArray(instream), StandardCharsets.UTF_8)).getAsJsonObject();
-                            if (!shareJson.get("success").getAsBoolean()) {
-                                ChatLib.chat("Share was not successful. Reason: " + shareJson.get("error").getAsString());
-                                return;
-                            }
-
-                            JsonObject shareItem = shareJson.get("share").getAsJsonObject().get("item").getAsJsonObject();
-                            String itemName = shareItem.get("name").getAsString();
-                            JsonArray itemLore = shareItem.get("lore").getAsJsonArray();
-                            boolean isItemVerified = shareJson.get("share").getAsJsonObject().get("verified").getAsBoolean();
-
-                            IChatComponent shareComponent = new ChatComponentText(
-                                (isItemVerified ? EnumChatFormatting.GREEN + "✔ " : EnumChatFormatting.RED + "✖ ")
-                                + EnumChatFormatting.LIGHT_PURPLE
-                                + "[Synthesis " + itemName + EnumChatFormatting.LIGHT_PURPLE + "]"
-                            );
-
-                            AtomicReference<String> s = new AtomicReference<>("");
-                            itemLore.iterator().forEachRemaining(jsonElement -> s.set(s.get() + jsonElement.getAsString() + "\n"));
-                            String shareLore = itemName + "\n" + s.get();
-
-                            shareComponent.getChatStyle().setChatHoverEvent(new HoverEvent(
-                                HoverEvent.Action.SHOW_TEXT,
-                                new ChatComponentText(shareLore.substring(0, shareLore.length() - 2))
-                            ));
-                            shares.add(shareComponent);
-                        }*/
                     } catch (IOException | JsonParseException e) {
                         ChatLib.chat("Something went wrong trying to read share. Check logs maybe?");
                         e.printStackTrace();
