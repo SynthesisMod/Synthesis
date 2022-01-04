@@ -108,6 +108,80 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
+            name = "Remove dungeon potion effects message",
+            description = "Removes the chat message when you join a dungeon with active potion effects outside.",
+            category = "Cleanup",
+            subcategory = "Dungeon"
+    )
+    public boolean cleanupDungeonPotionEffects = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove dungeon class message",
+            description = "Removes the chat message when you're the only player using a class.",
+            category = "Cleanup",
+            subcategory = "Dungeon"
+    )
+    public boolean cleanupDungeonSoloClassMessage = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove dungeon ultimate message",
+            description = "Removes the dungeon remained that your ultimate is ready to use.",
+            category = "Cleanup",
+            subcategory = "Dungeon"
+    )
+    public boolean cleanupDungeonUltimateMessage = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove dungeon blessing stats messages",
+            description = "Removes the chat message that shows the stats of the collected blessing.",
+            category = "Cleanup",
+            subcategory = "Dungeon"
+    )
+    public boolean cleanupDungeonBlessingStatMessages = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove dungeon blessing messages",
+            description = "Also removes the message that a blessing has been obtained, not only stats.",
+            category = "Cleanup",
+            subcategory = "Dungeon"
+    )
+    public boolean cleanupDungeonBlessingMessages = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove dungeon silverfish messages",
+            description = "Removes the chat message when you hit the silverfish while it's moving.",
+            category = "Cleanup",
+            subcategory = "Dungeon"
+    )
+    public boolean cleanupDungeonSilverfishMessages = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove dungeon key usage messages",
+            description = "Removes the chat message that explains how to use blood and wither keys.",
+            category = "Cleanup",
+            subcategory = "Dungeon"
+    )
+    public boolean cleanupDungeonKeyUsageMessages = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove dungeon watcher messages",
+            description = "Removes all watcher messages except for the last one.",
+            category = "Cleanup",
+            subcategory = "Dungeon"
+    )
+    public boolean cleanupDungeonWatcherMessages = false;
+
+    //FUTURE
+
+    @Property(
+            type = PropertyType.SWITCH,
             name = "Keep sent messages",
             description = "Clearing the chat with F3 + D won't clear sent messages from the up and down arrows.",
             category = "Future features"
@@ -393,6 +467,7 @@ public class Config extends Vigilant {
         hidePropertyIf("utilitiesWishingCompassWaypoint", () -> !Loader.isModLoaded("skytils"));
         addDependency("utilitiesWishingCompassWaypoint", "utilitiesWishingCompass");
         addDependency("utilitiesBlockWishingCompass", "utilitiesWishingCompass");
+        addDependency("cleanupDungeonBlessingMessages", "cleanupDungeonBlessingStatMessages");
         registerListener("utilitiesColorlessPanes", (z) -> Minecraft.getMinecraft().renderGlobal.loadRenderers());
     }
 }
