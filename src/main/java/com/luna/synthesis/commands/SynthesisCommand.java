@@ -1,32 +1,15 @@
 package com.luna.synthesis.commands;
 
-import com.google.gson.*;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import com.luna.synthesis.managers.BackpackManager;
 import com.luna.synthesis.utils.ChatLib;
 import gg.essential.api.EssentialAPI;
-import gg.essential.api.commands.Command;
-import gg.essential.api.commands.DefaultHandler;
-import gg.essential.api.commands.Options;
-import gg.essential.api.commands.SubCommand;
-import net.minecraft.client.Minecraft;
+import gg.essential.api.commands.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fml.common.Loader;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClients;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 public class SynthesisCommand extends Command {
@@ -47,7 +30,7 @@ public class SynthesisCommand extends Command {
     }
 
     @SubCommand("bp")
-    public void bp(int number, Optional<String> name, Optional<Integer> meta) {
+    public void bp(@DisplayName("backpack number") int number, @DisplayName("texture name") Optional<String> name, @DisplayName("texture meta") Optional<Integer> meta) {
         BackpackManager bpm = Synthesis.getInstance().getBackpackManager();
         if (number < 1 || number > 18) {
             ChatLib.chat("That's not a valid backpack number.");
@@ -83,7 +66,7 @@ public class SynthesisCommand extends Command {
     }
 
     @SubCommand("domains")
-    public void domains(@Options({"add", "remove", "list"}) String options, Optional<String> domain) {
+    public void domains(@Options({"add", "remove", "list"}) String options, @DisplayName("domain") Optional<String> domain) {
         if (!Loader.isModLoaded("patcher")) {
             ChatLib.chat("You can only use this feature if you use patcher.");
             return;

@@ -4,6 +4,7 @@ import com.luna.synthesis.commands.SynthesisCommand;
 import com.luna.synthesis.core.Config;
 import com.luna.synthesis.events.packet.PacketEvent;
 import com.luna.synthesis.features.cleanup.CoopCleanup;
+import com.luna.synthesis.features.cleanup.DungeonCleanup;
 import com.luna.synthesis.features.future.ChunkBorders;
 import com.luna.synthesis.features.utilities.*;
 import com.luna.synthesis.managers.BackpackManager;
@@ -50,6 +51,7 @@ public class Synthesis {
         MinecraftForge.EVENT_BUS.register(new ChatBridge());
         MinecraftForge.EVENT_BUS.register(new VisibleLinks());
         MinecraftForge.EVENT_BUS.register(new Share());
+        MinecraftForge.EVENT_BUS.register(new DungeonCleanup());
         config.preload();
         new SynthesisCommand().register();
     }

@@ -19,7 +19,7 @@ public class CapeUtilsMixin {
     @Dynamic
     @ModifyVariable(method = "downloadCape(Lnet/minecraft/client/entity/AbstractClientPlayer;)V", at = @At("STORE"), name = "username")
     private static String downloadCape(String in) {
-        if (!config.utilitiesCapesCustomCape.equals("") && in.equals(Minecraft.getMinecraft().thePlayer.getName())) {
+        if (!config.utilitiesCapesCustomCape.equals("") && in.equals(Minecraft.getMinecraft().getSession().getUsername())) {
             return config.utilitiesCapesCustomCape;
         }
         if (config.utilitiesCapesTransYeti && in.equals("Yeti ")) {
