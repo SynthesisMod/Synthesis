@@ -20,6 +20,9 @@ import java.lang.reflect.Method;
 
 public class Config extends Vigilant {
 
+    // Me englando is no bueno.
+    // If you find something that could be rewritten to be more concise and clear, let me know
+
     @Property(
             type = PropertyType.SELECTOR,
             name = "Collection tooltips",
@@ -417,47 +420,56 @@ public class Config extends Vigilant {
             name = "Custom cape",
             description = "Use someone else's optifine cape. Only you will see this! Leave empty to not use someone else's cape.",
             category = "Utilities",
-            subcategory = "Capes",
+            subcategory = "Optifine",
             min = 1,
             max = 16
     )
-    public String utilitiesCapesCustomCape = "";
+    public String utilitiesOptifineCustomCape = "";
 
     @Property(
             type = PropertyType.SWITCH,
             name = "Trans yeti",
             description = "Gives the yeti a trans cape.",
             category = "Utilities",
-            subcategory = "Capes"
+            subcategory = "Optifine"
     )
-    public boolean utilitiesCapesTransYeti = true;
+    public boolean utilitiesOptifineTransYeti = true;
 
     @Property(
             type = PropertyType.SWITCH,
             name = "Trans terracotta",
             description = "Gives the terracotta a trans cape.",
             category = "Utilities",
-            subcategory = "Capes"
+            subcategory = "Optifine"
     )
-    public boolean utilitiesCapesTransTerracotta = true;
+    public boolean utilitiesOptifineTransTerracotta = true;
 
     @Property(
             type = PropertyType.SWITCH,
             name = "Non binary bonzo",
             description = "Gives bonzo a non binary cape.",
             category = "Utilities",
-            subcategory = "Capes"
+            subcategory = "Optifine"
     )
-    public boolean utilitiesCapesNonBinaryBonzo = true;
+    public boolean utilitiesOptifineNonBinaryBonzo = true;
 
     @Property(
             type = PropertyType.SWITCH,
             name = "Candy cane grinch",
             description = "Gives the grinch a candy cane cape.",
             category = "Utilities",
-            subcategory = "Capes"
+            subcategory = "Optifine"
     )
-    public boolean utilitiesCapesCandyCaneGrinch = true;
+    public boolean utilitiesOptifineCandyCaneGrinch = true;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Hide santa/witch hat",
+            description = "Hides the witch/santa hat given to players with capes on halloween/christmas.",
+            category = "Utilities",
+            subcategory = "Optifine"
+    )
+    public boolean utilitiesOptifineHideHats = false;
 
     //PATCHER
 

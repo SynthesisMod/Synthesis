@@ -9,6 +9,7 @@
         "accessors.ItemModelMesherAccessor",
         "accessors.S2FPacketSetSlotAccessor",
         "optifine.CapeUtilsMixin",
+        "optifine.PlayerItemsLayerMixin",
         "patcher.ChatHandlerMixin",
         "patcher.ImagePreviewerMixin",
         "BlockStainedGlassPaneMixin",

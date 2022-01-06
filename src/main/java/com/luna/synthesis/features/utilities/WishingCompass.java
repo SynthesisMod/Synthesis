@@ -1,6 +1,5 @@
 package com.luna.synthesis.features.utilities;
 
-import com.luna.synthesis.Comment;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import com.luna.synthesis.events.packet.PacketReceivedEvent;
@@ -13,7 +12,6 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.ClientCommandHandler;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -54,7 +52,6 @@ public class WishingCompass {
         }
     }
 
-    @Comment("Will eventually have something for checking the item's sb id instead of name but ehhhh")
     @SubscribeEvent
     public void onRightClick(PlayerInteractEvent event) {
         if (!config.utilitiesWishingCompass) return;
@@ -82,7 +79,9 @@ public class WishingCompass {
         awaiting = false;
     }
 
-    @Comment("All math credit in the mod (this included) goes to Lucy. Thank you Lucy!")
+    // All math in the mod is thanks to Lucy, this included, thank you, Lucy!
+    // If you don't understand something don't blame me, I just copied her notes.
+    // And no, you cannot expect me to do very simple math, I will simply ask the math genius when possible.
     private void calculateIntercept() {
         double a = pos1.xCoord;
         double b = pos1.yCoord;
@@ -106,7 +105,7 @@ public class WishingCompass {
         } else {
             BlockPos solution = new BlockPos((a + t * i + h + s * l) / 2, (b + t * j + v + s * m) / 2, (c + t * k + w + s * n) / 2);
             if (Math.abs(solution.getX() - 513) < 65 && Math.abs(solution.getZ() - 513) < 65) {
-                ChatLib.chat("This compass points to the nucleus! You need to place crystals so the compass points somewhere else.");
+                ChatLib.chat("This compass points to the nucleus! You need to place crystals so the compass points somewhere else. It's also possible that the structure hasn't spawned.");
             } else {
                 ChatLib.chat("Solution: (" + solution.getX() + ", " + solution.getY() + ", " + solution.getZ() + ")");
                 if (config.utilitiesWishingCompassWaypoint) {

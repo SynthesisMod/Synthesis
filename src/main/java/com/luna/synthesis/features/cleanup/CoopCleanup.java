@@ -1,10 +1,8 @@
 package com.luna.synthesis.features.cleanup;
 
-import com.luna.synthesis.Comment;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import com.luna.synthesis.events.packet.PacketReceivedEvent;
-import com.luna.synthesis.utils.ChatLib;
 import com.luna.synthesis.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.event.HoverEvent;
@@ -33,7 +31,7 @@ public class CoopCleanup {
     private IChatComponent theMessage = null;
     private final AtomicReference<String> price = new AtomicReference<>("");
 
-    @Comment("Collection tooltips. I could have used regexes for other people's contributions but they are laggy and this is invoked a lot of times per second. If there is any problem with this I'll eventually swap to regex but for now, this is decent. Also no, that Minecraft.getMinecraft().getSession().getUsername() further down is not a session stealer.")
+    // I'm deeply terrified of regexes being called way too many times, as long as the message cannot be faked or give false positives, this will have to work.
     @SubscribeEvent
     public void onTooltip(ItemTooltipEvent event) {
         if (config.cleanupCoopCollections == 0) return;
@@ -79,8 +77,7 @@ public class CoopCleanup {
         }
     }
 
-    @Comment("Travel messages. Same thing as earlier, but as long as it works without regexes and people can't fake the message, I won't use regexes.")
-    // &9&l» &aaliasalias &eis traveling to &aPrivate Island &e&lFOLLOW&r
+    // It is not necessary to check hover action because the " » " changes color depending on party/coop member, but I realised that when this was already done so whatever
     @SubscribeEvent
     public void onChatMessage(ClientChatReceivedEvent event) {
         if (!config.cleanupCoopTravel) return;
@@ -114,11 +111,12 @@ public class CoopCleanup {
                 price.set("");
             } else {
                 theMessage = event.message;
+                event.setCanceled(true);
             }
         }
     }
 
-    @Comment("Used as a way to detect bulk/block messages (that are surrounded by dividers, like coop messages).")
+    // Used as a way to detect bulk messages (the ones between dividers) and filter out potential messages that got caught between them.
     @SubscribeEvent
     public void onPacketReceived(PacketReceivedEvent event) {
         if (event.getPacket() instanceof S02PacketChat) {

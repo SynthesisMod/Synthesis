@@ -1,6 +1,5 @@
 package com.luna.synthesis.mixins;
 
-import com.luna.synthesis.Comment;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import com.luna.synthesis.managers.BackpackManager;
@@ -28,7 +27,7 @@ public class RenderItemMixin {
 
     private final Config config = Synthesis.getInstance().getConfig();
 
-    @Comment("Might make these two mixins onto a forge event because they're very cool")
+    // Might make these two onto a forge event because they're very cool
     @Redirect(method = "renderItemIntoGUI", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ItemModelMesher;getItemModel(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/client/resources/model/IBakedModel;"))
     public IBakedModel iBakedModel(ItemModelMesher imm, ItemStack stack) {
         String name = StringUtils.stripControlCodes(stack.getDisplayName());

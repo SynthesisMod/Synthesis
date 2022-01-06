@@ -1,20 +1,16 @@
 package com.luna.synthesis.features.utilities;
 
-import com.luna.synthesis.Comment;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import com.luna.synthesis.mixins.accessors.GuiNewChatAccessor;
-import com.luna.synthesis.utils.ChatLib;
 import com.luna.synthesis.utils.MixinUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
 import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.GuiUtilRenderComponents;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -29,7 +25,6 @@ public class SearchMode {
     public static boolean isSearchMode = false;
     private final Config config = Synthesis.getInstance().getConfig();
 
-    @Comment("Ctrl is 29, f is 33")
     @SubscribeEvent
     public void onKeyTyped(GuiScreenEvent.KeyboardInputEvent.Pre event) {
         if (!(event.gui instanceof GuiChat || (event.gui instanceof GuiContainer && config.utilitiesContainerChat && MixinUtils.inputField != null && MixinUtils.inputField.isFocused()))) return;
@@ -59,7 +54,6 @@ public class SearchMode {
         }
     }
 
-    @Comment("Keyboard::getKeyEventState is always false inside a GuiContainer??")
     @SubscribeEvent
     public void onKeyTypedPost(GuiScreenEvent.KeyboardInputEvent.Post event) {
         if (!(event.gui instanceof GuiChat || (event.gui instanceof GuiContainer && config.utilitiesContainerChat && MixinUtils.inputField != null && MixinUtils.inputField.isFocused()))) return;
