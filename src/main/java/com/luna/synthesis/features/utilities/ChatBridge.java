@@ -1,16 +1,12 @@
 package com.luna.synthesis.features.utilities;
 
-import com.luna.synthesis.Comment;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
-import net.minecraft.client.Minecraft;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -25,7 +21,6 @@ public class ChatBridge {
     private final Pattern msgPattern = Pattern.compile("^Guild > (?<rank>\\[[A-Z+]+] )?(?<ign>[a-zA-Z0-9_]{3,16})(?<grank> \\[.+])?: (?<discordname>.{1,32})(?<separator>( > |: ))(?<msg>.+)");
     private final Pattern linkPattern = Pattern.compile("((?:[a-z0-9]{2,}:\\/\\/)?(?:(?:[0-9]{1,3}\\.){3}[0-9]{1,3}|(?:[-\\w_\\.]{1,}\\.[a-z]{2,}?))(?::[0-9]{1,5})?.*?(?=[!\"\u00A7 \n]|$))", Pattern.CASE_INSENSITIVE);
 
-    @Comment("That second if is to not try to match that pattern on a message that will never be correct.")
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onClientChatMessage(ClientChatReceivedEvent event) {
         if (!config.utilitiesBridge) return;
@@ -42,7 +37,7 @@ public class ChatBridge {
         }
     }
 
-    @Comment("Adapted from ForgeHooks::newChatWithLinks")
+    // Adapted from ForgeHooks::newChatWithLinks, may change linkPattern in the future
     private IChatComponent newChatWithLinks(String string) {
         IChatComponent ichat = null;
         Matcher matcher = linkPattern.matcher(string);

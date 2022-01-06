@@ -1,6 +1,5 @@
 package com.luna.synthesis.mixins.patcher;
 
-import com.luna.synthesis.Comment;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import gg.essential.api.utils.TrustedHostsUtil;
@@ -20,7 +19,7 @@ public class ImagePreviewerMixin {
 
     private final Config config = Synthesis.getInstance().getConfig();
 
-    @Comment("Most likely not the way to do it since TrustedHostsUtil::addTrustedHost exists BUT don't care")
+    // Probably not the way to do this since TrustedHostUtil::addTrustedHost exists BUT don't care.
     @Dynamic
     @Redirect(method = "handle(Ljava/lang/String;)V", at = @At(value = "INVOKE", target = "Lgg/essential/api/utils/TrustedHostsUtil;getTrustedHosts()Ljava/util/Set;"))
     public Set<TrustedHostsUtil.TrustedHost> equalsIgnoreCase(TrustedHostsUtil util) {

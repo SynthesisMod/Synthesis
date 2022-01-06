@@ -13,6 +13,7 @@ public class VisibleLinks {
 
     private final Config config = Synthesis.getInstance().getConfig();
 
+    // Low priority so it's compatible with bridge
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onChatMessage(ClientChatReceivedEvent event) {
         if (!config.utilitiesVisibleLinks) return;

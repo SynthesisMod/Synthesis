@@ -1,21 +1,15 @@
 package com.luna.synthesis.mixins;
 
 import com.google.common.collect.Lists;
-import com.luna.synthesis.Comment;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import com.luna.synthesis.features.utilities.SearchMode;
 import com.luna.synthesis.mixins.accessors.GuiChatAccessor;
 import com.luna.synthesis.mixins.accessors.GuiContainerAccessor;
-import com.luna.synthesis.utils.ChatLib;
 import com.luna.synthesis.utils.MixinUtils;
-import com.luna.synthesis.utils.Utils;
-import com.sun.org.apache.bcel.internal.generic.GETFIELD;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StringUtils;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,9 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @Mixin(GuiNewChat.class)
 public abstract class GuiNewChatMixin {
@@ -65,7 +57,7 @@ public abstract class GuiNewChatMixin {
         }
     }
 
-    @Comment("Walmart solution to not having continue inside mixins. Kind of a cool mixin, prevents lag with a ton of chat lines when trying to search.")
+    // A way to "continue" in loops from inside a mixin. Kinda proud of this one ngl, fixes lag when searching for a lot of lines, mostly with Patcher's void chat.
     @ModifyVariable(method = "refreshChat", at = @At(value = "INVOKE", target = "Ljava/util/List;get(I)Ljava/lang/Object;", shift = At.Shift.BEFORE), index = 1)
     public int i(int in) {
         GuiScreen gui = Minecraft.getMinecraft().currentScreen;
@@ -88,7 +80,7 @@ public abstract class GuiNewChatMixin {
         return in;
     }
 
-    @Comment("And here's the failsafe to be able to 'continue' in the last iteration of the loop")
+    // This just here so it's possible to "continue" in the last iteration of the loop
     @Inject(method = "refreshChat", at = @At(value = "INVOKE", target = "Ljava/util/List;get(I)Ljava/lang/Object;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
     public void refreshChat(CallbackInfo ci, int i) {
         if (i == -1) {

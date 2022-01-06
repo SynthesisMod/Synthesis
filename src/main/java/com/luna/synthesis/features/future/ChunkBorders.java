@@ -1,6 +1,5 @@
 package com.luna.synthesis.features.future;
 
-import com.luna.synthesis.Comment;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import net.minecraft.client.Minecraft;
@@ -20,7 +19,7 @@ public class ChunkBorders {
     private final Config config = Synthesis.getInstance().getConfig();
     private boolean isToggled = false;
 
-    @Comment("Code directly taken from 1.12.2, translated to 1.8.9 and cleaned up a little.")
+    // Directly taken from 1.12.2, translated and adapted a bit.
     @SubscribeEvent
     public void onRenderWorld(RenderWorldLastEvent event) {
         if (!config.futureChunkBorders) return;
@@ -114,7 +113,7 @@ public class ChunkBorders {
         GlStateManager.enableTexture2D();
     }
 
-    @Comment("61 is F3, 34 is G")
+    // F3 + G, like in future versions of the game. Should this be configurable? Eh..
     @SubscribeEvent
     public void onKeyPress(InputEvent.KeyInputEvent event) {
         if (!Keyboard.getEventKeyState()) return;

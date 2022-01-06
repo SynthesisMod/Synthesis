@@ -1,6 +1,5 @@
 package com.luna.synthesis.mixins.patcher;
 
-import com.luna.synthesis.Comment;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import net.minecraft.client.gui.ChatLine;
@@ -18,7 +17,7 @@ public class ChatHandlerMixin {
 
     private static final Config config = Synthesis.getInstance().getConfig();
 
-    @Comment("ChatLine equals is bad. Calling GuiNewChat::refreshChat() creates a copy of the line, so equals doesn't actually work.")
+    // GuiNewChat::setChatLine breaks equals since ChatLine's is not overridden + the method creates a new chat line, this fixes that
     @Dynamic
     @Redirect(method = "deleteMessageByHash(I)Z", at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z"), remap = false)
     private static boolean contains(Set<ChatLine> toRemove, Object obj) {

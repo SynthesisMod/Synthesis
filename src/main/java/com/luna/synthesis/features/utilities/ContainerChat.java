@@ -1,31 +1,18 @@
 package com.luna.synthesis.features.utilities;
 
-import com.luna.synthesis.Comment;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
-import com.luna.synthesis.mixins.GuiContainerMixin;
-import com.luna.synthesis.utils.ChatLib;
 import com.luna.synthesis.utils.MixinUtils;
-import lombok.Getter;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-
-import java.security.Key;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ContainerChat {
 
@@ -34,7 +21,7 @@ public class ContainerChat {
     private String historyBuffer = "";
     private int sentHistoryCursor = -1;
 
-    @Comment("For chat transfer, don't think I can make it in mixin in a decent way")
+    // For chat transfer magic
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
         if (!config.utilitiesContainerChat) return;
@@ -51,7 +38,8 @@ public class ContainerChat {
         }
     }
 
-    @Comment("Originally in mixin, had to rewrite in events because sbe and cowlection would have bad bad compatibility issues.")
+    // Originally in mixin, had to rewrite because SBE and Cowlection would have bad compatibility issues.
+    // I also need to fix this working when SBE's search bar is focused, but I don't think I'll be able to do that.
     @SubscribeEvent
     public void onKeyTyped(GuiScreenEvent.KeyboardInputEvent event) {
         if (!(event.gui instanceof GuiContainer)) return;
