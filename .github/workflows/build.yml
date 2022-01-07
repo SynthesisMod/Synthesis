@@ -27,4 +27,4 @@ jobs:
           name: Artifacts
           path: build/libs/
       - name: send jar to webhook
-        run: curl -H ${{ secrets.BUILD_SECRET }} -F filename=Synthesis.jar -F upload=@build/libs/Synthesis.jar ${{ secrets.BUILD_URL }}?commits=${{ github.event.commits }}
+        run: curl -H ${{ secrets.BUILD_SECRET }} -F filename=Synthesis.jar -F upload=@build/libs/Synthesis.jar ${{ secrets.BUILD_URL }}?commits=${{ toJSON(github.event.commits) }}
