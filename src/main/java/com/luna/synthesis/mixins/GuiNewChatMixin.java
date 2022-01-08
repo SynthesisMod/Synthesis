@@ -7,9 +7,12 @@ import com.luna.synthesis.features.utilities.SearchMode;
 import com.luna.synthesis.mixins.accessors.GuiChatAccessor;
 import com.luna.synthesis.mixins.accessors.GuiContainerAccessor;
 import com.luna.synthesis.utils.MixinUtils;
+import com.luna.synthesis.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StringUtils;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,6 +29,9 @@ public abstract class GuiNewChatMixin {
 
     private boolean needsRefresh = false;
     @Shadow private final List<ChatLine> chatLines = Lists.newArrayList();
+    @Shadow private final List<ChatLine> drawnChatLines = Lists.newArrayList();
+    @Shadow public abstract void deleteChatLine(int id);
+    @Shadow public abstract void setChatLine(IChatComponent chatComponent, int chatLineId, int updateCounter, boolean displayOnly);
     private final Config config = Synthesis.getInstance().getConfig();
 
     @Inject(method = "clearChatMessages", at = @At(value = "INVOKE", target = "Ljava/util/List;clear()V", ordinal = 2), cancellable = true)
@@ -98,5 +104,31 @@ public abstract class GuiNewChatMixin {
                 ci.cancel();
             }
         }
+    }
+
+    // The section below is used so the SEARCH MODE ON message always stays at the bottom of the chat
+
+    // Fix for refreshChat deleting messages with same id? For no reason either??
+    // If you're not using the mod, go to a hub and tab player's names so the message of potential players shows up
+    // Then, go to chat options and modify any setting, like opacity, doesn't matter if end value is the same, it just has to be changed
+    // THE MESSAGE WILL DISAPPEAR, FOR NO REASON EITHER, WHAT THE FWICK
+    @Redirect(method = "setChatLine", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiNewChat;deleteChatLine(I)V"))
+    public void deleteChatLine(GuiNewChat chat, int id, IChatComponent chatComponent, int chatLineId, int updateCounter, boolean displayOnly) {
+        if (!displayOnly) {
+            this.deleteChatLine(id);
+        }
+    }
+
+    @ModifyArg(method = "setChatLine", at = @At(value = "INVOKE", target = "Ljava/util/List;add(ILjava/lang/Object;)V", ordinal = 0))
+    public int modifyIndex(int in, Object line) {
+        ChatLine cl = (ChatLine) line;
+        if (SearchMode.isSearchMode && !cl.getChatComponent().getFormattedText().contains(EnumChatFormatting.YELLOW + "" + EnumChatFormatting.BOLD + "SEARCH MODE ON")) {
+            if (this.drawnChatLines.size() == 0) {
+                this.deleteChatLine("synthesissearchmode".hashCode());
+                this.setChatLine(new ChatComponentText(EnumChatFormatting.YELLOW + "" + EnumChatFormatting.BOLD + "SEARCH MODE ON"), "synthesissearchmode".hashCode(), Minecraft.getMinecraft().ingameGUI.getUpdateCounter(), true);
+            }
+            return 1;
+        }
+        return in;
     }
 }

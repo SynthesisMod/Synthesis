@@ -12,6 +12,7 @@ public class BackpackManager {
     private JsonObject jsonObject;
     private File file;
 
+    // Damn this is old and garbage lmao
     public BackpackManager(File file) {
         if (!file.exists()) {
             try {

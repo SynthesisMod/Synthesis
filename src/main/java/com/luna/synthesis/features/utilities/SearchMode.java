@@ -4,6 +4,7 @@ import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import com.luna.synthesis.mixins.accessors.GuiNewChatAccessor;
 import com.luna.synthesis.utils.MixinUtils;
+import com.luna.synthesis.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
 import net.minecraft.client.gui.GuiChat;
@@ -17,6 +18,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,9 +36,9 @@ public class SearchMode {
         if (Keyboard.getEventKey() == 33 && Keyboard.isKeyDown(29)) {
             isSearchMode = !isSearchMode;
             if (isSearchMode) {
-                Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new ChatComponentText(EnumChatFormatting.YELLOW + "" + EnumChatFormatting.BOLD + "SEARCH MODE ON"), "synthesis".hashCode());
+                ((GuiNewChatAccessor) Minecraft.getMinecraft().ingameGUI.getChatGUI()).invokeSetChatLine(new ChatComponentText(EnumChatFormatting.YELLOW + "" + EnumChatFormatting.BOLD + "SEARCH MODE ON"), "synthesissearchmode".hashCode(), Minecraft.getMinecraft().ingameGUI.getUpdateCounter(), true);
             } else {
-                Minecraft.getMinecraft().ingameGUI.getChatGUI().deleteChatLine("synthesis".hashCode());
+                Minecraft.getMinecraft().ingameGUI.getChatGUI().deleteChatLine("synthesissearchmode".hashCode());
             }
             event.setCanceled(true);
             if (!isSearchMode) {
@@ -44,11 +46,14 @@ public class SearchMode {
             }
         } else if (Keyboard.getEventKey() == 1) {
             if (isSearchMode) isSearchMode = false;
-            Minecraft.getMinecraft().ingameGUI.getChatGUI().deleteChatLine("synthesis".hashCode());
+            Minecraft.getMinecraft().ingameGUI.getChatGUI().deleteChatLine("synthesissearchmode".hashCode());
             Minecraft.getMinecraft().ingameGUI.getChatGUI().refreshChat();
         } else if (Keyboard.getEventKey() == 28 && isSearchMode) {
             if (!config.utilitiesChatSearchKeyRefresh) {
                 Minecraft.getMinecraft().ingameGUI.getChatGUI().refreshChat();
+                if (((GuiNewChatAccessor) Minecraft.getMinecraft().ingameGUI.getChatGUI()).getDrawnChatLines().size() == 0) {
+                    ((GuiNewChatAccessor) Minecraft.getMinecraft().ingameGUI.getChatGUI()).invokeSetChatLine(new ChatComponentText(EnumChatFormatting.YELLOW + "" + EnumChatFormatting.BOLD + "SEARCH MODE ON"), "synthesissearchmode".hashCode(), Minecraft.getMinecraft().ingameGUI.getUpdateCounter(), true);
+                }
             }
             event.setCanceled(true);
         }
@@ -60,6 +65,9 @@ public class SearchMode {
         if (!Keyboard.getEventKeyState() && event.gui instanceof GuiChat) return;
         if (config.utilitiesChatSearchKeyRefresh && isSearchMode) {
             Minecraft.getMinecraft().ingameGUI.getChatGUI().refreshChat();
+            if (((GuiNewChatAccessor) Minecraft.getMinecraft().ingameGUI.getChatGUI()).getDrawnChatLines().size() == 0) {
+                ((GuiNewChatAccessor) Minecraft.getMinecraft().ingameGUI.getChatGUI()).invokeSetChatLine(new ChatComponentText(EnumChatFormatting.YELLOW + "" + EnumChatFormatting.BOLD + "SEARCH MODE ON"), "synthesissearchmode".hashCode(), Minecraft.getMinecraft().ingameGUI.getUpdateCounter(), true);
+            }
         }
     }
 
@@ -82,7 +90,7 @@ public class SearchMode {
             }
         }
         isSearchMode = false;
-        Minecraft.getMinecraft().ingameGUI.getChatGUI().deleteChatLine("synthesis".hashCode());
+        Minecraft.getMinecraft().ingameGUI.getChatGUI().deleteChatLine("synthesissearchmode".hashCode());
         Minecraft.getMinecraft().ingameGUI.getChatGUI().refreshChat();
         Minecraft.getMinecraft().ingameGUI.getChatGUI().resetScroll();
         chatLines = ((GuiNewChatAccessor) Minecraft.getMinecraft().ingameGUI.getChatGUI()).getDrawnChatLines();
