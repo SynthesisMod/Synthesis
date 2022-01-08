@@ -86,7 +86,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveName = tasks.jar.archiveName
+    archiveName = "Synthesis.jar"
     classifier = ""
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
