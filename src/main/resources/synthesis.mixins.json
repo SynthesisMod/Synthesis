@@ -8,6 +8,7 @@
         "accessors.GuiNewChatAccessor",
         "accessors.ItemModelMesherAccessor",
         "accessors.S2FPacketSetSlotAccessor",
+        "neu.NEUEventListenerMixin",
         "optifine.CapeUtilsMixin",
         "optifine.PlayerItemsLayerMixin",
         "patcher.ChatHandlerMixin",
