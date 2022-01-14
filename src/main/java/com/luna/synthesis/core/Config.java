@@ -334,6 +334,22 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
+            name = "Display wishing compass uses left",
+            description = "Displays the uses left on wishing compasses.",
+            category = "Utilities"
+    )
+    public boolean utilitiesWishingCompassUsesLeft = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Always display wishing compass uses left",
+            description = "Also displays uses left on wishing compasses when they have 3 uses left.",
+            category = "Utilities"
+    )
+    public boolean utilitiesWishingCompassAlwaysUsesLeft = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
             name = "Visible links",
             description = "Makes clickable links blue and underlined.",
             category = "Utilities"
@@ -414,6 +430,15 @@ public class Config extends Vigilant {
     public void utilitiesBridgeTestFormat() {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(utilitiesBridgeMessageFormat.replaceAll("&", "§").replace("<ign>", "Luna").replace("<msg>", "This is an example message. Thank you for using Synthesis!")));
     }
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Bridge guild chat tab",
+            description = "If using skytils' chattabs, moves formatted bridge messages to the guild tab.",
+            category = "Utilities",
+            subcategory = "Bridge"
+    )
+    public boolean utilitiesBridgeGuildChatTab = true;
 
     @Property(
             type = PropertyType.TEXT,

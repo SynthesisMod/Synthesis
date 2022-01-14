@@ -14,6 +14,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StringUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.*;
@@ -83,6 +84,20 @@ public class RenderItemMixin {
                 }
             }
         }
+        if (config.utilitiesWishingCompassUsesLeft) {
+            if (stack != null && stack.getDisplayName().contains("Wishing Compass")) {
+                NBTTagCompound tag = stack.getTagCompound();
+                if (tag.hasKey("ExtraAttributes")) {
+                    if (tag.getCompoundTag("ExtraAttributes").hasKey("wishing_compass_uses")) {
+                        drawStringAsStackSize(String.valueOf(3 - tag.getCompoundTag("ExtraAttributes").getInteger("wishing_compass_uses")), xPosition, yPosition);
+                    } else {
+                        if (config.utilitiesWishingCompassAlwaysUsesLeft) {
+                            drawStringAsStackSize("3", xPosition, yPosition);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void drawStringAsStackSize(String text, int xPosition, int yPosition) {
@@ -92,6 +107,5 @@ public class RenderItemMixin {
         Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(text, (float)(xPosition + 19 - 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(text)), (float)(yPosition + 6 + 3), 16777215);
         GlStateManager.enableLighting();
         GlStateManager.enableDepth();
-        System.out.println("");
     }
 }
