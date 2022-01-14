@@ -22,27 +22,6 @@ import java.util.regex.Pattern;
 public class ChatTabsMixin {
 
     private final Config config = Synthesis.getInstance().getConfig();
-    private final Pattern msgPattern = Pattern.compile("^Guild > (?<rank>\\[[A-Z+]+] )?(?<ign>[a-zA-Z0-9_]{3,16})(?<grank> \\[.+])?: (?<discordname>.{1,32})(?<separator>( > |: ))(?<msg>.+)");
-
-    @Dynamic
-    @Redirect(method = "onChat", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/play/server/S02PacketChat;getChatComponent()Lnet/minecraft/util/IChatComponent;", ordinal = 0))
-    public IChatComponent redirectComponent(S02PacketChat packet) {
-        if (config.utilitiesBridgeGuildChatTab) {
-            if (!config.utilitiesBridge) return packet.getChatComponent();
-            String message = StringUtils.stripControlCodes(packet.getChatComponent().getUnformattedText());
-            if (!message.startsWith("Guild > ") || !message.contains(config.utilitiesBridgeBotName)) return packet.getChatComponent();
-            Matcher matcher = msgPattern.matcher(message);
-            if (matcher.matches() && matcher.groupCount() == 7) {
-                String msgSender = matcher.group(2);
-                if (msgSender.equals(config.utilitiesBridgeBotName)) {
-                    String ign = matcher.group(4);
-                    String msg = matcher.group(7);
-                    return Utils.newChatWithLinks(config.utilitiesBridgeMessageFormat.replaceAll("&", "§").replace("<ign>", ign).replace("<msg>", msg));
-                }
-            }
-        }
-        return packet.getChatComponent();
-    }
 
     // Hacky way to add bridge messages to guild, shrug
     @Dynamic
