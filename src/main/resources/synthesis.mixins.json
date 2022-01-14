@@ -13,6 +13,7 @@
         "optifine.PlayerItemsLayerMixin",
         "patcher.ChatHandlerMixin",
         "patcher.ImagePreviewerMixin",
+        "skytils.ChatTabsMixin",
         "BlockStainedGlassPaneMixin",
         "EntityPlayerMixin",
         "GuiContainerMixin",
