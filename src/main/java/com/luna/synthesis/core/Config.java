@@ -365,6 +365,14 @@ public class Config extends Vigilant {
     public boolean utilitiesColorlessPanes = false;
 
     @Property(
+            type = PropertyType.SWITCH,
+            name = "Chat in portal",
+            description = "Lets you open and use chat inside a nether portal.",
+            category = "Utilities"
+    )
+    public boolean utilitiesPortalChat = false;
+
+    @Property(
             type = PropertyType.TEXT,
             name = "Share text",
             description = "Hold an item and type the text to show the item to other Synthesis users.",
