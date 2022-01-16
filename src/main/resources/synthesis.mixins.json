@@ -16,6 +16,7 @@
         "skytils.ChatTabsMixin",
         "BlockStainedGlassPaneMixin",
         "EntityPlayerMixin",
+        "EntityPlayerSPMixin",
         "GuiContainerMixin",
         "GuiNewChatMixin",
         "GuiScreenMixin",
