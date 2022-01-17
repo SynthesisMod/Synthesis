@@ -61,6 +61,11 @@ public class ContainerChat {
                     MixinUtils.inputField.setFocused(true);
                     Keyboard.enableRepeatEvents(true);
                     return;
+                } else if (keyCode == Minecraft.getMinecraft().gameSettings.keyBindCommand.getKeyCode()) {
+                    MixinUtils.inputField.setText("/");
+                    MixinUtils.inputField.setFocused(true);
+                    Keyboard.enableRepeatEvents(true);
+                    return;
                 }
             }
 
