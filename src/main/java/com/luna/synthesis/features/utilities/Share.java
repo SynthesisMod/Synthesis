@@ -61,6 +61,13 @@ public class Share {
             NBTTagCompound extraAttributes = item.getSubCompound("ExtraAttributes", false);
             JsonArray loreArray = new JsonArray();
             NBTTagList lore = item.getSubCompound("display", false).getTagList("Lore", 8);
+            if (item.hasTagCompound()) {
+                if (item.getTagCompound().hasKey("display")) {
+                    if (item.getTagCompound().getCompoundTag("display").hasKey("color")) {
+                        loreArray.add(new JsonPrimitive(EnumChatFormatting.GRAY + "Color: #" + Integer.toHexString(item.getTagCompound().getCompoundTag("display").getInteger("color")).toUpperCase()));
+                    }
+                }
+            }
             for (int i = 0; i < lore.tagCount(); i++) {
                 loreArray.add(new JsonPrimitive(lore.getStringTagAt(i)));
             }
@@ -139,13 +146,13 @@ public class Share {
                         http.connect();
                         try (InputStream instream = http.getInputStream()) {
                             if (http.getResponseCode() != 200) {
-                                ChatLib.chat("Something went wrong trying to read share. Check logs maybe?");
+                                Minecraft.getMinecraft().thePlayer.addChatMessage(event.message);
                                 return;
                             }
                             JsonParser parser = new JsonParser();
                             JsonObject shareJson = parser.parse(new String(IOUtils.toByteArray(instream), StandardCharsets.UTF_8)).getAsJsonObject();
                             if (!shareJson.get("success").getAsBoolean()) {
-                                ChatLib.chat("Share was not successful. Reason: " + shareJson.get("error").getAsString());
+                                Minecraft.getMinecraft().thePlayer.addChatMessage(event.message);
                                 return;
                             }
 
