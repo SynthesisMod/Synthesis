@@ -39,9 +39,8 @@ public class CoopCleanup {
             event.toolTip.removeIf(s -> EnumChatFormatting.getTextWithoutFormattingCodes(s).endsWith(": 0"));
         } else if (config.cleanupCoopCollections == 2) {
             Iterator<String> iterator = event.toolTip.iterator();
-            iterator.forEachRemaining(s -> {
-                String actualLine = EnumChatFormatting.getTextWithoutFormattingCodes(s);
-
+            while (iterator.hasNext()) {
+                String actualLine = EnumChatFormatting.getTextWithoutFormattingCodes(iterator.next());
                 if (actualLine.equals("")) {
                     onContributions = false;
                 }
@@ -54,12 +53,12 @@ public class CoopCleanup {
                 if (actualLine.startsWith("Co-op Contributions:")) {
                     onContributions = true;
                 }
-            });
+            }
             onContributions = false;
         } else if (config.cleanupCoopCollections == 3) {
             Iterator<String> iterator = event.toolTip.iterator();
-            iterator.forEachRemaining(s -> {
-                String actualLine = EnumChatFormatting.getTextWithoutFormattingCodes(s);
+            while (iterator.hasNext()) {
+                String actualLine = EnumChatFormatting.getTextWithoutFormattingCodes(iterator.next());
                 if (actualLine.startsWith("Co-op Contributions:")) {
                     shouldRemove = true;
                 }
@@ -72,7 +71,7 @@ public class CoopCleanup {
                 if (actualLine.equals("")) {
                     shouldRemove = false;
                 }
-            });
+            }
             shouldRemove = false;
         }
     }
