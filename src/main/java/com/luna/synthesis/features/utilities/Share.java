@@ -61,13 +61,6 @@ public class Share {
             NBTTagCompound extraAttributes = item.getSubCompound("ExtraAttributes", false);
             JsonArray loreArray = new JsonArray();
             NBTTagList lore = item.getSubCompound("display", false).getTagList("Lore", 8);
-            if (item.hasTagCompound()) {
-                if (item.getTagCompound().hasKey("display")) {
-                    if (item.getTagCompound().getCompoundTag("display").hasKey("color")) {
-                        loreArray.add(new JsonPrimitive(EnumChatFormatting.GRAY + "Color: #" + Integer.toHexString(item.getTagCompound().getCompoundTag("display").getInteger("color")).toUpperCase()));
-                    }
-                }
-            }
             for (int i = 0; i < lore.tagCount(); i++) {
                 loreArray.add(new JsonPrimitive(lore.getStringTagAt(i)));
             }
@@ -75,9 +68,19 @@ public class Share {
             JsonObject itemJson = new JsonObject();
             itemJson.add("name", new JsonPrimitive(item.getSubCompound("display", false).getString("Name")));
             itemJson.add("lore", loreArray);
+            JsonObject extraObject = new JsonObject();
+            if (item.hasTagCompound()) {
+                if (item.getTagCompound().hasKey("display")) {
+                    if (item.getTagCompound().getCompoundTag("display").hasKey("color")) {
+                        extraObject.add("color", new JsonPrimitive(item.getTagCompound().getCompoundTag("display").getInteger("color")));
+                    }
+                }
+            }
             if (extraAttributes != null && extraAttributes.hasKey("uuid")) {
                 itemJson.add("uuid", new JsonPrimitive(extraAttributes.getString("uuid")));
             }
+
+            itemJson.add("extra", extraObject);
 
             JsonObject body = new JsonObject();
             body.add("owner", new JsonPrimitive(Minecraft.getMinecraft().getSession().getPlayerID()));
@@ -168,6 +171,11 @@ public class Share {
                             ));
 
                             AtomicReference<String> s = new AtomicReference<>("");
+                            if (shareItem.has("extra")) {
+                                if (shareItem.get("extra").getAsJsonObject().has("color")) {
+                                    s.set(EnumChatFormatting.GRAY + "Color: #" + Integer.toHexString(shareItem.get("extra").getAsJsonObject().get("color").getAsInt()).toUpperCase() + "\n");
+                                }
+                            }
                             itemLore.iterator().forEachRemaining(jsonElement -> s.set(s.get() + jsonElement.getAsString() + "\n"));
                             String shareLore = itemName + "\n" + s.get();
 
@@ -184,7 +192,7 @@ public class Share {
                             shares.add(verifiedComponent);
                         }
                     } catch (IOException | JsonParseException e) {
-                        ChatLib.chat("Something went wrong trying to read share. Check logs maybe?");
+                        Minecraft.getMinecraft().thePlayer.addChatMessage(event.message);
                         e.printStackTrace();
                     }
                 }
