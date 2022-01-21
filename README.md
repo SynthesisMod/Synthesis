@@ -1,7 +1,7 @@
 # Synthesis
 Hypixel SkyBlock QoL Mod. A collection of random mod features that I couldn't find anywhere else.
 
-Releases and announcements at the official [discord](https.//discord.gg/vAUuKSwbp6).
+Releases and announcements at the official [discord](https://discord.gg/vAUuKSwbp6).
 Feedback such as suggestions, new features, bugs, etc. will also be collected there.
 
 ***
