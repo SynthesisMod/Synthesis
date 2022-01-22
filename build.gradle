@@ -26,7 +26,7 @@ apply plugin: "net.minecraftforge.gradle.forge"
 apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: "org.spongepowered.mixin"
 
-version = "Alpha-v4"
+version = "0.1.0"
 group = "com.luna"
 archivesBaseName = "Synthesis"
 
