@@ -2,6 +2,10 @@ package com.luna.synthesis.features.cleanup;
 
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.inventory.ContainerChest;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -16,6 +20,15 @@ public class LoreCleanup {
 
     @SubscribeEvent
     public void onItemTooltip(ItemTooltipEvent event) {
+        if (Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerChest) {
+            ContainerChest containerChest = (ContainerChest) Minecraft.getMinecraft().thePlayer.openContainer;
+            String title = StringUtils.stripControlCodes(containerChest.getLowerChestInventory().getDisplayName().getUnformattedText());
+            if (config.cleanupLoreAuctionException) {
+                if (title.startsWith("Auctions") || title.endsWith("Auction View")) {
+                    return;
+                }
+            }
+        }
         Iterator<String> iterator = event.toolTip.iterator();
         int index = 0;
         boolean inEnchantments = false;
