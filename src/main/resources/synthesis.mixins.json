@@ -6,6 +6,7 @@
         "accessors.GuiChatAccessor",
         "accessors.GuiContainerAccessor",
         "accessors.GuiNewChatAccessor",
+        "accessors.GuiRepairAccessor",
         "accessors.ItemModelMesherAccessor",
         "accessors.S2FPacketSetSlotAccessor",
         "neu.NEUEventListenerMixin",

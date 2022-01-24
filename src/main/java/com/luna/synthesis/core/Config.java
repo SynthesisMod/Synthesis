@@ -1,22 +1,16 @@
 package com.luna.synthesis.core;
 
 import com.luna.synthesis.Synthesis;
-import gg.essential.api.EssentialAPI;
-import gg.essential.api.data.OnboardingData;
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.JVMAnnotationPropertyCollector;
 import gg.essential.vigilance.data.Property;
 import gg.essential.vigilance.data.PropertyType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fml.common.Loader;
-import scala.sys.Prop;
 
-import java.awt.*;
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 public class Config extends Vigilant {
 
@@ -130,7 +124,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Remove dungeon ultimate message",
-            description = "Removes the dungeon remained that your ultimate is ready to use.",
+            description = "Removes the dungeon reminder that your ultimate is ready to use.",
             category = "Cleanup",
             subcategory = "Dungeon"
     )
@@ -180,6 +174,132 @@ public class Config extends Vigilant {
             subcategory = "Dungeon"
     )
     public boolean cleanupDungeonWatcherMessages = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove gear score",
+            description = "Removes the gear score line.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLoreGearScore = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove HPB stat bonuses",
+            description = "Removes the text of bonus stats from hot/fuming potato books.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLoreHPB = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove reforge stat bonuses",
+            description = "Removes the text of bonus stats from reforge.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLoreReforge = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove gemstone stat bonuses",
+            description = "Removes the text of bonus stats from gemstones.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLoreGemstones = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove dungeon stat bonuses",
+            description = "Removes the text of the weapon's dungeon stats.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLoreDungeon = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove gemstone icons",
+            description = "Removes the line that indicates applied gemstones.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLoreGemstoneSlots = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove enchantment descriptions",
+            description = "Removes the explanation of what each enchantment does when the item has a low amount of enchantments.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLoreEnchantmentDescriptions = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove enchantments",
+            description = "Removes the paragraph of enchantments.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLoreEnchantments = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove item abilities",
+            description = "Removes the item ability text.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLoreAbilities = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove reforge abilities",
+            description = "Removes the reforge ability text.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLoreReforgeAbility = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove armor full set bonuses",
+            description = "Removes the armor full set bonus text.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLoreFullSetBonus = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove soulbound text",
+            description = "Removes the co-op soulbound text.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLoreSoulbound = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove recombobulated obfuscated text",
+            description = "Removes the obfuscated text on the rarity of a recombobulated item.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLoreRecombobulatedObfuscated = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Auction house exception",
+            description = "Stops the lore being cleaned up when the auction house menu is opened.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLoreAuctionException = false;
 
     //FUTURE
 
@@ -441,10 +561,29 @@ public class Config extends Vigilant {
             name = "Test bridge message",
             description = "Send in chat a message formatted like the above format. Useful for testing that format.",
             category = "Utilities",
-            subcategory = "Bridge"
+            subcategory = "Bridge",
+            placeholder = "Test"
     )
     public void utilitiesBridgeTestFormat() {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(utilitiesBridgeMessageFormat.replaceAll("&", "§").replace("<ign>", "Luna").replace("<msg>", "This is an example message. Thank you for using Synthesis!")));
+    }
+
+    @Property(
+            type = PropertyType.BUTTON,
+            name = "Color code guide",
+            description = "Sends a chat message with all formatting codes.",
+            category = "Utilities",
+            subcategory = "Bridge",
+            placeholder = "Show"
+    )
+    public void utilitiesBridgeColorCodeGuide() {
+        for (EnumChatFormatting value : EnumChatFormatting.values()) {
+            if (value.getFriendlyName().equals("obfuscated")) {
+                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText( "&" + value.toString().replace("§", "") + " - " + value + value.getFriendlyName()));
+            } else {
+                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(value + "&" + value.toString().replace("§", "") + " - " + value.getFriendlyName()));
+            }
+        }
     }
 
     @Property(

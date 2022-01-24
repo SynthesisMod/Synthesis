@@ -6,6 +6,7 @@ import com.luna.synthesis.core.Config;
 import com.luna.synthesis.events.packet.PacketEvent;
 import com.luna.synthesis.features.cleanup.CoopCleanup;
 import com.luna.synthesis.features.cleanup.DungeonCleanup;
+import com.luna.synthesis.features.cleanup.LoreCleanup;
 import com.luna.synthesis.features.future.ChunkBorders;
 import com.luna.synthesis.features.utilities.*;
 import com.luna.synthesis.managers.BackpackManager;
@@ -54,6 +55,7 @@ public class Synthesis {
         MinecraftForge.EVENT_BUS.register(new Share());
         MinecraftForge.EVENT_BUS.register(new DungeonCleanup());
         MinecraftForge.EVENT_BUS.register(new BetterWitherImpactPerspective());
+        MinecraftForge.EVENT_BUS.register(new LoreCleanup());
         config.preload();
         new SynthesisCommand().register();
         new CopyToClipboardCommand().register();

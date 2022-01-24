@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 public class ChatBridge {
 
     private final Config config = Synthesis.getInstance().getConfig();
-    private final Pattern msgPattern = Pattern.compile("^Guild > (?<rank>\\[[A-Z+]+] )?(?<ign>[a-zA-Z0-9_]{3,16})(?<grank> \\[.+])?: (?<discordname>.{1,32})(?<separator>( > |: ))(?<msg>.+)");
+    private final Pattern msgPattern = Pattern.compile("^Guild > (?<rank>\\[[A-Z+]+] )?(?<ign>[a-zA-Z0-9_]{3,16})(?<grank> \\[.+])?: (?<discordname>.*)(?<separator>( >|:))(?<msg> .*)");
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onClientChatMessage(ClientChatReceivedEvent event) {
