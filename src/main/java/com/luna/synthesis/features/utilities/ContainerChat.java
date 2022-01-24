@@ -2,9 +2,11 @@ package com.luna.synthesis.features.utilities;
 
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
+import com.luna.synthesis.mixins.accessors.GuiRepairAccessor;
 import com.luna.synthesis.utils.MixinUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.gui.GuiRepair;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.MathHelper;
@@ -47,6 +49,7 @@ public class ContainerChat {
         if (!Keyboard.getEventKeyState()) return;
         int keyCode = Keyboard.getEventKey();
         if (MixinUtils.inputField == null) return;
+        if (event.gui instanceof GuiRepair && ((GuiRepairAccessor) event.gui).getNameField().isFocused()) return;
         if (event instanceof GuiScreenEvent.KeyboardInputEvent.Pre) {
             if (MixinUtils.inputField.isFocused()) {
                 if (keyCode == 1) {
