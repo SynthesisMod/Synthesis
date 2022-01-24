@@ -55,7 +55,9 @@ public class ContainerChat {
                     Keyboard.enableRepeatEvents(false);
                     Minecraft.getMinecraft().ingameGUI.getChatGUI().resetScroll();
                 }
-                event.setCanceled(true);
+                if (keyCode != Minecraft.getMinecraft().gameSettings.keyBindScreenshot.getKeyCode()) {
+                    event.setCanceled(true);
+                }
             } else {
                 if (keyCode == Minecraft.getMinecraft().gameSettings.keyBindChat.getKeyCode()) {
                     MixinUtils.inputField.setFocused(true);

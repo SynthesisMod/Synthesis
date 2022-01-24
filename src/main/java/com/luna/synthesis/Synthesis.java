@@ -53,6 +53,7 @@ public class Synthesis {
         MinecraftForge.EVENT_BUS.register(new VisibleLinks());
         MinecraftForge.EVENT_BUS.register(new Share());
         MinecraftForge.EVENT_BUS.register(new DungeonCleanup());
+        MinecraftForge.EVENT_BUS.register(new BetterWitherImpactPerspective());
         config.preload();
         new SynthesisCommand().register();
         new CopyToClipboardCommand().register();
