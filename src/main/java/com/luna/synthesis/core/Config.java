@@ -373,6 +373,14 @@ public class Config extends Vigilant {
     public boolean utilitiesPortalChat = false;
 
     @Property(
+            type = PropertyType.SWITCH,
+            name = "Better wither impact perspective",
+            description = "Toggling third person view will skip the front camera if holding a wither impact weapon.",
+            category = "Utilities"
+    )
+    public boolean utilitiesWitherImpactPerspective = false;
+
+    @Property(
             type = PropertyType.TEXT,
             name = "Share text",
             description = "Hold an item and type the text to show the item to other Synthesis users.",
