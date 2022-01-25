@@ -10,6 +10,7 @@ import com.luna.synthesis.features.cleanup.LoreCleanup;
 import com.luna.synthesis.features.future.ChunkBorders;
 import com.luna.synthesis.features.utilities.*;
 import com.luna.synthesis.managers.BackpackManager;
+import com.luna.synthesis.utils.ReflectionUtils;
 import lombok.Getter;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -59,5 +60,6 @@ public class Synthesis {
         config.preload();
         new SynthesisCommand().register();
         new CopyToClipboardCommand().register();
+        ReflectionUtils.onInit();
     }
 }
