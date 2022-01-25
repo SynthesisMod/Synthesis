@@ -15,6 +15,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StringUtils;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
@@ -28,10 +29,10 @@ import java.util.List;
 public abstract class GuiNewChatMixin {
 
     private boolean needsRefresh = false;
-    @Shadow private final List<ChatLine> chatLines = Lists.newArrayList();
-    @Shadow private final List<ChatLine> drawnChatLines = Lists.newArrayList();
+    @Final @Shadow private final List<ChatLine> chatLines = Lists.newArrayList();
+    @Final @Shadow private final List<ChatLine> drawnChatLines = Lists.newArrayList();
     @Shadow public abstract void deleteChatLine(int id);
-    @Shadow public abstract void setChatLine(IChatComponent chatComponent, int chatLineId, int updateCounter, boolean displayOnly);
+    @Shadow protected abstract void setChatLine(IChatComponent chatComponent, int chatLineId, int updateCounter, boolean displayOnly);
     private final Config config = Synthesis.getInstance().getConfig();
 
     @Inject(method = "clearChatMessages", at = @At(value = "INVOKE", target = "Ljava/util/List;clear()V", ordinal = 2), cancellable = true)

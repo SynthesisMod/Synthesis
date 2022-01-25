@@ -3,6 +3,7 @@ package com.luna.synthesis.mixins;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import com.luna.synthesis.utils.MixinUtils;
+import com.luna.synthesis.utils.ReflectionUtils;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,8 +18,10 @@ import java.util.List;
 public class GuiContainerMixin extends GuiScreen {
 
     private final Config config = Synthesis.getInstance().getConfig();
+    private final boolean patcherClearField = ReflectionUtils.getPatcherChatField();
 
     private GuiTextField inputField;
+    // Why are all of these unused and not removed
     private int sentHistoryCursor = -1;
     private boolean playerNamesFound;
     private boolean waitingOnAutocomplete;
@@ -53,7 +56,7 @@ public class GuiContainerMixin extends GuiScreen {
     @Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "net/minecraft/client/gui/GuiScreen.drawScreen(IIF)V"))
     public void drawScreen(int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
         if (config.utilitiesContainerChat && this.inputField.isFocused()) {
-            Gui.drawRect(2, this.height - 14, this.width - 2, this.height - 2, Integer.MIN_VALUE);
+            if(!patcherClearField) Gui.drawRect(2, this.height - 14, this.width - 2, this.height - 2, Integer.MIN_VALUE);
             this.inputField.drawTextBox();
         }
     }
