@@ -3,7 +3,7 @@
         "modid": "synthesis",
         "name": "Synthesis",
         "description": "Hypixel SkyBlock/general QoL mod.",
-        "version": "0.1.0",
+        "version": "${version}",
         "mcversion": "1.8.9",
         "url": "",
         "updateUrl": "",
