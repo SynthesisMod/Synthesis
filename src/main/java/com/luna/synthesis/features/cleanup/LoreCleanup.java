@@ -73,25 +73,27 @@ public class LoreCleanup {
             }
 
             // ENCHANTMENTS
-            if (line.startsWith("§9") || line.startsWith("§d§l")) {
-                if (config.cleanupLoreEnchantmentDescriptions) {
-                    inEnchantments = true;
+            if (!StringUtils.stripControlCodes(event.itemStack.getDisplayName()).equals("Enchanted Book")) {
+                if (line.startsWith("§9") || line.startsWith("§d§l")) {
+                    if (config.cleanupLoreEnchantmentDescriptions) {
+                        inEnchantments = true;
+                    }
                 }
-            }
-            if (inEnchantments) {
-                if (!config.cleanupLoreEnchantments && (line.startsWith("§9") || line.startsWith("§d§l"))) {
-                    index++;
-                    continue;
-                }
-                if (StringUtils.stripControlCodes(line).equals("")) {
-                    inEnchantments = false;
-                    if (config.cleanupLoreEnchantments) {
+                if (inEnchantments) {
+                    if (!config.cleanupLoreEnchantments && (line.startsWith("§9") || line.startsWith("§d§l"))) {
+                        index++;
+                        continue;
+                    }
+                    if (StringUtils.stripControlCodes(line).equals("")) {
+                        inEnchantments = false;
+                        if (config.cleanupLoreEnchantments) {
+                            index--;
+                            iterator.remove();
+                        }
+                    } else {
                         index--;
                         iterator.remove();
                     }
-                } else {
-                    index--;
-                    iterator.remove();
                 }
             }
 

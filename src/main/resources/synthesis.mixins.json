@@ -16,10 +16,12 @@
         "patcher.ImagePreviewerMixin",
         "skytils.ChatTabsMixin",
         "BlockStainedGlassPaneMixin",
+        "ContainerMixin",
         "EntityPlayerMixin",
         "EntityPlayerSPMixin",
         "GuiContainerMixin",
         "GuiNewChatMixin",
+        "GuiPlayerTabOverlayMixin",
         "GuiScreenMixin",
         "RenderItemMixin"
     ],

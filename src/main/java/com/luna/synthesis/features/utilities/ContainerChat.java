@@ -27,6 +27,7 @@ public class ContainerChat {
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
         if (!config.utilitiesContainerChat) return;
+        sentHistoryCursor = Minecraft.getMinecraft().ingameGUI.getChatGUI().getSentMessages().size();
         if (config.utilitiesReopenContainerChat && MixinUtils.inputField != null) {
             if (event.gui == null) {
                 if (Minecraft.getMinecraft().currentScreen instanceof GuiContainer) {
