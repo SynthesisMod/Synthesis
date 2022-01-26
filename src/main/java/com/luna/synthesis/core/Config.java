@@ -301,6 +301,24 @@ public class Config extends Vigilant {
     )
     public boolean cleanupLoreAuctionException = false;
 
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove tablist header",
+            description = "Removes the message at the top of the tablist.",
+            category = "Cleanup",
+            subcategory = "Tablist"
+    )
+    public boolean cleanupTablistHeader = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove tablist footer",
+            description = "Removes the last 2 lines at the bottom of the tablist.",
+            category = "Cleanup",
+            subcategory = "Tablist"
+    )
+    public boolean cleanupTablistFooter = false;
+
     //FUTURE
 
     @Property(
@@ -499,6 +517,14 @@ public class Config extends Vigilant {
             category = "Utilities"
     )
     public boolean utilitiesWitherImpactPerspective = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Superpairs IDs",
+            description = "Gives superpairs item rewards SkyBlock IDs so mods like NEU and SBE can display price and resource packs can display custom textures.",
+            category = "Utilities"
+    )
+    public boolean utilitiesSuperpairsIDs = false;
 
     @Property(
             type = PropertyType.TEXT,
