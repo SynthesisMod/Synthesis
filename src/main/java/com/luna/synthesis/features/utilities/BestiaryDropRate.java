@@ -30,11 +30,13 @@ public class BestiaryDropRate {
                 it.forEachRemaining(s -> {
                     String line = StringUtils.stripControlCodes(s);
                     if (line.endsWith("%)")) {
-                        double number = Double.parseDouble(line.split("\\(")[1].replace("%)", ""));
-                        if (number < 100) {
-                            event.toolTip.set(i.get(), s.replaceAll("\\(§a[\\d.]+%§8\\)",
-                                    EnumChatFormatting.DARK_GRAY + "(" + EnumChatFormatting.GREEN + "1/" + Math.floor(10000/number + 0.5) / 100 + EnumChatFormatting.DARK_GRAY + ")"));
-                        }
+                        try {
+                            double number = Double.parseDouble(line.split("\\(")[1].replace("%)", ""));
+                            if (number < 100) {
+                                event.toolTip.set(i.get(), s.replaceAll("\\(§a[\\d.]+%§8\\)",
+                                        EnumChatFormatting.DARK_GRAY + "(" + EnumChatFormatting.GREEN + "1/" + Math.floor(10000 / number + 0.5) / 100 + EnumChatFormatting.DARK_GRAY + ")"));
+                            }
+                        } catch (NumberFormatException ignored) {}
                     }
                     i.getAndIncrement();
                 });
