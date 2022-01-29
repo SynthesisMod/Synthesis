@@ -132,4 +132,13 @@ public abstract class GuiNewChatMixin {
         }
         return in;
     }
+
+    @Redirect(method = "deleteChatLine", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/ChatLine;getChatLineID()I"))
+    public int fixCrashMaybe(ChatLine cl) {
+        if (cl == null) {
+            return -12;
+        } else {
+            return cl.getChatLineID();
+        }
+    }
 }
