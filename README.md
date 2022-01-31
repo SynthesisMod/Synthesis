@@ -28,7 +28,7 @@ Features that help the game feel more clean.
   - Wither/Blood key usage messages
   - Watcher messages
     - Doesn't remove the final message
-- Lore cleanup, still customizable
+- Lore cleanup, still customizable (0.2.0+)
   - Gear score line
   - HPB stat bonuses
   - Reforge stat bonuses
@@ -41,7 +41,7 @@ Features that help the game feel more clean.
   - Soulbound text
   - Obfuscated text from recombobulator
   - Option to not cleanup lore when in the auction house
-- Tablist cleanup
+- Tablist cleanup (0.2.0+)
   - Option to remove tablist header
   - Option to remove the last 2 lines from the tablist footer
     
@@ -89,9 +89,9 @@ The actual collection of QoL features that doesn't fit any other category.
   - Allows you to type and use chat while inside a nether portal, like the one in dungeon blood room.
   - **Note**: It's possible to make portals not close containers such as player inventory, ender chest and others,
     but won't for now since I don't know if Hypixel would like that.
-- Better wither impact perspective (im good with names)
+- Better wither impact perspective (im good with names, 0.2.0+)
   - Toggling perspective while holding a wither impact weapon will skip the front camera.
-- Superpairs IDs
+- Superpairs IDs (0.2.0+)
   - Gives skyblock item IDs to items inside superpairs, so NEU and SBE can read them for price displays.
   - Additionally, resource packs can also modify those items.
   - This was made 1 minute before realizing [Skytils](https://github.com/Skytils/SkytilsMod/) has a working price display inside superpairs, so no need to use this if you use Skytils.
