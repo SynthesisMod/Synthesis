@@ -28,6 +28,22 @@ Features that help the game feel more clean.
   - Wither/Blood key usage messages
   - Watcher messages
     - Doesn't remove the final message
+- Lore cleanup, still customizable
+  - Gear score line
+  - HPB stat bonuses
+  - Reforge stat bonuses
+  - Gemstone stat bonuses
+  - Gemstone icons
+  - Enchantment descriptions
+    - And an option to remove enchantment names
+  - Item abilities
+  - Full armor set bonuses
+  - Soulbound text
+  - Obfuscated text from recombobulator
+  - Option to not cleanup lore when in the auction house
+- Tablist cleanup
+  - Option to remove tablist header
+  - Option to remove the last 2 lines from the tablist footer
     
 </details>
 
@@ -73,6 +89,12 @@ The actual collection of QoL features that doesn't fit any other category.
   - Allows you to type and use chat while inside a nether portal, like the one in dungeon blood room.
   - **Note**: It's possible to make portals not close containers such as player inventory, ender chest and others,
     but won't for now since I don't know if Hypixel would like that.
+- Better wither impact perspective (im good with names)
+  - Toggling perspective while holding a wither impact weapon will skip the front camera.
+- Superpairs IDs
+  - Gives skyblock item IDs to items inside superpairs, so NEU and SBE can read them for price displays.
+  - Additionally, resource packs can also modify those items.
+  - This was made 1 minute before realizing [Skytils](https://github.com/Skytils/SkytilsMod/) has a working price display inside superpairs, so no need to use this if you use Skytils.
 - Shares
   - Shares are a way to showcase your items to other users using the mod.
   - To show an item, hold it and type "[item]" (configurable) in chat.
@@ -101,7 +123,7 @@ The actual collection of QoL features that doesn't fit any other category.
   - Option to fix an issue that would make compact chat not work under very specific circumstance.
     Also when using search mode/container chat in some instances.
   - Option to add custom trusted domains to Patcher's Image Preview.
-    - Some image hosts, like [boob.li](https://boob.li/), won't work with [Patcher](https://github.com/Sk1erLLC/Patcher)'s Image Preview, but will when trusted with this feature.
+    - Some image hosts, like [boob.li](https://boob.li/), won't work with [Patcher](https://github.com/Sk1erLLC/Patcher) 's Image Preview, but will when trusted with this feature.
 </details>
 <details>
   <summary>Commands</summary>
