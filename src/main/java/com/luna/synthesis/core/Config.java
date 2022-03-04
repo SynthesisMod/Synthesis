@@ -303,6 +303,15 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
+            name = "Remove old reforge messages",
+            description = "Removes past reforge messages from chat when a new one is received.",
+            category = "Cleanup",
+            subcategory = "Chat"
+    )
+    public boolean cleanupChatOldReforgeMessages = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
             name = "Remove tablist header",
             description = "Removes the message at the top of the tablist.",
             category = "Cleanup",
@@ -520,6 +529,14 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
+            name = "Better perspective",
+            description = "Makes Better wither impact perspective skip the wither impact test and will always skip the front camera.",
+            category = "Utilities"
+    )
+    public boolean utilitiesWitherImpactPerspectiveGlobal = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
             name = "Superpairs IDs",
             description = "Gives superpairs item rewards SkyBlock IDs so mods like NEU and SBE can display price and resource packs can display custom textures.",
             category = "Utilities"
@@ -715,6 +732,7 @@ public class Config extends Vigilant {
         addDependency("utilitiesWishingCompassWaypoint", "utilitiesWishingCompass");
         addDependency("utilitiesBlockWishingCompass", "utilitiesWishingCompass");
         addDependency("cleanupDungeonBlessingMessages", "cleanupDungeonBlessingStatMessages");
+        addDependency("utilitiesWitherImpactPerspectiveGlobal", "utilitiesWitherImpactPerspective");
         registerListener("utilitiesColorlessPanes", (z) -> Minecraft.getMinecraft().renderGlobal.loadRenderers());
     }
 }
