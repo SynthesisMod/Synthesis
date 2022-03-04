@@ -141,4 +141,22 @@ public abstract class GuiNewChatMixin {
             return cl.getChatLineID();
         }
     }
+
+    // For reforge message cleanup - There's probably a better way to do this, but I'm blind
+    // Also regexes wack, you know how it goes with me and regexes
+    @ModifyArg(method = "printChatMessage", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiNewChat;printChatMessageWithOptionalDeletion(Lnet/minecraft/util/IChatComponent;I)V"), index = 1)
+    public int overrideChatId(IChatComponent chatComponent, int in) {
+        if (config.cleanupChatOldReforgeMessages) {
+            String msg = StringUtils.stripControlCodes(chatComponent.getUnformattedText());
+            // Why must I be punished like this.
+            // What have I done to deserve this.
+            // Luna from the future (10 minutes after starting to code this): I should have done this with like 5 regexes holy shit this is annoying
+            if ((msg.startsWith("You reforged your ") && msg.contains(" into a ") && msg.endsWith("!")) ||
+                    (msg.startsWith("You applied the ") && msg.contains(" reforge to your ") && msg.endsWith("!")) ||
+                    (msg.startsWith("You applied the ") && msg.contains(" reforge to ") && msg.contains(" accessories of ") && msg.endsWith(" rarity in your Accessory Bag!"))) {
+                return "synthesisreforgemessagecleanup".hashCode();
+            }
+        }
+        return in;
+    }
 }

@@ -44,7 +44,7 @@ public class LoreCleanup {
             } else if (StringUtils.stripControlCodes(line).startsWith(" [") && config.cleanupLoreGemstoneSlots) {
                 index--;
                 iterator.remove();
-            } else if (line.equals("§8§l* §8Co-op Soulbound §8§l*")) {
+            } else if (line.equals("§8§l* §8Co-op Soulbound §8§l*") && config.cleanupLoreSoulbound) {
                 index--;
                 iterator.remove();
             }

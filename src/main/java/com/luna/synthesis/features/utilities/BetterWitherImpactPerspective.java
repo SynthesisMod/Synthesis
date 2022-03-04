@@ -19,13 +19,17 @@ public class BetterWitherImpactPerspective {
         if (!Keyboard.getEventKeyState()) return;
         if (Keyboard.getEventKey() == Minecraft.getMinecraft().gameSettings.keyBindTogglePerspective.getKeyCode()) {
             if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 2) {
-                ItemStack item = Minecraft.getMinecraft().thePlayer.getHeldItem();
-                if (item == null) return;
-                if (item.hasTagCompound()) {
-                    if (item.getTagCompound().hasKey("ExtraAttributes")) {
-                        if (item.getTagCompound().getCompoundTag("ExtraAttributes").hasKey("ability_scroll")) {
-                            if (item.getTagCompound().getCompoundTag("ExtraAttributes").getTagList("ability_scroll", 8).tagCount() == 3) {
-                                Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
+                if (config.utilitiesWitherImpactPerspectiveGlobal) {
+                    Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
+                } else {
+                    ItemStack item = Minecraft.getMinecraft().thePlayer.getHeldItem();
+                    if (item == null) return;
+                    if (item.hasTagCompound()) {
+                        if (item.getTagCompound().hasKey("ExtraAttributes")) {
+                            if (item.getTagCompound().getCompoundTag("ExtraAttributes").hasKey("ability_scroll")) {
+                                if (item.getTagCompound().getCompoundTag("ExtraAttributes").getTagList("ability_scroll", 8).tagCount() == 3) {
+                                    Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
+                                }
                             }
                         }
                     }
