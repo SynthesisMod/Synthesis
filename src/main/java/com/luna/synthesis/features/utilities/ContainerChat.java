@@ -9,6 +9,7 @@ import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiRepair;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -46,6 +47,7 @@ public class ContainerChat {
     @SubscribeEvent
     public void onKeyTyped(GuiScreenEvent.KeyboardInputEvent event) {
         if (!(event.gui instanceof GuiContainer)) return;
+        if (event.gui instanceof GuiContainerCreative) return;
         if (!config.utilitiesContainerChat) return;
         if (!Keyboard.getEventKeyState()) return;
         int keyCode = Keyboard.getEventKey();
