@@ -3,6 +3,7 @@ package com.luna.synthesis.features.cleanup;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import com.luna.synthesis.events.packet.PacketReceivedEvent;
+import com.luna.synthesis.utils.ChatLib;
 import com.luna.synthesis.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.event.HoverEvent;
@@ -28,6 +29,7 @@ public class CoopCleanup {
 
     private List<String> messageQueue = new ArrayList<>();
     private boolean isDividerBlock = false;
+    private int dividerBlockCap = 3;
     private IChatComponent theMessage = null;
     private final AtomicReference<String> price = new AtomicReference<>("");
 
@@ -123,6 +125,13 @@ public class CoopCleanup {
             if (packet.getType() != 2) {
                 if (isDividerBlock) {
                     messageQueue.add(packet.getChatComponent().getUnformattedText());
+                    if (dividerBlockCap > 0) {
+                        dividerBlockCap--;
+                    } else {
+                        isDividerBlock = false;
+                        messageQueue.clear();
+                        dividerBlockCap = 5;
+                    }
                 }
                 if (Utils.isDivider(packet.getChatComponent().getUnformattedText())) {
                     if (isDividerBlock) {
@@ -195,6 +204,7 @@ public class CoopCleanup {
                             price.set("");
                         }
                     } else {
+                        dividerBlockCap = 5;
                         isDividerBlock = true;
                         messageQueue.add(packet.getChatComponent().getUnformattedText());
                     }

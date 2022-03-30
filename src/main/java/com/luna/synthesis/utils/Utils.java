@@ -15,6 +15,7 @@ public class Utils {
 
     // Copied and adapted from Patcher
     public static boolean isDivider(String message) {
+        if (message == null) return false;
         if (message.length() < 5) {
             return false;
         } else {
