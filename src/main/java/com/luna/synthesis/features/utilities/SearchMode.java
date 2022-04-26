@@ -45,9 +45,11 @@ public class SearchMode {
                 Minecraft.getMinecraft().ingameGUI.getChatGUI().refreshChat();
             }
         } else if (Keyboard.getEventKey() == 1) {
-            if (isSearchMode) isSearchMode = false;
-            Minecraft.getMinecraft().ingameGUI.getChatGUI().deleteChatLine("synthesissearchmode".hashCode());
-            Minecraft.getMinecraft().ingameGUI.getChatGUI().refreshChat();
+            if (isSearchMode) {
+                isSearchMode = false;
+                Minecraft.getMinecraft().ingameGUI.getChatGUI().deleteChatLine("synthesissearchmode".hashCode());
+                Minecraft.getMinecraft().ingameGUI.getChatGUI().refreshChat();
+            }
         } else if (Keyboard.getEventKey() == 28 && isSearchMode) {
             if (!config.utilitiesChatSearchKeyRefresh) {
                 Minecraft.getMinecraft().ingameGUI.getChatGUI().refreshChat();
