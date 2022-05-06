@@ -66,6 +66,8 @@ public class ContainerChat {
                 }
             } else {
                 if (keyCode == Minecraft.getMinecraft().gameSettings.keyBindChat.getKeyCode()) {
+                    if (config.utilitiesContainerControl && !GuiScreen.isCtrlKeyDown()) return;
+                    if (!config.utilitiesContainerControl && GuiScreen.isCtrlKeyDown()) return;
                     MixinUtils.inputField.setFocused(true);
                     Keyboard.enableRepeatEvents(true);
                     return;

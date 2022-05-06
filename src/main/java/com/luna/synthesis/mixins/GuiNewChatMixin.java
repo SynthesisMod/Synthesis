@@ -145,7 +145,7 @@ public abstract class GuiNewChatMixin {
             // I have no clue what I did here, but I indeed regret it now, months after the fact, now that I have to change this.
             if ((msg.startsWith("You reforged your ") && msg.contains(" into a ") && msg.endsWith("!")) ||
                     (msg.startsWith("You applied the ") && msg.contains(" reforge to your ") && msg.endsWith("!")) ||
-                    (msg.startsWith("You applied the ") && msg.contains(" reforge to ") && msg.contains(" accessories of ") && msg.endsWith(" rarity in your Accessory Bag!"))) {
+                    (msg.startsWith("You selected the ") && msg.endsWith(" power for your Accessory Bag!"))) {
                 return "synthesisreforgemessagecleanup".hashCode();
             }
         }

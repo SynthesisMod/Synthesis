@@ -356,6 +356,14 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
+            name = "Container control",
+            description = "Requires to have the control key held down to be able to open chat inside a container.\nIf not toggled, holding control key down will not open container chat.",
+            category = "Utilities"
+    )
+    public boolean utilitiesContainerControl = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
             name = "Resize chat",
             description = "Resizes chat when inside a container for it to fit on the screen.",
             category = "Utilities"
@@ -731,6 +739,7 @@ public class Config extends Vigilant {
         hidePropertyIf("utilitiesTriangulationWaypoint", () -> !Loader.isModLoaded("skytils"));
         addDependency("utilitiesTriangulationWaypoint", "utilitiesTriangulation");
         addDependency("utilitiesBlockTriangulationItem", "utilitiesTriangulation");
+        addDependency("utilitiesContainerControl", "utilitiesContainerChat");
         addDependency("cleanupDungeonBlessingMessages", "cleanupDungeonBlessingStatMessages");
         addDependency("utilitiesWitherImpactPerspectiveGlobal", "utilitiesWitherImpactPerspective");
         registerListener("utilitiesColorlessPanes", (z) -> Minecraft.getMinecraft().renderGlobal.loadRenderers());
