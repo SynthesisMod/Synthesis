@@ -457,27 +457,27 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "Wishing compass triangulation",
-            description = "Triangulates the location wishing compass points to. Use wishing compass once, wait until the particle trail has disappeared, move away a bit and use it again. Make sure /pq is NOT \"off\".",
+            name = "Triangulation helper",
+            description = "Triangulates the location wishing compass or ancestral spade points to. Use the item once, wait until the particle trail has disappeared, move away a bit and use it again. Make sure /pq is NOT \"off\".",
             category = "Utilities"
     )
-    public boolean utilitiesWishingCompass = false;
+    public boolean utilitiesTriangulation = false;
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "Block wishing compass",
-            description = "Blocks using wishing compass if the last trail hasn't disappeared.",
+            name = "Block triangulation item",
+            description = "Blocks using wishing compass or ancestral spade if the last trail hasn't disappeared.",
             category = "Utilities"
     )
-    public boolean utilitiesBlockWishingCompass = false;
+    public boolean utilitiesBlockTriangulationItem = false;
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "Wishing compass waypoints",
-            description = "Sets a waypoint at the location calculated by wishing compass. Uses Skytils' waypoints.",
+            name = "Triangulation waypoints",
+            description = "Sets a waypoint at the location calculated by triangulation. Uses Skytils' waypoints.",
             category = "Utilities"
     )
-    public boolean utilitiesWishingCompassWaypoint = false;
+    public boolean utilitiesTriangulationWaypoint = false;
 
     @Property(
             type = PropertyType.SWITCH,

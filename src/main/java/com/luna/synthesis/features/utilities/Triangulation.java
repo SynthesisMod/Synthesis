@@ -16,11 +16,11 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class WishingCompass {
+public class Triangulation {
 
     private final Config config = Synthesis.getInstance().getConfig();
     private boolean awaiting = false;
-    private long lastCompass = -1L;
+    private long lastItem = -1L;
     private Vec3 pos1 = null;
     private Vec3 pos2 = null;
     private Vec3 vec1 = null;
@@ -28,10 +28,10 @@ public class WishingCompass {
 
     @SubscribeEvent
     public void onPacketReceived(PacketReceivedEvent event) {
-        if (!config.utilitiesWishingCompass) return;
+        if (!config.utilitiesTriangulation) return;
         if (event.getPacket() instanceof S2APacketParticles) {
             S2APacketParticles packet = (S2APacketParticles) event.getPacket();
-            if (packet.getParticleType() == EnumParticleTypes.VILLAGER_HAPPY && packet.getParticleSpeed() == 0.0 && packet.getParticleCount() == 1.0) {
+            if ((packet.getParticleType() == EnumParticleTypes.VILLAGER_HAPPY || packet.getParticleType() == EnumParticleTypes.DRIP_LAVA) && packet.getParticleSpeed() == 0.0 && packet.getParticleCount() == 1.0) {
                 if (awaiting) {
                     if (pos1 == null) {
                         pos1 = new Vec3(packet.getXCoordinate(), packet.getYCoordinate(), packet.getZCoordinate());
@@ -54,18 +54,18 @@ public class WishingCompass {
 
     @SubscribeEvent
     public void onRightClick(PlayerInteractEvent event) {
-        if (!config.utilitiesWishingCompass) return;
+        if (!config.utilitiesTriangulation) return;
         if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR || event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
             ItemStack item = Minecraft.getMinecraft().thePlayer.getHeldItem();
             if (item == null) return;
-            if (StringUtils.stripControlCodes(item.getDisplayName()).contains("Wishing Compass")) {
-                if (config.utilitiesBlockWishingCompass && System.currentTimeMillis() - lastCompass < 4000) {
+            if (StringUtils.stripControlCodes(item.getDisplayName()).contains("Wishing Compass") || StringUtils.stripControlCodes(item.getDisplayName()).contains("Ancestral Spade")) {
+                if (config.utilitiesBlockTriangulationItem && System.currentTimeMillis() - lastItem < 4000) {
                     ChatLib.chat("Last wishing compass hasn't disappeared yet, chill.");
                     event.setCanceled(true);
                     return;
                 }
                 awaiting = true;
-                lastCompass = System.currentTimeMillis();
+                lastItem = System.currentTimeMillis();
             }
         }
     }
@@ -108,8 +108,8 @@ public class WishingCompass {
                 ChatLib.chat("This compass points to the nucleus! You need to place crystals so the compass points somewhere else. It's also possible that the structure hasn't spawned.");
             } else {
                 ChatLib.chat("Solution: (" + solution.getX() + ", " + solution.getY() + ", " + solution.getZ() + ")");
-                if (config.utilitiesWishingCompassWaypoint) {
-                    ClientCommandHandler.instance.executeCommand(Minecraft.getMinecraft().thePlayer, "/sthw set WishingCompass " + solution.getX() + " " + solution.getY() + " " + solution.getZ());
+                if (config.utilitiesTriangulationWaypoint) {
+                    ClientCommandHandler.instance.executeCommand(Minecraft.getMinecraft().thePlayer, "/sthw set Triangulation " + solution.getX() + " " + solution.getY() + " " + solution.getZ());
                 }
             }
         }
