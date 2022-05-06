@@ -133,15 +133,6 @@ public abstract class GuiNewChatMixin {
         return in;
     }
 
-    @Redirect(method = "deleteChatLine", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/ChatLine;getChatLineID()I"))
-    public int fixCrashMaybe(ChatLine cl) {
-        if (cl == null) {
-            return -12;
-        } else {
-            return cl.getChatLineID();
-        }
-    }
-
     // For reforge message cleanup - There's probably a better way to do this, but I'm blind
     // Also regexes wack, you know how it goes with me and regexes
     @ModifyArg(method = "printChatMessage", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiNewChat;printChatMessageWithOptionalDeletion(Lnet/minecraft/util/IChatComponent;I)V"), index = 1)
@@ -151,6 +142,7 @@ public abstract class GuiNewChatMixin {
             // Why must I be punished like this.
             // What have I done to deserve this.
             // Luna from the future (10 minutes after starting to code this): I should have done this with like 5 regexes holy shit this is annoying
+            // I have no clue what I did here, but I indeed regret it now, months after the fact, now that I have to change this.
             if ((msg.startsWith("You reforged your ") && msg.contains(" into a ") && msg.endsWith("!")) ||
                     (msg.startsWith("You applied the ") && msg.contains(" reforge to your ") && msg.endsWith("!")) ||
                     (msg.startsWith("You applied the ") && msg.contains(" reforge to ") && msg.contains(" accessories of ") && msg.endsWith(" rarity in your Accessory Bag!"))) {

@@ -728,9 +728,9 @@ public class Config extends Vigilant {
         hidePropertyIf("patcherCompactChatFix", () -> !Loader.isModLoaded("patcher"));
         hidePropertyIf("patcherCustomImagePreviewer", () -> !Loader.isModLoaded("patcher"));
         hidePropertyIf("utilitiesShareScroll", () -> !Loader.isModLoaded("text_overflow_scroll"));
-        hidePropertyIf("utilitiesWishingCompassWaypoint", () -> !Loader.isModLoaded("skytils"));
-        addDependency("utilitiesWishingCompassWaypoint", "utilitiesWishingCompass");
-        addDependency("utilitiesBlockWishingCompass", "utilitiesWishingCompass");
+        hidePropertyIf("utilitiesTriangulationWaypoint", () -> !Loader.isModLoaded("skytils"));
+        addDependency("utilitiesTriangulationWaypoint", "utilitiesTriangulation");
+        addDependency("utilitiesBlockTriangulationItem", "utilitiesTriangulation");
         addDependency("cleanupDungeonBlessingMessages", "cleanupDungeonBlessingStatMessages");
         addDependency("utilitiesWitherImpactPerspectiveGlobal", "utilitiesWitherImpactPerspective");
         registerListener("utilitiesColorlessPanes", (z) -> Minecraft.getMinecraft().renderGlobal.loadRenderers());
