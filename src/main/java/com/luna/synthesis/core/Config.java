@@ -481,7 +481,7 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "Triangulation waypoints",
+            name = "WishingCompass waypoints",
             description = "Sets a waypoint at the location calculated by triangulation. Uses Skytils' waypoints.",
             category = "Utilities"
     )
