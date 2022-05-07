@@ -11,15 +11,15 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.Vec3;
-import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class Triangulation {
+public class AncestralSpade {
 
     private final Config config = Synthesis.getInstance().getConfig();
     private boolean awaiting = false;
+    private int particleCount = 0;
     private long lastItem = -1L;
     private Vec3 pos1 = null;
     private Vec3 pos2 = null;
@@ -31,12 +31,13 @@ public class Triangulation {
         if (!config.utilitiesTriangulation) return;
         if (event.getPacket() instanceof S2APacketParticles) {
             S2APacketParticles packet = (S2APacketParticles) event.getPacket();
-            if ((packet.getParticleType() == EnumParticleTypes.VILLAGER_HAPPY || packet.getParticleType() == EnumParticleTypes.DRIP_LAVA) && packet.getParticleSpeed() == 0.0 && packet.getParticleCount() == 1.0) {
+            if (packet.getParticleType() == EnumParticleTypes.FIREWORKS_SPARK) {
+                particleCount++;
                 if (awaiting) {
-                    if (pos1 == null) {
+                    if (particleCount == 10 && pos1 == null) {
                         pos1 = new Vec3(packet.getXCoordinate(), packet.getYCoordinate(), packet.getZCoordinate());
                         awaiting = false;
-                    } else if (pos2 == null) {
+                    } else if (particleCount == 10 && pos2 == null) {
                         pos2 = new Vec3(packet.getXCoordinate(), packet.getYCoordinate(), packet.getZCoordinate());
                         awaiting = false;
                     }
@@ -58,13 +59,14 @@ public class Triangulation {
         if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR || event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
             ItemStack item = Minecraft.getMinecraft().thePlayer.getHeldItem();
             if (item == null) return;
-            if (StringUtils.stripControlCodes(item.getDisplayName()).contains("Wishing Compass") || StringUtils.stripControlCodes(item.getDisplayName()).contains("Ancestral Spade")) {
+            if (StringUtils.stripControlCodes(item.getDisplayName()).contains("Ancestral Spade")) {
                 if (config.utilitiesBlockTriangulationItem && System.currentTimeMillis() - lastItem < 4000) {
-                    ChatLib.chat("Last wishing compass hasn't disappeared yet, chill.");
+                    ChatLib.chat("Last trail hasn't disappeared yet, chill.");
                     event.setCanceled(true);
                     return;
                 }
                 awaiting = true;
+                particleCount = 0;
                 lastItem = System.currentTimeMillis();
             }
         }
@@ -77,42 +79,28 @@ public class Triangulation {
         vec1 = null;
         vec2 = null;
         awaiting = false;
+        lastItem = -1L;
+        particleCount = 0;
     }
 
-    // All math in the mod is thanks to Lucy, this included, thank you, Lucy!
-    // If you don't understand something don't blame me, I just copied her notes.
-    // And no, you cannot expect me to do very simple math, I will simply ask the math genius when possible.
+    // Thank you, Ollie, for doing this for me, so I don't have to
     private void calculateIntercept() {
-        double a = pos1.xCoord;
-        double b = pos1.yCoord;
-        double c = pos1.zCoord;
-        double i = vec1.xCoord;
-        double j = vec1.yCoord;
-        double k = vec1.zCoord;
+        double p1x = pos1.xCoord;
+        double p1z = pos1.zCoord;
+        double v1x = vec1.xCoord;
+        double v1z = vec1.zCoord;
         //
-        double h = pos2.xCoord;
-        double v = pos2.yCoord;
-        double w = pos2.zCoord;
-        double l = vec2.xCoord;
-        double m = vec2.yCoord;
-        double n = vec2.zCoord;
+        double p2x = pos2.xCoord;
+        double p2z = pos2.zCoord;
+        double v2x = vec2.xCoord;
+        double v2z = vec2.zCoord;
+        double a = v1z / v1x * p1x - p1z;
+        double b = v2z / v2x * p2x - p2z;
+        double x = (a - b) / (v1z / v1x - v2z / v2x);
+        double z = v1z / v1x * x - a;
 
-        double t = ((b - v) / m - (a - h) / l) / ((i / l) - (j / m));
-        double s = (j * (c - w) + k * (v - b)) / (j * n - k * m);
-
-        if (t < 0 || s < 0) {
-            ChatLib.chat("Something went wrong. Did you wait until the first particle trail disappeared? Did you move from one quadrant to another?");
-        } else {
-            BlockPos solution = new BlockPos((a + t * i + h + s * l) / 2, (b + t * j + v + s * m) / 2, (c + t * k + w + s * n) / 2);
-            if (Math.abs(solution.getX() - 513) < 65 && Math.abs(solution.getZ() - 513) < 65) {
-                ChatLib.chat("This compass points to the nucleus! You need to place crystals so the compass points somewhere else. It's also possible that the structure hasn't spawned.");
-            } else {
-                ChatLib.chat("Solution: (" + solution.getX() + ", " + solution.getY() + ", " + solution.getZ() + ")");
-                if (config.utilitiesTriangulationWaypoint) {
-                    ClientCommandHandler.instance.executeCommand(Minecraft.getMinecraft().thePlayer, "/sthw set Triangulation " + solution.getX() + " " + solution.getY() + " " + solution.getZ());
-                }
-            }
-        }
+        BlockPos solution = new BlockPos(x, 0, z);
+        ChatLib.chat("Solution: (" + solution.getX() + ", " + solution.getZ() + ")");
 
         pos1 = pos2 = vec1 = vec2 = null;
     }
