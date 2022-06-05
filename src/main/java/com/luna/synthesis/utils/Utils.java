@@ -20,7 +20,7 @@ public class Utils {
             return false;
         } else {
             // Dear god, forgive me, for I am tired.
-            if (message.equals("--------------  Guild: Message Of The Day  --------------")) {
+            if (message.equals("--------------  Guild: Message Of The Day  --------------") || message.equals("----------  Guild: Message Of The Day (Preview)  ----------")) {
                 return true;
             } else {
                 for (int i = 0; i < message.length(); i++) {
