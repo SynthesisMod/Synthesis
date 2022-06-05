@@ -267,6 +267,15 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
+            name = "Remove armor piece bonuses",
+            description = "Removes the armor piece bonus text.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLorePieceBonus = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
             name = "Remove armor full set bonuses",
             description = "Removes the armor full set bonus text.",
             category = "Cleanup",
@@ -466,7 +475,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Triangulation helper",
-            description = "Triangulates the location wishing compass or ancestral spade points to. Use the item once, wait until the particle trail has disappeared, move away a bit and use it again. Make sure /pq is NOT \"off\".",
+            description = "Triangulates the location wishing compass points to. Use the item once, wait until the particle trail has disappeared, move away a bit and use it again. Make sure /pq is NOT \"off\".",
             category = "Utilities"
     )
     public boolean utilitiesTriangulation = false;
@@ -474,7 +483,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Block triangulation item",
-            description = "Blocks using wishing compass or ancestral spade if the last trail hasn't disappeared.",
+            description = "Blocks using wishing compass if the last trail hasn't disappeared.",
             category = "Utilities"
     )
     public boolean utilitiesBlockTriangulationItem = false;

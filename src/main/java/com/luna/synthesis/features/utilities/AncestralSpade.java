@@ -4,13 +4,17 @@ import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import com.luna.synthesis.events.packet.PacketReceivedEvent;
 import com.luna.synthesis.utils.ChatLib;
+import javafx.util.Pair;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.item.EntityFallingBlock;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S2APacketParticles;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.Vec3;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -19,35 +23,48 @@ public class AncestralSpade {
 
     private final Config config = Synthesis.getInstance().getConfig();
     private boolean awaiting = false;
-    private int particleCount = 0;
     private long lastItem = -1L;
     private Vec3 pos1 = null;
     private Vec3 pos2 = null;
     private Vec3 vec1 = null;
     private Vec3 vec2 = null;
+    private Vec3 lastParticle = null;
+    private Pair<Double, Double> lastGuess = null;
+    private double lastGuessDistance = -1;
+    private Pair<Double, Double> currentGuess = null;
 
     @SubscribeEvent
     public void onPacketReceived(PacketReceivedEvent event) {
         if (!config.utilitiesTriangulation) return;
         if (event.getPacket() instanceof S2APacketParticles) {
             S2APacketParticles packet = (S2APacketParticles) event.getPacket();
-            if (packet.getParticleType() == EnumParticleTypes.FIREWORKS_SPARK) {
-                particleCount++;
+            if (packet.getParticleType() == EnumParticleTypes.ENCHANTMENT_TABLE && packet.getParticleSpeed() == -2 && packet.getParticleCount() == 10) {
+                //((S2APacketParticlesAccessor) event.getPacket()).setParticleType(EnumParticleTypes.CRIT);
                 if (awaiting) {
-                    if (particleCount == 10 && pos1 == null) {
-                        pos1 = new Vec3(packet.getXCoordinate(), packet.getYCoordinate(), packet.getZCoordinate());
-                        awaiting = false;
-                    } else if (particleCount == 10 && pos2 == null) {
-                        pos2 = new Vec3(packet.getXCoordinate(), packet.getYCoordinate(), packet.getZCoordinate());
-                        awaiting = false;
+                    Vec3 thisParticle = new Vec3(packet.getXCoordinate(), packet.getYCoordinate(), packet.getZCoordinate());
+                    if (lastParticle != null) {
+                        if (vec1 == null) {
+                            pos1 = lastParticle;
+                        } else {
+                            pos2 = lastParticle;
+                            vec2 = thisParticle.subtract(lastParticle);
+                            calculateIntercept();
+                            if (lastGuess != null) {
+                                double distance = Math.sqrt(Math.pow(currentGuess.getKey() - lastGuess.getKey(), 2) + Math.pow(currentGuess.getValue() - lastGuess.getValue(), 2));
+                                if (Math.abs(distance - lastGuessDistance) <= 0.1) {
+                                    ChatLib.chat("Decent guess: (" + currentGuess.getKey() + ", " + currentGuess.getValue() + ")");
+                                    awaiting = false;
+                                    pos1 = vec1 = pos2 = vec2 = lastParticle = null;
+                                    lastGuess = currentGuess = null;
+                                    lastGuessDistance = -1;
+                                    return;
+                                }
+                                lastGuessDistance = distance;
+                            }
+                            lastGuess = currentGuess;
+                        }
                     }
-                } else {
-                    if (vec1 == null && pos1 != null) {
-                        vec1 = new Vec3(packet.getXCoordinate() - pos1.xCoord, packet.getYCoordinate() - pos1.yCoord, packet.getZCoordinate() - pos1.zCoord).normalize();
-                    } else if (vec2 == null && pos2 != null) {
-                        vec2 = new Vec3(packet.getXCoordinate() - pos2.xCoord, packet.getYCoordinate() - pos2.yCoord, packet.getZCoordinate() - pos2.zCoord).normalize();
-                        calculateIntercept();
-                    }
+                    lastParticle = thisParticle;
                 }
             }
         }
@@ -66,7 +83,10 @@ public class AncestralSpade {
                     return;
                 }
                 awaiting = true;
-                particleCount = 0;
+                if (vec1 == null && pos1 != null) {
+                    vec1 = lastParticle.subtract(pos1);
+                }
+                lastParticle = null;
                 lastItem = System.currentTimeMillis();
             }
         }
@@ -79,8 +99,8 @@ public class AncestralSpade {
         vec1 = null;
         vec2 = null;
         awaiting = false;
+        lastParticle = null;
         lastItem = -1L;
-        particleCount = 0;
     }
 
     // Thank you, Ollie, for doing this for me, so I don't have to
@@ -99,9 +119,16 @@ public class AncestralSpade {
         double x = (a - b) / (v1z / v1x - v2z / v2x);
         double z = v1z / v1x * x - a;
 
-        BlockPos solution = new BlockPos(x, 0, z);
-        ChatLib.chat("Solution: (" + solution.getX() + ", " + solution.getZ() + ")");
+        currentGuess = new Pair<>(x, z);
+    }
 
-        pos1 = pos2 = vec1 = vec2 = null;
+    @SubscribeEvent
+    public void onEntityJoinWorld(EntityJoinWorldEvent event) {
+        if (event.entity instanceof EntityFallingBlock) {
+            Block block = ((EntityFallingBlock) event.entity).getBlock().getBlock();
+            if (block != Blocks.sand) { // || others..
+                event.setCanceled(true);
+            }
+        }
     }
 }

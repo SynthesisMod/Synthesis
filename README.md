@@ -44,6 +44,9 @@ Features that help the game feel more clean.
 - Tablist cleanup (0.2.0+)
   - Option to remove tablist header
   - Option to remove the last 2 lines from the tablist footer
+- Chat cleanup (0.3.0+)
+  - Option to remove old reforge messages when a new one is received
+  - 
     
 </details>
 
@@ -91,6 +94,7 @@ The actual collection of QoL features that doesn't fit any other category.
     but won't for now since I don't know if Hypixel would like that.
 - Better wither impact perspective (im good with names, 0.2.0+)
   - Toggling perspective while holding a wither impact weapon will skip the front camera.
+  - Option to make it global instead of wither impact only (0.3.0+)
 - Superpairs IDs (0.2.0+)
   - Gives skyblock item IDs to items inside superpairs, so NEU and SBE can read them for price displays.
   - Additionally, resource packs can also modify those items.
