@@ -28,7 +28,7 @@ import java.io.File;
 public class Synthesis {
     public static final String NAME = "Synthesis";
     public static final String MODID = "synthesis";
-    public static final String VERSION = "0.2.0";
+    public static final String VERSION = "0.3.0";
     public static final String configLocation = "./config/synthesis.toml";
 
     @Getter private static Synthesis instance;
@@ -51,7 +51,7 @@ public class Synthesis {
         MinecraftForge.EVENT_BUS.register(new BestiaryDropRate());
         MinecraftForge.EVENT_BUS.register(new ContainerChat());
         MinecraftForge.EVENT_BUS.register(new WishingCompass());
-        MinecraftForge.EVENT_BUS.register(new AncestralSpade());
+        //MinecraftForge.EVENT_BUS.register(new AncestralSpade());
         MinecraftForge.EVENT_BUS.register(new ChatBridge());
         MinecraftForge.EVENT_BUS.register(new VisibleLinks());
         MinecraftForge.EVENT_BUS.register(new Share());

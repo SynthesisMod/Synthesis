@@ -3,10 +3,8 @@ package com.luna.synthesis.features.cleanup;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.inventory.ContainerChest;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -24,11 +22,13 @@ public class LoreCleanup {
             ContainerChest containerChest = (ContainerChest) Minecraft.getMinecraft().thePlayer.openContainer;
             String title = StringUtils.stripControlCodes(containerChest.getLowerChestInventory().getDisplayName().getUnformattedText());
             if (config.cleanupLoreAuctionException) {
-                if (title.startsWith("Auctions") || title.endsWith("Auction View")) {
+                if (title.startsWith("Auctions") || title.endsWith("Auction View") || title.endsWith("'s Auctions")) {
                     return;
                 }
             }
         }
+        ItemStack item = event.itemStack;
+        if (!item.hasTagCompound() || !item.getTagCompound().hasKey("ExtraAttributes") || !item.getTagCompound().getCompoundTag("ExtraAttributes").hasKey("id")) return;
         Iterator<String> iterator = event.toolTip.iterator();
         int index = 0;
         boolean inEnchantments = false;
@@ -73,7 +73,7 @@ public class LoreCleanup {
             }
 
             // ENCHANTMENTS
-            if (!StringUtils.stripControlCodes(event.itemStack.getDisplayName()).equals("Enchanted Book")) {
+            if (!StringUtils.stripControlCodes(item.getDisplayName()).equals("Enchanted Book")) {
                 if (line.startsWith("§9") || line.startsWith("§d§l")) {
                     if (config.cleanupLoreEnchantmentDescriptions) {
                         inEnchantments = true;
@@ -84,6 +84,7 @@ public class LoreCleanup {
                         index++;
                         continue;
                     }
+                    System.out.println(StringUtils.stripControlCodes(line));
                     if (StringUtils.stripControlCodes(line).equals("")) {
                         inEnchantments = false;
                         if (config.cleanupLoreEnchantments) {
@@ -108,6 +109,10 @@ public class LoreCleanup {
                 }
             } else if (line.startsWith("§6Full Set Bonus: ")) {
                 if (config.cleanupLoreFullSetBonus) {
+                    inAbility = true;
+                }
+            } else if (line.startsWith("§6Piece Bonus: ")) {
+                if (config.cleanupLorePieceBonus) {
                     inAbility = true;
                 }
             }

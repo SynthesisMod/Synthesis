@@ -109,7 +109,7 @@ public class WishingCompass {
             } else {
                 ChatLib.chat("Solution: (" + solution.getX() + ", " + solution.getY() + ", " + solution.getZ() + ")");
                 if (config.utilitiesTriangulationWaypoint) {
-                    ClientCommandHandler.instance.executeCommand(Minecraft.getMinecraft().thePlayer, "/sthw set WishingCompass " + solution.getX() + " " + solution.getY() + " " + solution.getZ());
+                    ClientCommandHandler.instance.executeCommand(Minecraft.getMinecraft().thePlayer, "/sthw set " + solution.getX() + " " + solution.getY() + " " + solution.getZ() + " WishingCompass");
                 }
             }
         }

@@ -19,10 +19,15 @@ public class Utils {
         if (message.length() < 5) {
             return false;
         } else {
-            for (int i = 0; i < message.length(); i++) {
-                char c = message.charAt(i);
-                if (c != '-' && c != '=' && c != '\u25AC') {
-                    return false;
+            // Dear god, forgive me, for I am tired.
+            if (message.equals("--------------  Guild: Message Of The Day  --------------")) {
+                return true;
+            } else {
+                for (int i = 0; i < message.length(); i++) {
+                    char c = message.charAt(i);
+                    if (c != '-' && c != '=' && c != '\u25AC') {
+                        return false;
+                    }
                 }
             }
         }
