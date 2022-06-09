@@ -32,12 +32,12 @@ public class LoreCleanup {
         boolean inEnchantments = false;
         boolean inAbility = false;
         boolean petHoldingItem = false;
+        boolean inPetsMenuOrIsPetItem = ((item.getItem() instanceof ItemSkull && Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerChest && StringUtils.stripControlCodes(((ContainerChest)(Minecraft.getMinecraft().thePlayer.openContainer)).getLowerChestInventory().getDisplayName().getUnformattedText()).endsWith("Pets")) && (item.getDisplayName().matches(".+\\[Lvl \\d+\\] (?<color>§[0-9a-fk-or]).+") || item.getDisplayName().matches(".+\\[\\d+\\] (?<color>§[0-9a-fk-or]).+")));
         String previousLine = "";
         while (iterator.hasNext()) {
             // Thank you vanilla, very cool
             String line = iterator.next().replace("§5§o", "");
             // GEAR SCORE, GEMSTONE SLOTS, SOULBOUND, PET STUFF
-            boolean inPetsMenuOrIsPetItem = ((item.getItem() instanceof ItemSkull && Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerChest && StringUtils.stripControlCodes(((ContainerChest)(Minecraft.getMinecraft().thePlayer.openContainer)).getLowerChestInventory().getDisplayName().getUnformattedText()).endsWith("Pets"))); //PLAN: HOW TO READ ITEM NBT DATA IN ONE LINE I REALLY DON'T KNOW HOW SBA DOES IT AND I WANNA REPLICATE THAT BUT AAAAAAA (event.itemStack.getSubCompound("ExtraAttibutes", false).getString("id").equals("PET") -ERY
             if (config.cleanupPetDisplayName && inPetsMenuOrIsPetItem && StringUtils.stripControlCodes(item.getDisplayName()).startsWith("[Lvl ") && StringUtils.stripControlCodes(item.getDisplayName()).contains("] ")){
                 item.setStackDisplayName(item.getDisplayName().replace("Lvl ", ""));
             }
