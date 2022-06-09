@@ -32,7 +32,7 @@ public class LoreCleanup {
         boolean inEnchantments = false;
         boolean inAbility = false;
         boolean petHoldingItem = false;
-        boolean inPetsMenuOrIsPetItem = ((item.getItem() instanceof ItemSkull && Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerChest && StringUtils.stripControlCodes(((ContainerChest)(Minecraft.getMinecraft().thePlayer.openContainer)).getLowerChestInventory().getDisplayName().getUnformattedText()).endsWith("Pets")) && (item.getDisplayName().matches(".+\\[Lvl \\d+\\] (?<color>§[0-9a-fk-or]).+") || item.getDisplayName().matches(".+\\[\\d+\\] (?<color>§[0-9a-fk-or]).+")));
+        boolean inPetsMenuOrIsPetItem = ((item.getItem() instanceof ItemSkull && Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerChest && StringUtils.stripControlCodes(((ContainerChest)(Minecraft.getMinecraft().thePlayer.openContainer)).getLowerChestInventory().getDisplayName().getUnformattedText()).endsWith("Pets")) && (item.getDisplayName().matches(".+\\[Lvl \\d+\\] (?<color>§[0-9a-fk-or]).+") || item.getDisplayName().matches(".+\\[\\d+\\] (?<color>§[0-9a-fk-or]).+"))); //PLAN: HOW TO READ ITEM NBT DATA IN ONE LINE I REALLY DON'T KNOW HOW SBA DOES IT AND I WANNA REPLICATE THAT BUT AAAAAAA (event.itemStack.getSubCompound("ExtraAttibutes", false).getString("id").equals("PET") -ERY
         String previousLine = "";
         while (iterator.hasNext()) {
             // Thank you vanilla, very cool
@@ -74,10 +74,6 @@ public class LoreCleanup {
                 event.toolTip.set(index, line.replace("Held Item: ", ""));
                 petHoldingItem = true;
                 continue;
-            } else if (config.cleanupLorePetEmptyLines && inPetsMenuOrIsPetItem && line.equals("")) {
-                previousLine = line;
-                iterator.remove();
-                continue;
             } else if (config.cleanupLorePetMaxLevel && inPetsMenuOrIsPetItem && line.contains("MAX LEVEL")) {
                 previousLine = line;
                 iterator.remove();
@@ -106,6 +102,10 @@ public class LoreCleanup {
                 if (line.indexOf("1/") != -1 && line.indexOf("10/") == -1)
                     pluralOrSingular = "Candy";
                 event.toolTip.set(index + ifPetHeldItemEnabledOffset, line.replace("/10", "").replace("Pet Candy Used", pluralOrSingular).replace("(", "").replace(")", ""));
+                continue;
+            } else if (config.cleanupLorePetEmptyLines && inPetsMenuOrIsPetItem && line.equals("")) {
+                previousLine = line;
+                iterator.remove();
                 continue;
             }
             /*  PLAN: SOMEHOW REMOVE PROGRESS BAR WITHOUT EDGE CASES OF PROGRESS COUNT DUPLICATING ITSELF.
