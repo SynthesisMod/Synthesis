@@ -395,7 +395,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Compact pet lore's \"§a(X/10) Pet Candy Used§r\" line in the pet menu",
-            description = "Example: §a(X/10) Pet Candy Used§r -> §aX Pet Cand[y/ies]",
+            description = "Example: §a(X/10) Pet Candy Used§r -> §aX Cand[y/ies]",
             category = "Cleanup",
             subcategory = "Lore"
     )
