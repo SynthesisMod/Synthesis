@@ -32,21 +32,21 @@ public class LoreCleanup {
         boolean inEnchantments = false;
         boolean inAbility = false;
         boolean petHoldingItem = false;
-        boolean inPetsMenuOrIsPetItem = ((item.getItem() instanceof ItemSkull && Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerChest && StringUtils.stripControlCodes(((ContainerChest)(Minecraft.getMinecraft().thePlayer.openContainer)).getLowerChestInventory().getDisplayName().getUnformattedText()).endsWith("Pets")) && (item.getDisplayName().matches(".+\\[Lvl \\d+\\] (?<color>§[0-9a-fk-or]).+") || item.getDisplayName().matches(".+\\[\\d+\\] (?<color>§[0-9a-fk-or]).+")));
+        boolean inPetsMenuAndIsAPet = ((item.getItem() instanceof ItemSkull && Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerChest && StringUtils.stripControlCodes(((ContainerChest)(Minecraft.getMinecraft().thePlayer.openContainer)).getLowerChestInventory().getDisplayName().getUnformattedText()).endsWith("Pets")) && (item.getDisplayName().matches(".+\\[Lvl \\d+\\] (?<color>§[0-9a-fk-or]).+") || item.getDisplayName().matches(".+\\[\\d+\\] (?<color>§[0-9a-fk-or]).+")));
         String previousLine = "";
         while (iterator.hasNext()) {
             // Thank you vanilla, very cool
             String line = iterator.next().replace("§5§o", "");
             // GEAR SCORE, GEMSTONE SLOTS, SOULBOUND, PET STUFF
-            if (config.cleanupPetDisplayName && inPetsMenuOrIsPetItem && StringUtils.stripControlCodes(item.getDisplayName()).startsWith("[Lvl ") && StringUtils.stripControlCodes(item.getDisplayName()).contains("] ")){
+            if (config.cleanupPetDisplayName && inPetsMenuAndIsAPet && StringUtils.stripControlCodes(item.getDisplayName()).startsWith("[Lvl ") && StringUtils.stripControlCodes(item.getDisplayName()).contains("] ")){
                 item.setStackDisplayName(item.getDisplayName().replace("Lvl ", ""));
             }
             /* CONDITIONAL TO SKIP BASE CASE LINES, EDIT WITH CAUTION! -ERY */
-            else if (inPetsMenuOrIsPetItem && (previousLine.startsWith("§6") && previousLine.contains("Held Item"))) {
-                //(inPetsMenuOrIsPetItem && (previousLine.startsWith("§6") && previousLine.contains("Held Item")) || line.matches(".*§7[a-z].*") || line.matches(".*§[abcde569].*")) //PLAN: THERE IS NONE. HYPIXEL IS SO INCONSISTENT WITH THEIR LINE SPACING I'M SURPRISED ANY OF THE UNCOMMENTED CODE I WROTE EVEN WORKS. -ERY
+            else if (inPetsMenuAndIsAPet && (previousLine.startsWith("§6") && previousLine.contains("Held Item"))) {
+                //(inPetsMenuAndIsAPet && (previousLine.startsWith("§6") && previousLine.contains("Held Item")) || line.matches(".*§7[a-z].*") || line.matches(".*§[abcde569].*")) //PLAN: THERE IS NONE. HYPIXEL IS SO INCONSISTENT WITH THEIR LINE SPACING I'M SURPRISED ANY OF THE UNCOMMENTED CODE I WROTE EVEN WORKS. -ERY
                 previousLine = line;
                 continue;
-            } else if (config.cleanupLorePetType > 0 && config.cleanupLorePetType < 4 && inPetsMenuOrIsPetItem && line.startsWith("§8") && (line.endsWith(" Pet") || line.endsWith(" Mount") || line.endsWith(" Morph") || line.endsWith(" gain XP") || line.contains("All Skills"))) {
+            } else if (config.cleanupLorePetType > 0 && config.cleanupLorePetType < 4 && inPetsMenuAndIsAPet && line.startsWith("§8") && (line.endsWith(" Pet") || line.endsWith(" Mount") || line.endsWith(" Morph") || line.endsWith(" gain XP") || line.contains("All Skills"))) {
                 previousLine = line;
                 if (config.cleanupLorePetType == 3 || line.contains("All Skills"))
                     iterator.remove();
@@ -55,7 +55,7 @@ public class LoreCleanup {
                 else if (config.cleanupLorePetType == 1)
                     event.toolTip.set(index, line.replace(" Pet", "").replace(" Mount", "").replace(" Morph", "").replace(", feed to gain XP", ""));
                 continue;
-            } else if (config.cleanupLorePetPerkName && inPetsMenuOrIsPetItem && line.startsWith("§6") && !line.contains("Held Item")) {
+            } else if (config.cleanupLorePetPerkName && inPetsMenuAndIsAPet && line.startsWith("§6") && !line.contains("Held Item")) {
                 previousLine = line;
                 iterator.remove();
                 continue;
@@ -64,29 +64,29 @@ public class LoreCleanup {
                 I ALREADY TRIED THE "inXYZ" CONDITIONAL STRATEGY AND IT WENT TERRIBLY WRONG BECAUSE, AGAIN, HYPIXEL
                 PET MENU LORE HAS NO STANDARD CONVENTION WHATSOEVER. -ERY
 
-                else if (config.cleanupLorePetPerkHyphens && inPetsMenuOrIsPetItem && line.contains("§7§7") && !line.contains(":") && line.matches(".*§7§7[A-Z].*") && !previousLine.contains("Held Item")) {
+                else if (config.cleanupLorePetPerkHyphens && inPetsMenuAndIsAPet && line.contains("§7§7") && !line.contains(":") && line.matches(".*§7§7[A-Z].*") && !previousLine.contains("Held Item")) {
                 event.toolTip.set(index, ("§e§r§7- " + line));
                 previousLine = line;
                 continue;
             */
-            else if (config.cleanupLorePetHeldItemPrefix && inPetsMenuOrIsPetItem && line.contains("Held Item")) {
+            else if (config.cleanupLorePetHeldItemPrefix && inPetsMenuAndIsAPet && line.contains("Held Item")) {
                 previousLine = line;
                 event.toolTip.set(index, line.replace("Held Item: ", ""));
                 petHoldingItem = true;
                 continue;
-            } else if (config.cleanupLorePetMaxLevel && inPetsMenuOrIsPetItem && line.contains("MAX LEVEL")) {
+            } else if (config.cleanupLorePetMaxLevel && inPetsMenuAndIsAPet && line.contains("MAX LEVEL")) {
                 previousLine = line;
                 iterator.remove();
                 continue;
-            } else if (config.cleanupLorePetClickToSummon && inPetsMenuOrIsPetItem && line.contains("Click to summon!")) {
+            } else if (config.cleanupLorePetClickToSummon && inPetsMenuAndIsAPet && line.contains("Click to summon!")) {
                 previousLine = line;
                 iterator.remove();
                 continue;
-            } else if (config.cleanupLorePetClickToDespawn && inPetsMenuOrIsPetItem && line.contains("Click to despawn!")) {
+            } else if (config.cleanupLorePetClickToDespawn && inPetsMenuAndIsAPet && line.contains("Click to despawn!")) {
                 previousLine = line;
                 iterator.remove();
                 continue;
-            } else if (config.cleanupLorePetCandiesUsed && inPetsMenuOrIsPetItem && line.contains("Pet Candy Used")) {
+            } else if (config.cleanupLorePetCandiesUsed && inPetsMenuAndIsAPet && line.contains("Pet Candy Used")) {
                 previousLine = line;
                 // begin the very hacky solution i wrote but it works on the pets that i own so im rolling with this unless anyone has better ideas -ery
                 int ifPetHeldItemEnabledOffset = 2;
@@ -103,7 +103,7 @@ public class LoreCleanup {
                     pluralOrSingular = "Candy";
                 event.toolTip.set(index + ifPetHeldItemEnabledOffset, line.replace("/10", "").replace("Pet Candy Used", pluralOrSingular).replace("(", "").replace(")", ""));
                 continue;
-            } else if (config.cleanupLorePetEmptyLines && inPetsMenuOrIsPetItem && line.equals("")) {
+            } else if (config.cleanupLorePetEmptyLines && inPetsMenuAndIsAPet && line.equals("")) {
                 previousLine = line;
                 iterator.remove();
                 continue;
@@ -111,7 +111,7 @@ public class LoreCleanup {
             /*  PLAN: SOMEHOW REMOVE PROGRESS BAR WITHOUT EDGE CASES OF PROGRESS COUNT DUPLICATING ITSELF.
                 ATTEMPTED AND FAILED BECAUSE AAAAAAAAAAAAAAAAAA -ERY
 
-                else if (config.cleanupLorePetLevelProgressBar && inPetsMenuOrIsPetItem && line.contains("--") && (line.contains("f-") || line.contains("2-"))) {
+                else if (config.cleanupLorePetLevelProgressBar && inPetsMenuAndIsAPet && line.contains("--") && (line.contains("f-") || line.contains("2-"))) {
                 event.toolTip.set(index, line.replaceAll("-", ""));
                 previousLine = line;
                 // iterator.remove();
@@ -121,7 +121,7 @@ public class LoreCleanup {
             /*  PLAN: SOMEHOW REMOVE TEXT PRECEDING PERCENTAGE PROGRESS. 
                 ATTEMPTED AND FAILED BECAUSE AAAAAAAAAAAAAAAAAA -ERY
 
-                else if (config.cleanupLorePetLevelPercent && inPetsMenuOrIsPetItem && line.contains("Progress to Level")) {
+                else if (config.cleanupLorePetLevelPercent && inPetsMenuAndIsAPet && line.contains("Progress to Level")) {
                 event.toolTip.set(index, line.replaceAll(".*Progress to Level [0-9]{1,3}.*", "% of next Lvl"));
                 // previousLine = line;
                 continue;
@@ -161,7 +161,7 @@ public class LoreCleanup {
 
                 // ENCHANTMENTS
                 if (!StringUtils.stripControlCodes(item.getDisplayName()).equals("Enchanted Book")) {
-                    if (((line.startsWith("§9") || line.startsWith("§d§l")) && config.cleanupLoreEnchantmentDescriptions && !(inPetsMenuOrIsPetItem && item.getItem() instanceof ItemSkull))) inEnchantments = true;
+                    if (((line.startsWith("§9") || line.startsWith("§d§l")) && config.cleanupLoreEnchantmentDescriptions && !(inPetsMenuAndIsAPet && item.getItem() instanceof ItemSkull))) inEnchantments = true;
                     if (inEnchantments) {
                         if (!config.cleanupLoreEnchantments && (line.startsWith("§9") || line.startsWith("§d§l"))) {
                             index++;
