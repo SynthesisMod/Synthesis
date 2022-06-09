@@ -240,12 +240,21 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "Remove enchantments",
-            description = "Removes the paragraph of enchantments.",
+            name = "Remove enchantments and reforge abilities",
+            description = "Removes both the paragraph of enchantments and any mention of reforge abilities.",
             category = "Cleanup",
             subcategory = "Lore"
     )
     public boolean cleanupLoreEnchantments = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove reforge abilities",
+            description = "Removes only the reforge ability text and leaves the paragraph of enchantments alone.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLoreReforgeAbility = false;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -255,15 +264,6 @@ public class Config extends Vigilant {
             subcategory = "Lore"
     )
     public boolean cleanupLoreAbilities = false;
-
-    @Property(
-            type = PropertyType.SWITCH,
-            name = "Remove reforge abilities",
-            description = "Removes the reforge ability text.",
-            category = "Cleanup",
-            subcategory = "Lore"
-    )
-    public boolean cleanupLoreReforgeAbility = false;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -285,21 +285,121 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "Remove soulbound text",
-            description = "Removes the co-op soulbound text.",
+            name = "Remove co-op soulbound text",
+            description = "Removes the \"§8* Co-op Soulbound *§r\" text.",
             category = "Cleanup",
             subcategory = "Lore"
     )
-    public boolean cleanupLoreSoulbound = false;
+    public boolean cleanupLoreCoopSoulbound = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove solo soulbound text",
+            description = "Removes the \"§8* Soulbound *§r\" text.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLoreSoloSoulbound = false;
 
     @Property(
             type = PropertyType.SWITCH,
             name = "Remove recombobulated obfuscated text",
-            description = "Removes the obfuscated text on the rarity of a recombobulated item.",
+            description = "Removes the obfuscated text (§ka§r) on the rarity of a recombobulated item.",
             category = "Cleanup",
             subcategory = "Lore"
     )
     public boolean cleanupLoreRecombobulatedObfuscated = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove \"§7Lvl§r\" from pet names in the pet menu",
+            description = "Shows only the pet's level number in the pet menu.\n\n" +
+                          "§c§lWARNING§r§c: This WILL conflict with Skytils' item rarity feature at this time\n§cdue to their pet name regex detection, and consequently almost any other mod features that depends on the pet's display name.\n" +
+                          "§e§lCAUTION§r§e: This will also affect the output of the pet's display name\n§eif you use Developer Mode to copy item NBT data using the §7/sba nbt§e command from SkyblockAddons.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupPetDisplayName = false;
+
+    @Property(
+            type = PropertyType.SELECTOR,
+            name = "Remove pet type text in the pet menu",
+            description = "Removes the pet's type (type and/or skill, your choice) from its lore in the pet menu.\n" +
+                          "Example (show skill only): §8Mining Pet§r -> §8Mining\n" +
+                          "Example (show type only): §8Combat Morph§r -> §8Morph\n",
+            category = "Cleanup",
+            subcategory = "Lore",
+            options = {
+                "Off",
+                "Show skill only and remove pet type",
+                "Show type only and remove pet's skill",
+                "Remove both skill and type"
+            }
+    )
+    public int cleanupLorePetType = 0;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove pet perk names in the pet menu",
+            description = "Examples: §6Hive§r, §6Ridable§r, §6Run§r, §6Odyssey§r, §6Mining Exp Boost§r.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLorePetPerkName = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove pet \"§6Held Item: §r\" prefix in the pet menu",
+            description = "Example: §6Held Item: §aGold Claws\nThis will §lNOT§r remove the ability text\n§rof the held pet item in question.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLorePetHeldItemPrefix = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove pet lore's empty lines in the pet menu",
+            description = "This is a rather self-explanatory feature, but Essential's config menu renderer throws a hissy fit if you leave the description line empty, so now you're forced to read this.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLorePetEmptyLines = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove pet lore's \"§b§lMAX LEVEL§r\" line in the pet menu",
+            description = "This is a rather self-explanatory feature, but Essential's config menu renderer throws a hissy fit if you leave the description line empty, so now you're forced to read this.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLorePetMaxLevel = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove pet lore's \"§eClick to summon!§r\" line in the pet menu",
+            description = "This is a rather self-explanatory feature, but Essential's config menu renderer throws a hissy fit if you leave the description line empty, so now you're forced to read this.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLorePetClickToSummon = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Remove pet lore's \"§cClick to despawn!§r\" line in the pet menu",
+            description = "This is a rather self-explanatory feature, but Essential's config menu renderer throws a hissy fit if you leave the description line empty, so now you're forced to read this.",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLorePetClickToDespawn = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Compact pet lore's \"§a(X/10) Pet Candy Used§r\" line in the pet menu",
+            description = "Example: §a(X/10) Pet Candy Used§r -> §aX Pet Cand[y/ies]",
+            category = "Cleanup",
+            subcategory = "Lore"
+    )
+    public boolean cleanupLorePetCandiesUsed = false;
 
     @Property(
             type = PropertyType.SWITCH,
