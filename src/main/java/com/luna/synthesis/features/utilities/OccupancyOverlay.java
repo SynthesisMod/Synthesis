@@ -30,7 +30,7 @@ import org.lwjgl.opengl.GL11;
  * Here you go!
  *
  * Originally a feature from SkyblockReinvented by theCudster,
- * which adapted it from an earlier Hypixel Skyblock mo
+ * which adapted it from an earlier Hypixel Skyblock mod
  * named "Nate's Secret Mod" by Nat3z.
  *
  * Except this time it doesn't just use the same two or three predefined colors!
