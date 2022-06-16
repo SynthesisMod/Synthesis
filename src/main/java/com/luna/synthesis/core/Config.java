@@ -566,6 +566,51 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
+            name = "Server occupancy glance",
+            description = "Draws a background around any item representing the occupancy of a lobby or player island.\nDepending on the occupancy level of a server or island, the highlight's color can range from something near §athis highight§r (empty lobby/island) to something near §cthis highight§r (full lobby/island), with the occasional highlight of somewhere near §ethis color in particular§r (half-empty/half-full lobby/island).",
+            category = "Utilities",
+            subcategory = "Server occupancy overlay"
+    )
+    public boolean occupancyOverlay = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "§9Friend§r highlight",
+            description = "Uses §9this unique color§r for lobbies with at least one Hypixel friend.\n§e§lNOTE: §r§eThis highlight does not apply when a lobby\n§eis at or over its maximum capacity.",
+            category = "Utilities",
+            subcategory = "Server occupancy overlay"
+    )
+    public boolean occupancyOverlayFriendHighlght = false;
+    
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "§2Guildmate§r highlight",
+            description = "Uses §2this unique color§r for lobbies with at least one Hypixel guildmate.\n§e§lNOTE: §r§eThis highlight does not apply when a lobby\n§eis at or over its maximum capacity.",
+            category = "Utilities",
+            subcategory = "Server occupancy overlay"
+    )
+    public boolean occupancyOverlayGuildHighlght = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "§dFriend(s) §land§r§d guildmate(s)§r highlight",
+            description = "Uses §dthis unique color§r for lobbies with both at least one Hypixel friend and one Hypixel guildmate.\nIf this is disabled, then either §9the friend highlight§r or §2the guildmate highlight§r takes priority, depending on your settings.\n§e§lNOTE: §r§eThis highlight does not apply when a lobby\n§eis at or over its maximum capacity.",
+            category = "Utilities",
+            subcategory = "Server occupancy overlay"
+    )
+    public boolean occupancyOverlayFriendAndGuildHighlght = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "§bCurrently connected§r highlight",
+            description = "Uses §bthis unique color§r for lobbies you're already connected to.\nIf this is disabled, then at least one of the above settings (§9friend§r, §2guildmate§r, or §dboth§r) takes priority.\n§e§lNOTE: §r§eBecause of how Hypixel's hub selector tooltips work,\n§ethis highlight still applies even if a lobby is at or over its maximum capacity.",
+            category = "Utilities",
+            subcategory = "Server occupancy overlay"
+    )
+    public boolean occupancyOverlayAlreadyConnectedHighlght = true;
+
+    @Property(
+            type = PropertyType.SWITCH,
             name = "Armadillo fix",
             description = "Stops armadillo blocking the screen when trying to mine blocks.",
             category = "Utilities"
@@ -590,7 +635,7 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "WishingCompass waypoints",
+            name = "Wishing Compass waypoints",
             description = "Sets a waypoint at the location calculated by triangulation. Uses Skytils' waypoints.",
             category = "Utilities"
     )
@@ -841,6 +886,7 @@ public class Config extends Vigilant {
     public Config() {
         super(new File(Synthesis.configLocation), "§dSynthesis", new JVMAnnotationPropertyCollector(), new CustomSortingBehavior());
         initialize();
+        setSubcategoryDescription("Utilities", "Server occupancy overlay", "Ever wondered how full a lobby is?\nEver wanted a visual indicator of that metric?\nHere you go!");
         setSubcategoryDescription("Utilities", "Share", "A simple way to show your items to other people using the mod. Hold the item, type whatever \"Share text\" is and a preview for your item will be sent.");
         hidePropertyIf("patcherCompactChatFix", () -> !Loader.isModLoaded("patcher"));
         hidePropertyIf("patcherCustomImagePreviewer", () -> !Loader.isModLoaded("patcher"));
@@ -851,6 +897,10 @@ public class Config extends Vigilant {
         addDependency("utilitiesContainerControl", "utilitiesContainerChat");
         addDependency("cleanupDungeonBlessingMessages", "cleanupDungeonBlessingStatMessages");
         addDependency("utilitiesWitherImpactPerspectiveGlobal", "utilitiesWitherImpactPerspective");
+        addDependency("occupancyOverlayFriendHighlght", "occupancyOverlay");
+        addDependency("occupancyOverlayGuildHighlght", "occupancyOverlay");
+        addDependency("occupancyOverlayFriendAndGuildHighlght", "occupancyOverlay");
+        addDependency("occupancyOverlayAlreadyConnectedHighlght", "occupancyOverlay");
         registerListener("utilitiesColorlessPanes", (z) -> Minecraft.getMinecraft().renderGlobal.loadRenderers());
     }
 }
