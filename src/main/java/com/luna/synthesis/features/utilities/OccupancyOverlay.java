@@ -122,7 +122,7 @@ public class OccupancyOverlay {
                                                 r = 255F;
                                                 g = 255 - ((currentCapacity / maxCapacity) * 255F);
                                                 b = 0F;
-                                            } else if (currentCapacity / maxCapacity < .5F){
+                                            } else if (currentCapacity / maxCapacity < .5F) {
                                                 r = ((currentCapacity / maxCapacity) * 255F);
                                                 g = 255F;
                                                 b = 0F;
