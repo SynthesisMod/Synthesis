@@ -80,9 +80,9 @@ public class OccupancyOverlay {
                             itemLore = s.getStack().getTooltip(Minecraft.getMinecraft().thePlayer, false);
                             if (itemLore != null) {
                                 for (String line : itemLore) {
-                                    if (line.toLowerCase().contains("online friend")) {
+                                    if (line != null && line.toLowerCase().contains("online friend")) {
                                         hasFriend = true;
-                                    } else if (line.toLowerCase().contains("online guild")) {
+                                    } else if (line != null && line.toLowerCase().contains("online guild")) {
                                         hasGuildmate = true;
                                     } else if (line != null && (line.toLowerCase().contains("players: "))) {
                                         String apparentlyIHaveToDoThisNowToPreventFalseNegativeSearches = StringUtils.stripControlCodes(line);
@@ -100,19 +100,24 @@ public class OccupancyOverlay {
                                             maxCapacity = Float.parseFloat(apparentlyJavaRegexNeverWorksConsistently.substring(apparentlyJavaRegexNeverWorksConsistently.indexOf("/"), apparentlyJavaRegexNeverWorksConsistently.length()).replace("/", ""));
                                             //So why does Java regex never work 100% of the time? Beats me, but the user shouldn't be punished for it!
                                         }
-                                        if (currentCapacity >= maxCapacity) {
-                                            currentCapacity = maxCapacity;
-                                            r = 255F;
-                                            g = b = 0F;
-                                        } else if (config.occupancyOverlayFriendAndGuildHighlght && hasFriend && hasGuildmate) {
+                                        if (config.occupancyOverlayFriendAndGuildHighlght && hasFriend && hasGuildmate) {
                                             r = b = 255F;
                                             g = 85F;
+                                            break;
                                         } else if (config.occupancyOverlayFriendHighlght && hasFriend) {
                                             r = g = 85F;
                                             b = 255F;
+                                            break;
                                         } else if (config.occupancyOverlayGuildHighlght && hasGuildmate) {
                                             r = b = 0F;
                                             g = 170F;
+                                            break;
+                                        }
+                                        if (currentCapacity >= maxCapacity) {
+                                            currentCapacity = maxCapacity; //prevent java.awt.Color crashes
+                                            r = 255F;
+                                            g = b = 0F;
+                                            break;
                                         } else {
                                             //"You know what's cooler than magic? Math!" - [MCU] Spider-Man, Spider-Man: No Way Home (2021)
                                             if (currentCapacity / maxCapacity == .5F) {
@@ -122,7 +127,7 @@ public class OccupancyOverlay {
                                                 r = 255F;
                                                 g = 255 - ((currentCapacity / maxCapacity) * 255F);
                                                 b = 0F;
-                                            } else if (currentCapacity / maxCapacity < .5F) {
+                                            } else {
                                                 r = ((currentCapacity / maxCapacity) * 255F);
                                                 g = 255F;
                                                 b = 0F;
@@ -144,6 +149,7 @@ public class OccupancyOverlay {
                                     }
                                 }
                                 Color bgColor = new Color(((int)(r)), ((int)(g)), ((int)(b)));
+                                System.out.println("[Synthesis] Inside the menu named" + menuName + ", the color " + bgColor + " was selected for the hub named " + hubName + " because it was at a capacity of " + currentCapacity + " / " + maxCapacity + " (" + ((currentCapacity/maxCapacity)*100) + "% full) and hasFriend was " + hasFriend + ", hasGuildmate was " + hasGuildmate + ", couldNotConnect was " + couldNotConnect + ", and alreadyConnected was " + alreadyConnected);
                                 /**
                                  * The next six lines of code were taken from Danker's Skyblock Mod under the GPL 3.0 license.
                                  * https://github.com/bowser0000/SkyblockMod/blob/master/LICENSE
