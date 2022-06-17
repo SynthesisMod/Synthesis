@@ -567,7 +567,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Server occupancy glance",
-            description = "Draws a background around any item representing the occupancy of a lobby or player island.\nDepending on the occupancy level of a server or island, the highlight's color can range from something near §athis highight§r (empty lobby/island) to something near §cthis highight§r (full lobby/island), with the occasional highlight of somewhere near the color brown, representing a half-empty/half-full lobby/island. (Blame Mojang for not adding a brown formatting code option.)",
+            description = "Draws a background around any item representing the occupancy of a lobby or player island.\nDepending on the occupancy level of a server or island, the highlight's color can range from something near §athis highight§r (empty lobby/island) to something near §cthis highight§r (full lobby/island), with the occasional highlight of somewhere near §ethis color in particular§r (half-empty/half-full lobby/island).",
             category = "Utilities",
             subcategory = "Server occupancy overlay"
     )

@@ -101,6 +101,7 @@ public class OccupancyOverlay {
                                             //So why does Java regex never work 100% of the time? Beats me, but the user shouldn't be punished for it!
                                         }
                                         if (currentCapacity >= maxCapacity) {
+                                            currentCapacity = maxCapacity;
                                             r = 255F;
                                             g = b = 0F;
                                         } else if (config.occupancyOverlayFriendAndGuildHighlght && hasFriend && hasGuildmate) {
@@ -114,9 +115,18 @@ public class OccupancyOverlay {
                                             g = 170F;
                                         } else {
                                             //"You know what's cooler than magic? Math!" - [MCU] Spider-Man, Spider-Man: No Way Home (2021)
-                                            r = ((currentCapacity / maxCapacity) * 255F);
-                                            g = (((maxCapacity - currentCapacity) / maxCapacity) * 255F);
-                                            b = 0F;
+                                            if (currentCapacity / maxCapacity == .5F) {
+                                                r = g = 255F;
+                                                b = 0F;
+                                            } else if (currentCapacity / maxCapacity > .5F) {
+                                                r = 255F;
+                                                g = 255 - ((currentCapacity / maxCapacity) * 255F);
+                                                b = 0F;
+                                            } else if (currentCapacity / maxCapacity < .5F){
+                                                r = ((currentCapacity / maxCapacity) * 255F);
+                                                g = 255F;
+                                                b = 0F;
+                                            }
                                             //Instead of predefined RGB values, why not factor current occupancy in to make some degree of yellow?
                                             /*Disclaimer: usually not that noticable with skyblock hub selector npc because all hubs are usually close
                                             to full, try dungeon hub selector npc for better effect. i swear the code works as intended*/
