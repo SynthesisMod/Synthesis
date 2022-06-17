@@ -92,7 +92,7 @@ public class OccupancyOverlay {
                                             currentCapacity = Float.parseFloat(playerCapacityMatcher.group(1));
                                             maxCapacity = Float.parseFloat(playerCapacityMatcher.group(2));
                                         } else {
-                                            //"I am responsible. I... Oh, crap. My backpack's gone." - [MCU] Spider-Man, Spider-Man: Homecoming (2017)
+                                            //"What the fu...?" - [MCU] Spider-Man, Spider-Man: No Way Home (2021)
                                             System.out.println("[Synthesis — DEBUG] For some reason, Synthesis couldn't find the player capacity using regex. Here's the relevant info: Inside the menu named " + menuName + " at item slot " + s.getSlotIndex() + "'s item lore line `" + line + "` at itemLore.indexOf(line) " + itemLore.indexOf(line) +  " with hubName " + hubName + ". hasFriend was " + hasFriend + ", hasGuildmate was " + hasGuildmate + ", couldNotConnect was " + couldNotConnect + ", and alreadyConnected was " + alreadyConnected + ". -Erymanthus#5074");
                                             System.out.println("[Synthesis — DEBUG] Synthesis is now attempting a failsafe solution using Java's replace() and substring() methods. -Erymanthus#5074");
                                             String apparentlyJavaRegexNeverWorksConsistently = apparentlyIHaveToDoThisNowToPreventFalseNegativeSearches.replace("Players: ", "");
