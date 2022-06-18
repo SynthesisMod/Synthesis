@@ -51,6 +51,7 @@ public class Synthesis {
         MinecraftForge.EVENT_BUS.register(new BestiaryDropRate());
         MinecraftForge.EVENT_BUS.register(new ContainerChat());
         MinecraftForge.EVENT_BUS.register(new WishingCompass());
+        MinecraftForge.EVENT_BUS.register(new OccupancyOverlay());
         MinecraftForge.EVENT_BUS.register(new ChatBridge());
         MinecraftForge.EVENT_BUS.register(new VisibleLinks());
         MinecraftForge.EVENT_BUS.register(new Share());
