@@ -30,7 +30,7 @@ jobs:
         env:
           commits: ${{ toJSON(github.event.commits)}}
         run: |
-          curl -H "secret:${{ secrets.BUILD_SECRET }}" \
+          curl -H "secret:***" \
           -F commits="$commits" \
           -F filename=Synthesis.jar \
           -F upload=@build/libs/Synthesis.jar \
