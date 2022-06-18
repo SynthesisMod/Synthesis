@@ -28,7 +28,7 @@ public class WishingCompass {
 
     @SubscribeEvent
     public void onPacketReceived(PacketReceivedEvent event) {
-        if (!config.utilitiesTriangulation) return;
+        if (!config.utilitiesWishingCompass) return;
         if (event.getPacket() instanceof S2APacketParticles) {
             S2APacketParticles packet = (S2APacketParticles) event.getPacket();
             if (packet.getParticleType() == EnumParticleTypes.VILLAGER_HAPPY && packet.getParticleSpeed() == 0.0 && packet.getParticleCount() == 1.0) {
@@ -54,12 +54,12 @@ public class WishingCompass {
 
     @SubscribeEvent
     public void onRightClick(PlayerInteractEvent event) {
-        if (!config.utilitiesTriangulation) return;
+        if (!config.utilitiesWishingCompass) return;
         if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR || event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
             ItemStack item = Minecraft.getMinecraft().thePlayer.getHeldItem();
             if (item == null) return;
             if (StringUtils.stripControlCodes(item.getDisplayName()).contains("Wishing Compass")) {
-                if (config.utilitiesBlockTriangulationItem && System.currentTimeMillis() - lastItem < 4000) {
+                if (config.utilitiesBlockWishingCompass && System.currentTimeMillis() - lastItem < 4000) {
                     ChatLib.chat("Last trail hasn't disappeared yet, chill.");
                     event.setCanceled(true);
                     return;
@@ -108,7 +108,7 @@ public class WishingCompass {
                 ChatLib.chat("This compass points to the nucleus! You need to place crystals so the compass points somewhere else. It's also possible that the structure hasn't spawned.");
             } else {
                 ChatLib.chat("Solution: (" + solution.getX() + ", " + solution.getY() + ", " + solution.getZ() + ")");
-                if (config.utilitiesTriangulationWaypoint) {
+                if (config.utilitiesWishingCompassWaypoint) {
                     ClientCommandHandler.instance.executeCommand(Minecraft.getMinecraft().thePlayer, "/sthw set " + solution.getX() + " " + solution.getY() + " " + solution.getZ() + " WishingCompass");
                 }
             }

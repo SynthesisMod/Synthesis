@@ -10,6 +10,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fml.common.Loader;
 
+import java.awt.*;
 import java.io.File;
 
 public class Config extends Vigilant {
@@ -619,11 +620,11 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "Triangulation helper",
+            name = "WishingCompass helper",
             description = "Triangulates the location wishing compass points to. Use the item once, wait until the particle trail has disappeared, move away a bit and use it again. Make sure /pq is NOT \"off\".",
             category = "Utilities"
     )
-    public boolean utilitiesTriangulation = false;
+    public boolean utilitiesWishingCompass = false;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -631,7 +632,7 @@ public class Config extends Vigilant {
             description = "Blocks using wishing compass if the last trail hasn't disappeared.",
             category = "Utilities"
     )
-    public boolean utilitiesBlockTriangulationItem = false;
+    public boolean utilitiesBlockWishingCompass = false;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -639,7 +640,40 @@ public class Config extends Vigilant {
             description = "Sets a waypoint at the location calculated by triangulation. Uses Skytils' waypoints.",
             category = "Utilities"
     )
-    public boolean utilitiesTriangulationWaypoint = false;
+    public boolean utilitiesWishingCompassWaypoint = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "AncestralSpade helper",
+            description = "Triangulates the location ancestral spade points to. §cLook straight up or down§r, se the item once, wait until the particle trail has disappeared, move away a bit and use it again. Make sure /pq is NOT \"off\".",
+            category = "Utilities"
+    )
+    public boolean utilitiesAncestralSpade = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Burrow waypoints",
+            description = "Sets a waypoint at the location calculated by ancestral spade triangulation.",
+            category = "Utilities"
+    )
+    public boolean utilitiesAncestralSpadeWaypoint = false;
+
+    @Property(
+            type = PropertyType.COLOR,
+            name = "Burrow waypoint color",
+            description = "The color of the waypoint beacon.",
+            category = "Utilities",
+            allowAlpha = false
+    )
+    public Color utilitiesAncestralSpadeWaypointColor = Color.RED;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Parse burrow arrow",
+            description = "Saves the direction arrow from a burrow, making it only require an extra use of Ancestral Spade.",
+            category = "Utilities"
+    )
+    public boolean utilitiesAncestralSpadeArrow = false;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -891,9 +925,9 @@ public class Config extends Vigilant {
         hidePropertyIf("patcherCompactChatFix", () -> !Loader.isModLoaded("patcher"));
         hidePropertyIf("patcherCustomImagePreviewer", () -> !Loader.isModLoaded("patcher"));
         hidePropertyIf("utilitiesShareScroll", () -> !Loader.isModLoaded("text_overflow_scroll"));
-        hidePropertyIf("utilitiesTriangulationWaypoint", () -> !Loader.isModLoaded("skytils"));
-        addDependency("utilitiesTriangulationWaypoint", "utilitiesTriangulation");
-        addDependency("utilitiesBlockTriangulationItem", "utilitiesTriangulation");
+        hidePropertyIf("utilitiesWishingCompassWaypoint", () -> !Loader.isModLoaded("skytils"));
+        addDependency("utilitiesWishingCompassWaypoint", "utilitiesWishingCompass");
+        addDependency("utilitiesBlockWishingCompass", "utilitiesWishingCompass");
         addDependency("utilitiesContainerControl", "utilitiesContainerChat");
         addDependency("cleanupDungeonBlessingMessages", "cleanupDungeonBlessingStatMessages");
         addDependency("utilitiesWitherImpactPerspectiveGlobal", "utilitiesWitherImpactPerspective");

@@ -82,6 +82,8 @@ The actual collection of QoL features that doesn't fit any other category.
 - Wishing compass triangulation
   - Locates where a wishing compass points to. Use one, wait for the particle trail to disappear, move away and use it again.
   - Option to add a waypoint at the location while using [Skytils](https://github.com/Skytils/SkytilsMod/).
+- Ancestral Spade triangulation
+  - Quite literally the same thing as wishing compass, but with a few changes.
 - Wishing compass uses left display
   - Displays a wishing compass' left uses as stack size.
 - Visible links

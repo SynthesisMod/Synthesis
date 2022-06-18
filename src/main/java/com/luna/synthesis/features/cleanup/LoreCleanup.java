@@ -7,6 +7,7 @@ import net.minecraft.inventory.ContainerChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import net.minecraft.item.ItemSkull;
@@ -18,7 +19,7 @@ public class LoreCleanup {
     private final Config config = Synthesis.getInstance().getConfig();
     // Some fucking tasty spaghetti
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOW)
     public void onItemTooltip(ItemTooltipEvent event) {
         if (Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerChest) {
             ContainerChest containerChest = (ContainerChest)Minecraft.getMinecraft().thePlayer.openContainer;
@@ -45,7 +46,6 @@ public class LoreCleanup {
             else if (inPetsMenuAndIsAPet && (previousLine.startsWith("§6") && previousLine.contains("Held Item"))) {
                 //(inPetsMenuAndIsAPet && (previousLine.startsWith("§6") && previousLine.contains("Held Item")) || line.matches(".*§7[a-z].*") || line.matches(".*§[abcde569].*")) //PLAN: THERE IS NONE. HYPIXEL IS SO INCONSISTENT WITH THEIR LINE SPACING I'M SURPRISED ANY OF THE UNCOMMENTED CODE I WROTE EVEN WORKS. -ERY
                 previousLine = line;
-                continue;
             } else if (config.cleanupLorePetType > 0 && config.cleanupLorePetType < 4 && inPetsMenuAndIsAPet && line.startsWith("§8") && (line.endsWith(" Pet") || line.endsWith(" Mount") || line.endsWith(" Morph") || line.endsWith(" gain XP") || line.contains("All Skills"))) {
                 previousLine = line;
                 if (config.cleanupLorePetType == 3 || line.contains("All Skills"))
@@ -54,11 +54,9 @@ public class LoreCleanup {
                     event.toolTip.set(index, line.replace("Mining ", "").replace("Combat ", "").replace("Fishing ", "").replace("Farming ", "").replace("Foraging ", "").replace("Enchanting ", "").replace("Alchemy ", "").replace("Gabagool ", ""));
                 else if (config.cleanupLorePetType == 1)
                     event.toolTip.set(index, line.replace(" Pet", "").replace(" Mount", "").replace(" Morph", "").replace(", feed to gain XP", ""));
-                continue;
             } else if (config.cleanupLorePetPerkName && inPetsMenuAndIsAPet && line.startsWith("§6") && !line.contains("Held Item")) {
                 previousLine = line;
                 iterator.remove();
-                continue;
             }
             /*  PLAN: SOMEHOW DETECT THE BEGINNING OF A NEW PERK DESCRIPTION AND ADD A HYPHEN TO THE BEGINNING OF IT.
                 I ALREADY TRIED THE "inXYZ" CONDITIONAL STRATEGY AND IT WENT TERRIBLY WRONG BECAUSE, AGAIN, HYPIXEL
@@ -73,19 +71,15 @@ public class LoreCleanup {
                 previousLine = line;
                 event.toolTip.set(index, line.replace("Held Item: ", ""));
                 petHoldingItem = true;
-                continue;
             } else if (config.cleanupLorePetMaxLevel && inPetsMenuAndIsAPet && line.contains("MAX LEVEL")) {
                 previousLine = line;
                 iterator.remove();
-                continue;
             } else if (config.cleanupLorePetClickToSummon && inPetsMenuAndIsAPet && line.contains("Click to summon!")) {
                 previousLine = line;
                 iterator.remove();
-                continue;
             } else if (config.cleanupLorePetClickToDespawn && inPetsMenuAndIsAPet && line.contains("Click to despawn!")) {
                 previousLine = line;
                 iterator.remove();
-                continue;
             } else if (config.cleanupLorePetCandiesUsed && inPetsMenuAndIsAPet && line.contains("Pet Candy Used")) {
                 previousLine = line;
                 // begin the very hacky solution i wrote but it works on the pets that i own so im rolling with this unless anyone has better ideas -ery
@@ -99,14 +93,12 @@ public class LoreCleanup {
                     ifPetHeldItemEnabledOffset = 0;
                 // end hacky solution -ery
                 String pluralOrSingular = "Candies";
-                if (line.indexOf("1/") != -1 && line.indexOf("10/") == -1)
+                if (line.contains("1/") && !line.contains("10/"))
                     pluralOrSingular = "Candy";
                 event.toolTip.set(index + ifPetHeldItemEnabledOffset, line.replace("/10", "").replace("Pet Candy Used", pluralOrSingular).replace("(", "").replace(")", ""));
-                continue;
             } else if (config.cleanupLorePetEmptyLines && inPetsMenuAndIsAPet && line.equals("")) {
                 previousLine = line;
                 iterator.remove();
-                continue;
             }
             /*  PLAN: SOMEHOW REMOVE PROGRESS BAR WITHOUT EDGE CASES OF PROGRESS COUNT DUPLICATING ITSELF.
                 ATTEMPTED AND FAILED BECAUSE AAAAAAAAAAAAAAAAAA -ERY
@@ -167,7 +159,6 @@ public class LoreCleanup {
                             index++;
                             continue;
                         }
-                        System.out.println(StringUtils.stripControlCodes(line));
                         if (StringUtils.stripControlCodes(line).equals("")) {
                             iterator.remove();
                             continue;

@@ -58,6 +58,7 @@ public class Synthesis {
         MinecraftForge.EVENT_BUS.register(new DungeonCleanup());
         MinecraftForge.EVENT_BUS.register(new BetterWitherImpactPerspective());
         MinecraftForge.EVENT_BUS.register(new LoreCleanup());
+        MinecraftForge.EVENT_BUS.register(new AncestralSpade());
         config.preload();
         new SynthesisCommand().register();
         new CopyToClipboardCommand().register();
