@@ -625,7 +625,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Parse burrow arrow",
-            description = "Saves the direction arrow from a burrow, making it only require an extra use of Ancestral Spade.",
+            description = "Saves the direction arrow from a burrow, making it only require an extra use of Ancestral Spade. If waypoints are in the opposite direction, lower /pq values are recommended.",
             category = "Utilities"
     )
     public boolean utilitiesAncestralSpadeArrow = false;
