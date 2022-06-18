@@ -25,6 +25,7 @@ public class AncestralSpade {
     private final ResourceLocation beaconBeam = new ResourceLocation("textures/entity/beacon_beam.png");
     private boolean awaiting = false;
     private boolean awaitingForArrow = false;
+    private long lastSpoon = -1L;
     private Vec3 pos1 = null;
     private Vec3 pos2 = null;
     private Vec3 vec1 = null;
@@ -36,21 +37,23 @@ public class AncestralSpade {
         if (!config.utilitiesAncestralSpade) return;
         if (event.getPacket() instanceof S2APacketParticles) {
             S2APacketParticles packet = (S2APacketParticles) event.getPacket();
-            if (packet.getParticleType() == EnumParticleTypes.ENCHANTMENT_TABLE && packet.getParticleSpeed() == -2 && packet.getParticleCount() == 10) {
-                if (awaiting) {
-                    if (pos1 == null) {
-                        pos1 = new Vec3(packet.getXCoordinate(), packet.getYCoordinate(), packet.getZCoordinate());
-                        awaiting = false;
-                    } else if (pos2 == null) {
-                        pos2 = new Vec3(packet.getXCoordinate(), packet.getYCoordinate(), packet.getZCoordinate());
-                        awaiting = false;
-                    }
-                } else {
-                    if (vec1 == null && pos1 != null) {
-                        vec1 = new Vec3(packet.getXCoordinate() - pos1.xCoord, packet.getYCoordinate() - pos1.yCoord, packet.getZCoordinate() - pos1.zCoord).normalize();
-                    } else if (vec2 == null && pos2 != null) {
-                        vec2 = new Vec3(packet.getXCoordinate() - pos2.xCoord, packet.getYCoordinate() - pos2.yCoord, packet.getZCoordinate() - pos2.zCoord).normalize();
-                        calculateIntercept();
+            if (packet.getParticleType() == EnumParticleTypes.FIREWORKS_SPARK && packet.getXOffset() == 0 && packet.getYOffset() == 0 && packet.getZOffset() == 0) {
+                if (packet.getParticleSpeed() == 0 && packet.getParticleCount() == 1) {
+                    if (awaiting) {
+                        if (pos1 == null) {
+                            pos1 = new Vec3(packet.getXCoordinate(), packet.getYCoordinate(), packet.getZCoordinate());
+                            awaiting = false;
+                        } else if (pos2 == null) {
+                            pos2 = new Vec3(packet.getXCoordinate(), packet.getYCoordinate(), packet.getZCoordinate());
+                            awaiting = false;
+                        }
+                    } else {
+                        if (vec1 == null && pos1 != null) {
+                            vec1 = new Vec3(packet.getXCoordinate() - pos1.xCoord, packet.getYCoordinate() - pos1.yCoord, packet.getZCoordinate() - pos1.zCoord).normalize();
+                        } else if (vec2 == null && pos2 != null) {
+                            vec2 = new Vec3(packet.getXCoordinate() - pos2.xCoord, packet.getYCoordinate() - pos2.yCoord, packet.getZCoordinate() - pos2.zCoord).normalize();
+                            calculateIntercept();
+                        }
                     }
                 }
             } else if (packet.getParticleType() == EnumParticleTypes.REDSTONE && packet.getParticleSpeed() == 1 && packet.getParticleCount() == 0) {
@@ -74,8 +77,11 @@ public class AncestralSpade {
             ItemStack item = Minecraft.getMinecraft().thePlayer.getHeldItem();
             if (item == null) return;
             if (StringUtils.stripControlCodes(item.getDisplayName()).contains("Ancestral Spade")) {
-                if (Minecraft.getMinecraft().thePlayer.rotationPitch == 90 || Minecraft.getMinecraft().thePlayer.rotationPitch == -90) {
-                    awaiting = true;
+                if (System.currentTimeMillis() >= lastSpoon + 3000) {
+                    if (Minecraft.getMinecraft().thePlayer.rotationPitch == 90 || Minecraft.getMinecraft().thePlayer.rotationPitch == -90) {
+                        awaiting = true;
+                        lastSpoon = System.currentTimeMillis();
+                    }
                 }
             }
         }
@@ -108,10 +114,8 @@ public class AncestralSpade {
             double renderPosZ = Minecraft.getMinecraft().getRenderManager().viewerPosZ;
             GlStateManager.pushMatrix();
             GlStateManager.translate(-renderPosX, -renderPosY, -renderPosZ);
-            GlStateManager.disableDepth();
             Minecraft.getMinecraft().getTextureManager().bindTexture(beaconBeam);
-            Utils.renderBeamSegment(solution.getX(), 0, solution.getZ(), event.partialTicks, 1.0, Minecraft.getMinecraft().theWorld.getTotalWorldTime(), 0, 256, Color.BLUE.getColorComponents(null));
-            GlStateManager.enableDepth();
+            Utils.renderBeamSegment(solution.getX(), 0, solution.getZ(), event.partialTicks, 1.0, Minecraft.getMinecraft().theWorld.getTotalWorldTime(), 0, 256, config.utilitiesAncestralSpadeWaypointColor.getColorComponents(null));
             GlStateManager.translate(renderPosX, renderPosY, renderPosZ);
             GlStateManager.popMatrix();
         }
