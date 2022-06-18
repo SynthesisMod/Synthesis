@@ -10,6 +10,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fml.common.Loader;
 
+import java.awt.*;
 import java.io.File;
 
 public class Config extends Vigilant {
@@ -607,10 +608,19 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Burrow waypoints",
-            description = "Sets a waypoint at the location calculated by ancestral spade triangulation. Uses Skytils' waypoints.",
+            description = "Sets a waypoint at the location calculated by ancestral spade triangulation.",
             category = "Utilities"
     )
     public boolean utilitiesAncestralSpadeWaypoint = false;
+
+    @Property(
+            type = PropertyType.COLOR,
+            name = "Burrow waypoint color",
+            description = "The color of the waypoint beacon.",
+            category = "Utilities",
+            allowAlpha = false
+    )
+    public Color utilitiesAncestralSpadeWaypointColor = Color.RED;
 
     @Property(
             type = PropertyType.SWITCH,
