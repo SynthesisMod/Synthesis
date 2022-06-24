@@ -1,0 +1,125 @@
+package com.luna.synthesis.features.future;
+
+import com.luna.synthesis.Synthesis;
+import com.luna.synthesis.core.Config;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
+
+public class ChunkBorders {
+
+    private final Config config = Synthesis.getInstance().getConfig();
+    private boolean isToggled = false;
+
+    // Directly taken from 1.12.2, translated and adapted a bit.
+    @SubscribeEvent
+    public void onRenderWorld(RenderWorldLastEvent event) {
+        if (!config.futureChunkBorders) return;
+        if (!isToggled) return;
+        if (Minecraft.getMinecraft().thePlayer == null) return;
+
+        EntityPlayer entityplayer = Minecraft.getMinecraft().thePlayer;
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        double d0 = entityplayer.lastTickPosX + (entityplayer.posX - entityplayer.lastTickPosX) * event.partialTicks;
+        double d1 = entityplayer.lastTickPosY + (entityplayer.posY - entityplayer.lastTickPosY) * event.partialTicks;
+        double d2 = entityplayer.lastTickPosZ + (entityplayer.posZ - entityplayer.lastTickPosZ) * event.partialTicks;
+        double d3 = 0.0D - d1;
+        double d4 = 256.0D - d1;
+        GlStateManager.disableTexture2D();
+        GlStateManager.disableBlend();
+        double d5 = (entityplayer.chunkCoordX << 4) - d0;
+        double d6 = (entityplayer.chunkCoordZ << 4) - d2;
+        GL11.glLineWidth(1.0F);
+        worldRenderer.begin(3, DefaultVertexFormats.POSITION_COLOR);
+
+        for (int i = -16; i <= 32; i += 16) {
+            for (int j = -16; j <= 32; j += 16) {
+                worldRenderer.pos(d5 + i, d3, d6 + j).color(1.0F, 0.0F, 0.0F, 0.0F).endVertex();
+                worldRenderer.pos(d5 + i, d3, d6 + j).color(1.0F, 0.0F, 0.0F, 0.5F).endVertex();
+                worldRenderer.pos(d5 + i, d4, d6 + j).color(1.0F, 0.0F, 0.0F, 0.5F).endVertex();
+                worldRenderer.pos(d5 + i, d4, d6 + j).color(1.0F, 0.0F, 0.0F, 0.0F).endVertex();
+            }
+        }
+
+        for (int k = 2; k < 16; k += 2) {
+            worldRenderer.pos(d5 + k, d3, d6).color(1.0F, 1.0F, 0.0F, 0.0F).endVertex();
+            worldRenderer.pos(d5 + k, d3, d6).color(1.0F, 1.0F, 0.0F, 1.0F).endVertex();
+            worldRenderer.pos(d5 + k, d4, d6).color(1.0F, 1.0F, 0.0F, 1.0F).endVertex();
+            worldRenderer.pos(d5 + k, d4, d6).color(1.0F, 1.0F, 0.0F, 0.0F).endVertex();
+            worldRenderer.pos(d5 + k, d3, d6 + 16.0D).color(1.0F, 1.0F, 0.0F, 0.0F).endVertex();
+            worldRenderer.pos(d5 + k, d3, d6 + 16.0D).color(1.0F, 1.0F, 0.0F, 1.0F).endVertex();
+            worldRenderer.pos(d5 + k, d4, d6 + 16.0D).color(1.0F, 1.0F, 0.0F, 1.0F).endVertex();
+            worldRenderer.pos(d5 + k, d4, d6 + 16.0D).color(1.0F, 1.0F, 0.0F, 0.0F).endVertex();
+        }
+
+        for (int l = 2; l < 16; l += 2) {
+            worldRenderer.pos(d5, d3, d6 + l).color(1.0F, 1.0F, 0.0F, 0.0F).endVertex();
+            worldRenderer.pos(d5, d3, d6 + l).color(1.0F, 1.0F, 0.0F, 1.0F).endVertex();
+            worldRenderer.pos(d5, d4, d6 + l).color(1.0F, 1.0F, 0.0F, 1.0F).endVertex();
+            worldRenderer.pos(d5, d4, d6 + l).color(1.0F, 1.0F, 0.0F, 0.0F).endVertex();
+            worldRenderer.pos(d5 + 16.0D, d3, d6 + l).color(1.0F, 1.0F, 0.0F, 0.0F).endVertex();
+            worldRenderer.pos(d5 + 16.0D, d3, d6 + l).color(1.0F, 1.0F, 0.0F, 1.0F).endVertex();
+            worldRenderer.pos(d5 + 16.0D, d4, d6 + l).color(1.0F, 1.0F, 0.0F, 1.0F).endVertex();
+            worldRenderer.pos(d5 + 16.0D, d4, d6 + l).color(1.0F, 1.0F, 0.0F, 0.0F).endVertex();
+        }
+
+        for (int i1 = 0; i1 <= 256; i1 += 2) {
+            double d7 = i1 - d1;
+            worldRenderer.pos(d5, d7, d6).color(1.0F, 1.0F, 0.0F, 0.0F).endVertex();
+            worldRenderer.pos(d5, d7, d6).color(1.0F, 1.0F, 0.0F, 1.0F).endVertex();
+            worldRenderer.pos(d5, d7, d6 + 16.0D).color(1.0F, 1.0F, 0.0F, 1.0F).endVertex();
+            worldRenderer.pos(d5 + 16.0D, d7, d6 + 16.0D).color(1.0F, 1.0F, 0.0F, 1.0F).endVertex();
+            worldRenderer.pos(d5 + 16.0D, d7, d6).color(1.0F, 1.0F, 0.0F, 1.0F).endVertex();
+            worldRenderer.pos(d5, d7, d6).color(1.0F, 1.0F, 0.0F, 1.0F).endVertex();
+            worldRenderer.pos(d5, d7, d6).color(1.0F, 1.0F, 0.0F, 0.0F).endVertex();
+        }
+
+        tessellator.draw();
+        GL11.glLineWidth(2.0F);
+        worldRenderer.begin(3, DefaultVertexFormats.POSITION_COLOR);
+
+        for (int j1 = 0; j1 <= 16; j1 += 16) {
+            for (int l1 = 0; l1 <= 16; l1 += 16) {
+                worldRenderer.pos(d5 + j1, d3, d6 + l1).color(0.25F, 0.25F, 1.0F, 0.0F).endVertex();
+                worldRenderer.pos(d5 + j1, d3, d6 + l1).color(0.25F, 0.25F, 1.0F, 1.0F).endVertex();
+                worldRenderer.pos(d5 + j1, d4, d6 + l1).color(0.25F, 0.25F, 1.0F, 1.0F).endVertex();
+                worldRenderer.pos(d5 + j1, d4, d6 + l1).color(0.25F, 0.25F, 1.0F, 0.0F).endVertex();
+            }
+        }
+
+        for (int k1 = 0; k1 <= 256; k1 += 16) {
+            double d8 = k1 - d1;
+            worldRenderer.pos(d5, d8, d6).color(0.25F, 0.25F, 1.0F, 0.0F).endVertex();
+            worldRenderer.pos(d5, d8, d6).color(0.25F, 0.25F, 1.0F, 1.0F).endVertex();
+            worldRenderer.pos(d5, d8, d6 + 16.0D).color(0.25F, 0.25F, 1.0F, 1.0F).endVertex();
+            worldRenderer.pos(d5 + 16.0D, d8, d6 + 16.0D).color(0.25F, 0.25F, 1.0F, 1.0F).endVertex();
+            worldRenderer.pos(d5 + 16.0D, d8, d6).color(0.25F, 0.25F, 1.0F, 1.0F).endVertex();
+            worldRenderer.pos(d5, d8, d6).color(0.25F, 0.25F, 1.0F, 1.0F).endVertex();
+            worldRenderer.pos(d5, d8, d6).color(0.25F, 0.25F, 1.0F, 0.0F).endVertex();
+        }
+
+        tessellator.draw();
+        GL11.glLineWidth(1.0F);
+        GlStateManager.enableBlend();
+        GlStateManager.enableTexture2D();
+    }
+
+    // F3 + G, like in future versions of the game. Should this be configurable? Eh..
+    @SubscribeEvent
+    public void onKeyPress(InputEvent.KeyInputEvent event) {
+        if (!Keyboard.getEventKeyState()) return;
+        if (!config.futureChunkBorders) return;
+        if (Keyboard.isKeyDown(61) && Keyboard.getEventKey() == 34) {
+            isToggled = !isToggled;
+        }
+    }
+}
