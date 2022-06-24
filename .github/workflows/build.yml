@@ -27,6 +27,7 @@ jobs:
           name: Artifacts
           path: build/libs/
       - name: send jar to webhook
+        if: github.event_name != 'pull_request'
         env:
           commits: ${{ toJSON(github.event.commits)}}
         run: |
