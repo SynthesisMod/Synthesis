@@ -34,6 +34,7 @@ public class LoreCleanup {
         boolean inAbility = false;
         boolean petHoldingItem = false;
         boolean inPetsMenuAndIsAPet = ((item.getItem() instanceof ItemSkull && Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerChest && StringUtils.stripControlCodes(((ContainerChest)(Minecraft.getMinecraft().thePlayer.openContainer)).getLowerChestInventory().getDisplayName().getUnformattedText()).endsWith("Pets")) && (item.getDisplayName().matches(".+\\[Lvl \\d+\\] (?<color>§[0-9a-fk-or]).+") || item.getDisplayName().matches(".+\\[\\d+\\] (?<color>§[0-9a-fk-or]).+")));
+        boolean isBlackCat = false;
         String previousLine = "";
         while (iterator.hasNext()) {
             // Thank you vanilla, very cool
@@ -41,6 +42,9 @@ public class LoreCleanup {
             // GEAR SCORE, GEMSTONE SLOTS, SOULBOUND, PET STUFF
             if (config.cleanupPetDisplayName && inPetsMenuAndIsAPet && StringUtils.stripControlCodes(item.getDisplayName()).startsWith("[Lvl ") && StringUtils.stripControlCodes(item.getDisplayName()).contains("] ")){
                 item.setStackDisplayName(item.getDisplayName().replace("Lvl ", ""));
+                if (StringUtils.stripControlCodes(item.getDisplayName()).contains("Black Cat")) {
+                    isBlackCat = true;
+                }
             }
             /* CONDITIONAL TO SKIP BASE CASE LINES, EDIT WITH CAUTION! -ERY */
             else if (inPetsMenuAndIsAPet && (previousLine.startsWith("§6") && previousLine.contains("Held Item"))) {
@@ -50,10 +54,17 @@ public class LoreCleanup {
                 previousLine = line;
                 if (config.cleanupLorePetType == 3 || line.contains("All Skills"))
                     iterator.remove();
-                else if (config.cleanupLorePetType == 2 && !line.contains("All Skills"))
-                    event.toolTip.set(index, line.replace("Mining ", "").replace("Combat ", "").replace("Fishing ", "").replace("Farming ", "").replace("Foraging ", "").replace("Enchanting ", "").replace("Alchemy ", "").replace("Gabagool ", ""));
-                else if (config.cleanupLorePetType == 1)
-                    event.toolTip.set(index, line.replace(" Pet", "").replace(" Mount", "").replace(" Morph", "").replace(", feed to gain XP", ""));
+                else {
+                    if (config.cleanupLorePetType == 2 && !line.contains("All Skills")) {
+                        event.toolTip.set(index, line.replace("Mining ", "").replace("Combat ", "").replace("Fishing ", "").replace("Farming ", "").replace("Foraging ", "").replace("Enchanting ", "").replace("Alchemy ", "").replace("Gabagool ", ""));
+                    }
+                    else if (config.cleanupLorePetType == 1) {
+                        event.toolTip.set(index, line.replace(" Pet", "").replace(" Mount", "").replace(" Morph", "").replace(", feed to gain XP", ""));
+                    }
+                    if (isBlackCat) {
+                        event.toolTip.set(index, line.replace(line, line + " (Magic Find and Pet Luck increases are not additive, but rather percentage-based)"));
+                    }
+                }
             } else if (config.cleanupLorePetPerkName && inPetsMenuAndIsAPet && line.startsWith("§6") && !line.contains("Held Item")) {
                 previousLine = line;
                 iterator.remove();
