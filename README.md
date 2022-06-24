@@ -7,11 +7,11 @@ To prevent mayhem and in accordance with [GitHub's licensing guidelines](https:/
 
 > You're under no obligation to choose a license. However, without a license, the default copyright laws apply, meaning that you retain all rights to your source code and no one may reproduce, distribute, or create derivative works from your work.
 
-However, as part of ARR, this fork does not violate any copyright laws as I have recieved permission from SirDesco & friends (see below):
+However, as part of ARR, this fork does not violate any copyright laws as I have recieved explicit permission from SirDesco & friends (see below):
 
 ![image](https://media.discordapp.net/attachments/728977460737081454/989883710381895700/FOR_GITHUB.png)
 
-# SirDesco is currently on sabbatical in preparation for the Kotlin rewrite of Synthesis. All the information below this heading is solely for reference purposes only, and may not reflect the contents of this specific repository.
+# SirDesco is currently on sabbatical in preparation for the Kotlin rewrite of Synthesis. All the information below this heading is solely for reference purposes only, and may not reflect all of the contents of this specific repository.
 
 Releases and announcements at the official [discord](https://discord.gg/vAUuKSwbp6).
 Feedback such as suggestions, new features, bugs, etc. will also be collected there.
