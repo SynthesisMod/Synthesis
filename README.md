@@ -1,5 +1,17 @@
-# Synthesis
-Hypixel SkyBlock QoL Mod. A collection of random mod features that I couldn't find anywhere else.
+# Synthesis-NONCANON
+Hypixel SkyBlock QoL Mod. A collection of random mod features that SirDesco couldn't find anywhere else.
+
+***NOTE: These are noncanon builds of SirDesco's Synthesis mod. As in, because SirDesco wants to port v0.3.1 of Synthesis to Kotlin for v0.4.0 and I (Erymanthus | RayDeeUx) suck at Kotlin, this is an alternative take on Synthesis which includes some of the suggestions I liked that never made it into Synthesis. Use of any releases of these noncanon Synthesis builds—regardless of where, how, and when you obtained it—implies your understanding that some of the features in these non-canon builds of Synthesis will not make it into the Kotlin rewrite.***
+
+To prevent mayhem and in accordance with [GitHub's licensing guidelines](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository), this fork inherits the license as its parent previously assumed, which is ARR (all rights reserved):
+
+> You're under no obligation to choose a license. However, without a license, the default copyright laws apply, meaning that you retain all rights to your source code and no one may reproduce, distribute, or create derivative works from your work.
+
+However, as part of ARR, this fork does not violate any copyright laws as I have recieved permission from SirDesco & friends (see below):
+
+![image](https://media.discordapp.net/attachments/728977460737081454/989883710381895700/FOR_GITHUB.png)
+
+# SirDesco is currently on sabbatical in preparation for the Kotlin rewrite of Synthesis. All the information below this heading is solely for reference purposes only, and may not reflect the contents of this specific repository.
 
 Releases and announcements at the official [discord](https://discord.gg/vAUuKSwbp6).
 Feedback such as suggestions, new features, bugs, etc. will also be collected there.
