@@ -53,7 +53,11 @@ public class LoreCleanup {
             } else if (config.cleanupLorePetType > 0 && config.cleanupLorePetType < 4 && inPetsMenuAndIsAPet && line.startsWith("§8") && (line.endsWith(" Pet") || line.endsWith(" Mount") || line.endsWith(" Morph") || line.endsWith(" gain XP") || line.contains("All Skills"))) {
                 previousLine = line;
                 if (config.cleanupLorePetType == 3 || line.contains("All Skills"))
-                    iterator.remove();
+                    if (isBlackCat) {
+                        event.toolTip.set(index, line.replace(line, "§7Note: Magic Find and Pet Luck increases are not additive, but rather percentage-based."));
+                    } else {
+                        iterator.remove();
+                    }
                 else {
                     if (config.cleanupLorePetType == 2 && !line.contains("All Skills")) {
                         event.toolTip.set(index, line.replace("Mining ", "").replace("Combat ", "").replace("Fishing ", "").replace("Farming ", "").replace("Foraging ", "").replace("Enchanting ", "").replace("Alchemy ", "").replace("Gabagool ", ""));
@@ -62,7 +66,7 @@ public class LoreCleanup {
                         event.toolTip.set(index, line.replace(" Pet", "").replace(" Mount", "").replace(" Morph", "").replace(", feed to gain XP", ""));
                     }
                     if (isBlackCat) {
-                        event.toolTip.set(index, line.replace(line, line + " (Magic Find and Pet Luck increases are not additive, but rather percentage-based)"));
+                        event.toolTip.set(index, line.replace(line, line + " §7(Magic Find and Pet Luck increases are not additive, but rather percentage-based)"));
                     }
                 }
             } else if (config.cleanupLorePetPerkName && inPetsMenuAndIsAPet && line.startsWith("§6") && !line.contains("Held Item")) {
