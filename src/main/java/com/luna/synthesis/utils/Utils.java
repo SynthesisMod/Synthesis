@@ -8,6 +8,7 @@ import net.minecraft.event.ClickEvent;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
+
 import org.lwjgl.opengl.GL11;
 
 import java.net.URI;

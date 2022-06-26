@@ -901,14 +901,34 @@ public class Config extends Vigilant {
     public int personalBestiaryLevel = 0;
 
     @Property(
+            type = PropertyType.SELECTOR,
+            name = "Bestiary Milestone Warning",
+            description = "Specify how (if at all) you want your Bestiary Milestone warning to be delivered.",
+            category = "Utilities",
+            subcategory = "Bestiary",
+            options = {"Off", "Chat", "Notification"}
+    )
+    public int bestiaryMilestoneWarningDeliveryMethod = 0;
+
+    @Property(
             type = PropertyType.NUMBER,
-            name = "Bestiary Milestone Warning (in seconds)",
-            description = "Specify how frequently (in units of \"every X seconds\") Synthesis will notify you via chat if you're close to reaching a Bestiary Milestone that rewards combat experience.",
+            name = "Bestiary Milestone Frequency (in seconds)",
+            description = "Specify how frequently (in units of \"every X seconds\") Synthesis will (notify you via chat/send notifications) if you're close to reaching a Bestiary Milestone that rewards combat experience.",
             category = "Utilities",
             subcategory = "Bestiary",
             min = 5, max = 60
     )
     public int bestiaryMilestoneWarningSeconds = 5;
+
+    @Property(
+            type = PropertyType.NUMBER,
+            name = "Bestiary Milestone Notification Duration (in seconds)",
+            description = "Specify how long (in units of \"X seconds\") Synthesis' Bestiary Milestone notification will last.\n§cFor an optimal experience, it is recommended to keep this value lower than what you have for \"Bestiary Milestone Frequency (in seconds)\".",
+            category = "Utilities",
+            subcategory = "Bestiary",
+            min = 5, max = 120
+    )
+    public int bestiaryMilestoneWarningDuration = 5;
 
     //PATCHER
 
@@ -938,7 +958,7 @@ public class Config extends Vigilant {
     public String patcherCustomDomains = "";
 
     public Config() {
-        super(new File(Synthesis.configLocation), "§dSynthesis", new JVMAnnotationPropertyCollector(), new CustomSortingBehavior());
+        super(new File(Synthesis.configLocation), "§dSynthesis§r - §bNON-CANON EDITION BY ERYMANTHUS", new JVMAnnotationPropertyCollector(), new CustomSortingBehavior());
         initialize();
         setSubcategoryDescription("Utilities", "Server occupancy overlay", "Ever wondered how full a lobby is?\nEver wanted a visual indicator of that metric?\nHere you go!");
         setSubcategoryDescription("Utilities", "Share", "A simple way to show your items to other people using the mod. Hold the item, type whatever \"Share text\" is and a preview for your item will be sent.");
