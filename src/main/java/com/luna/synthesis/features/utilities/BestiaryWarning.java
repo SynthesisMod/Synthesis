@@ -11,12 +11,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StringUtils;
+import net.minecraft.scoreboard.ScoreObjective;
+import net.minecraft.item.ItemSkull;
+
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraft.item.ItemSkull;
 
 import java.lang.Thread;
 import java.util.List;
@@ -98,13 +100,13 @@ public class BestiaryWarning {
         if (config.bestiaryMilestoneWarningSeconds < 5 || config.bestiaryMilestoneWarningSeconds > 60){config.bestiaryMilestoneWarningSeconds = 5;}
         if (config.bestiaryMilestoneWarningDeliveryMethod != 0 && config.bestiaryMilestoneWarningDeliveryMethod != 1 && config.bestiaryMilestoneWarningDeliveryMethod != 2){config.bestiaryMilestoneWarningDeliveryMethod = 0;}
         if (config.bestiaryMilestoneWarningDuration < 5 || config.bestiaryMilestoneWarningDuration > 120){config.bestiaryMilestoneWarningDuration = 5;}
-        if (Minecraft.getMinecraft().thePlayer != null) {
+        if (Minecraft.getMinecraft().thePlayer != null && EssentialAPI.getMinecraftUtil().isHypixel()) {
             if (levelProgress != 9 || !isAboutToLevelUp) {ticks = 0;return;}
             ticks++;
-            if (((ticks % (20 * config.bestiaryMilestoneWarningSeconds)) == 0)) {
+            if (((ticks % (20 * config.bestiaryMilestoneWarningSeconds)) == 0 && (StringUtils.stripControlCodes(Minecraft.getMinecraft().theWorld.getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName()).contains("SKYBLOCK")))) {
                 if (config.bestiaryMilestoneWarningDeliveryMethod == 1) {
                     ChatLib.chat(("Here's a friendly reminder that you are very close to reaching Bestiary Milestone " + (config.personalBestiaryLevel+1) + " (currently at Milestone " + (config.personalBestiaryLevel) + " with progress " + (levelProgress) + "/10)."));
-                } else if (config.bestiaryMilestoneWarningDeliveryMethod == 2) {
+                } else if (config.bestiaryMilestoneWarningDeliveryMethod == 2 && (StringUtils.stripControlCodes(Minecraft.getMinecraft().theWorld.getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName()).contains("SKYBLOCK"))) {
                     EssentialAPI.getNotifications().push("§dSynthesis", ("Here's a friendly reminder that you are very close to reaching Bestiary Milestone " + (config.personalBestiaryLevel+1) + " (currently at Milestone " + (config.personalBestiaryLevel) + " with progress " + (levelProgress) + "/10)."), config.bestiaryMilestoneWarningDuration);
                 }
                 ticks = 0;
