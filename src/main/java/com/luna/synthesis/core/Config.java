@@ -933,7 +933,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Show Item UUID at End of Item Lore",
-            description = "Displays the item's UUID (if there is one) as the last line of an item's tooltip.\n§cFor compatibility reasons, UUIDs for pets inside the pet menu will not be displayed.",
+            description = "Displays the item's UUID (if there is one) as the last line of an item's tooltip.\n§cFor compatibility reasons, UUIDs for all pets while viewing the pet menu will not be displayed.",
             category = "Utilities",
             subcategory = "Item Lore"
     )
