@@ -903,7 +903,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SELECTOR,
             name = "Bestiary Milestone Warning",
-            description = "Specify how (if at all) you want your Bestiary Milestone warning to be delivered.\n§cIn order for this to work, you need to view the \"Bestiary Milestone\" item tooltip via §r/be§cfirst.",
+            description = "Specify how (if at all) you want your Bestiary Milestone warning to be delivered.\n§cIn order for this to work, you need to view the \"Bestiary Milestone\" item tooltip via §r/be §cfirst.",
             category = "Utilities",
             subcategory = "Bestiary",
             options = {"Off", "Chat", "Notification"}
