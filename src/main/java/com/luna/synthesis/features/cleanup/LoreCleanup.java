@@ -69,6 +69,8 @@ public class LoreCleanup {
                         event.toolTip.set(index, line.replace(line, line + " §7(Magic Find and Pet Luck increases are not additive, but rather percentage-based)"));
                     }
                 }
+            } else if ((config.cleanupLorePetType == 0) && (isBlackCat)) {
+                event.toolTip.set(index, line.replace(line, line + " §7(Magic Find and Pet Luck increases are not additive, but rather percentage-based)"));
             } else if (config.cleanupLorePetPerkName && inPetsMenuAndIsAPet && line.startsWith("§6") && !line.contains("Held Item")) {
                 previousLine = line;
                 iterator.remove();
