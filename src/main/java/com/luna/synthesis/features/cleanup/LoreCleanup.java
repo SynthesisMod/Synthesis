@@ -204,6 +204,9 @@ public class LoreCleanup {
                 }
             }
         }
-
+        // UUID — THIS MUST BE OUTSIDE THE WHILE LOOP TO PREVENT TOOLTIP CO-MODIFICATION CRASHES
+        if (item.getSubCompound("ExtraAttributes", false) != null && item.getSubCompound("ExtraAttributes", false).hasKey("uuid") && !inPetsMenuAndIsAPet && config.utilitiesLoreItemUUID) {
+            event.toolTip.add("§d[Synthesis]§7 Item UUID: " + item.getSubCompound("ExtraAttributes", false).getString("uuid"));
+        }
     }
 }
