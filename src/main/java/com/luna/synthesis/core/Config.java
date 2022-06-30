@@ -741,12 +741,48 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.TEXT,
-            name = "Share text",
+            name = "Share held item text",
             description = "Hold an item and type the text to show the item to other Synthesis users.",
             category = "Utilities",
             subcategory = "Share"
     )
     public String utilitiesShareText = "[item]";
+
+    @Property(
+            type = PropertyType.TEXT,
+            name = "Share helmet text",
+            description = "Type the text to show your helmet slot to other Synthesis users.",
+            category = "Utilities",
+            subcategory = "Share"
+    )
+    public String utilitiesShareHelmetText = "[helmet]";
+
+    @Property(
+            type = PropertyType.TEXT,
+            name = "Share chestplate text",
+            description = "Type the text to show your chestplate slot to other Synthesis users.",
+            category = "Utilities",
+            subcategory = "Share"
+    )
+    public String utilitiesShareChestplateText = "[chestplate]";
+
+    @Property(
+            type = PropertyType.TEXT,
+            name = "Share leggings text",
+            description = "Type the text to show your leggings slot to other Synthesis users.",
+            category = "Utilities",
+            subcategory = "Share"
+    )
+    public String utilitiesShareLeggingsText = "[leggings]";
+
+    @Property(
+            type = PropertyType.TEXT,
+            name = "Share boots text",
+            description = "Type the text to show your boots slot to other Synthesis users.",
+            category = "Utilities",
+            subcategory = "Share"
+    )
+    public String utilitiesShareBootsText = "[boots]";
 
     @Property(
             type = PropertyType.SWITCH,

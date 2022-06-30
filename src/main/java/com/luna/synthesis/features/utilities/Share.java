@@ -53,74 +53,21 @@ public class Share {
     @SubscribeEvent
     public void onMessageSent(MessageSentEvent event) {
         String message = event.message;
-        if (message.contains(config.utilitiesShareText)) {
-            ItemStack item = Minecraft.getMinecraft().thePlayer.getHeldItem();
-            if (item == null) return;
+        if (message.endsWith(config.utilitiesShareText)) {
             event.setCanceled(true);
-
-            NBTTagCompound extraAttributes = item.getSubCompound("ExtraAttributes", false);
-            JsonArray loreArray = new JsonArray();
-            NBTTagList lore = item.getSubCompound("display", false).getTagList("Lore", 8);
-            for (int i = 0; i < lore.tagCount(); i++) {
-                loreArray.add(new JsonPrimitive(lore.getStringTagAt(i)));
-            }
-
-            JsonObject itemJson = new JsonObject();
-            itemJson.add("name", new JsonPrimitive(item.getSubCompound("display", false).getString("Name")));
-            itemJson.add("lore", loreArray);
-            JsonObject extraObject = new JsonObject();
-            if (item.hasTagCompound()) {
-                if (item.getTagCompound().hasKey("display")) {
-                    if (item.getTagCompound().getCompoundTag("display").hasKey("color")) {
-                        extraObject.add("color", new JsonPrimitive(item.getTagCompound().getCompoundTag("display").getInteger("color")));
-                    }
-                }
-            }
-            if (extraAttributes != null && extraAttributes.hasKey("uuid")) {
-                itemJson.add("uuid", new JsonPrimitive(extraAttributes.getString("uuid")));
-            }
-
-            itemJson.add("extra", extraObject);
-
-            JsonObject body = new JsonObject();
-            body.add("owner", new JsonPrimitive(Minecraft.getMinecraft().getSession().getPlayerID()));
-            body.add("item", itemJson);
-
-            (new Thread(() -> {
-                try {
-                    URL url = new URL("https://synthesis-share.antonio32a.com/share");
-                    HttpURLConnection http = (HttpURLConnection) url.openConnection();
-                    http.setDoOutput(true);
-                    http.setDoInput(true);
-                    http.setRequestProperty("Content-Type", "application/json");
-                    http.setRequestProperty("User-Agent", "SynthesisMod");
-                    http.setRequestProperty("Accept", "application/json");
-                    http.setRequestProperty("Method", "POST");
-                    http.connect();
-                    try (OutputStream os = http.getOutputStream()) {
-                        os.write(body.toString().getBytes(StandardCharsets.UTF_8));
-                        os.close();
-                        if (http.getResponseCode() != 200) {
-                            ChatLib.chat("Something went wrong trying to upload share. Check logs maybe?");
-                            return;
-                        }
-                        JsonParser parser = new JsonParser();
-                        JsonObject shareJson = parser.parse(IOUtils.toString(http.getInputStream())).getAsJsonObject();
-                        if (!shareJson.get("success").getAsBoolean()) {
-                            ChatLib.chat("Share was not successful. Reason: " + shareJson.get("error").getAsString());
-                            return;
-                        }
-
-                        String shareId = shareJson.get("share").getAsJsonObject().get("id").getAsString();
-                        String share = "{SynthesisShare:" + shareId + "}";
-                        //Can't write event.message because this is a thread
-                        Minecraft.getMinecraft().thePlayer.sendChatMessage(message.replace("[item]", share).replace("[share]", share));
-                    }
-                } catch (IOException e) {
-                    ChatLib.chat("Something went wrong trying to upload share. Check logs maybe?");
-                    e.printStackTrace();
-                }
-            })).start();
+            doTheMagic(Minecraft.getMinecraft().thePlayer.getHeldItem(), message, config.utilitiesShareText);
+        } else if (message.endsWith(config.utilitiesShareHelmetText)) {
+            event.setCanceled(true);
+            doTheMagic(Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(4), message, config.utilitiesShareHelmetText);
+        } else if (message.endsWith(config.utilitiesShareChestplateText)) {
+            event.setCanceled(true);
+            doTheMagic(Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(3), message, config.utilitiesShareChestplateText);
+        } else if (message.endsWith(config.utilitiesShareLeggingsText)) {
+            event.setCanceled(true);
+            doTheMagic(Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(2), message, config.utilitiesShareLeggingsText);
+        } else if (message.endsWith(config.utilitiesShareBootsText)) {
+            event.setCanceled(true);
+            doTheMagic(Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(1), message, config.utilitiesShareBootsText);
         }
     }
 
@@ -225,5 +172,72 @@ public class Share {
                 event.setCanceled(true);
             }
         }
+    }
+
+    private void doTheMagic(ItemStack itemParam, String messageParam, String whateverWasMatchedParam) {
+        if (itemParam == null || messageParam == null) {return;}
+        NBTTagCompound extraAttributes = itemParam.getSubCompound("ExtraAttributes", false);
+        JsonArray loreArray = new JsonArray();
+        NBTTagList lore = itemParam.getSubCompound("display", false).getTagList("Lore", 8);
+        for (int i = 0; i < lore.tagCount(); i++) {
+            loreArray.add(new JsonPrimitive(lore.getStringTagAt(i)));
+        }
+
+        JsonObject itemJson = new JsonObject();
+        itemJson.add("name", new JsonPrimitive(itemParam.getSubCompound("display", false).getString("Name")));
+        itemJson.add("lore", loreArray);
+        JsonObject extraObject = new JsonObject();
+        if (itemParam.hasTagCompound()) {
+            if (itemParam.getTagCompound().hasKey("display")) {
+                if (itemParam.getTagCompound().getCompoundTag("display").hasKey("color")) {
+                    extraObject.add("color", new JsonPrimitive(itemParam.getTagCompound().getCompoundTag("display").getInteger("color")));
+                }
+            }
+        }
+        if (extraAttributes != null && extraAttributes.hasKey("uuid")) {
+            itemJson.add("uuid", new JsonPrimitive(extraAttributes.getString("uuid")));
+        }
+
+        itemJson.add("extra", extraObject);
+
+        JsonObject body = new JsonObject();
+        body.add("owner", new JsonPrimitive(Minecraft.getMinecraft().getSession().getPlayerID()));
+        body.add("item", itemJson);
+
+        (new Thread(() -> {
+            try {
+                URL url = new URL("https://synthesis-share.antonio32a.com/share");
+                HttpURLConnection http = (HttpURLConnection) url.openConnection();
+                http.setDoOutput(true);
+                http.setDoInput(true);
+                http.setRequestProperty("Content-Type", "application/json");
+                http.setRequestProperty("User-Agent", "SynthesisMod");
+                http.setRequestProperty("Accept", "application/json");
+                http.setRequestProperty("Method", "POST");
+                http.connect();
+                try (OutputStream os = http.getOutputStream()) {
+                    os.write(body.toString().getBytes(StandardCharsets.UTF_8));
+                    os.close();
+                    if (http.getResponseCode() != 200) {
+                        ChatLib.chat("Something went wrong trying to upload share. Check logs maybe?");
+                        return;
+                    }
+                    JsonParser parser = new JsonParser();
+                    JsonObject shareJson = parser.parse(IOUtils.toString(http.getInputStream())).getAsJsonObject();
+                    if (!shareJson.get("success").getAsBoolean()) {
+                        ChatLib.chat("Share was not successful. Reason: " + shareJson.get("error").getAsString());
+                        return;
+                    }
+
+                    String shareId = shareJson.get("share").getAsJsonObject().get("id").getAsString();
+                    String share = "{SynthesisShare:" + shareId + "}";
+                    //Can't write event.message because this is a thread
+                    Minecraft.getMinecraft().thePlayer.sendChatMessage(messageParam.replace(whateverWasMatchedParam, share));
+                }
+            } catch (IOException e) {
+                ChatLib.chat("Something went wrong trying to upload share. Check logs maybe?");
+                e.printStackTrace();
+            }
+        })).start();
     }
 }
