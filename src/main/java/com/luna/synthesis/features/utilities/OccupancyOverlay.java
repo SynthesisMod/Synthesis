@@ -100,19 +100,6 @@ public class OccupancyOverlay {
                                             maxCapacity = Float.parseFloat(apparentlyJavaRegexNeverWorksConsistently.substring(apparentlyJavaRegexNeverWorksConsistently.indexOf("/"), apparentlyJavaRegexNeverWorksConsistently.length()).replace("/", ""));
                                             //So why does Java regex never work 100% of the time? Beats me, but the user shouldn't be punished for it!
                                         }
-                                        if (config.occupancyOverlayFriendAndGuildHighlght && hasFriend && hasGuildmate) {
-                                            r = b = 255F;
-                                            g = 85F;
-                                            break;
-                                        } else if (config.occupancyOverlayFriendHighlght && hasFriend) {
-                                            r = g = 85F;
-                                            b = 255F;
-                                            break;
-                                        } else if (config.occupancyOverlayGuildHighlght && hasGuildmate) {
-                                            r = b = 0F;
-                                            g = 170F;
-                                            break;
-                                        }
                                         if (currentCapacity >= maxCapacity) {
                                             currentCapacity = maxCapacity; //prevent java.awt.Color crashes
                                             r = 255F;
@@ -136,6 +123,15 @@ public class OccupancyOverlay {
                                             /*Disclaimer: usually not that noticable with skyblock hub selector npc because all hubs are usually close
                                             to full, try dungeon hub selector npc for better effect. i swear the code works as intended*/
                                         }
+                                    } else if (config.occupancyOverlayFriendAndGuildHighlght && hasFriend && hasGuildmate) {
+                                        r = b = 255F;
+                                        g = 85F;
+                                    } else if (config.occupancyOverlayFriendHighlght && hasFriend) {
+                                        r = g = 85F;
+                                        b = 255F;
+                                    } else if (config.occupancyOverlayGuildHighlght && hasGuildmate) {
+                                        r = b = 0F;
+                                        g = 170F;
                                     } else if (line != null && (line.toLowerCase().contains("full") || line.toLowerCase().contains("offline") || line.toLowerCase().contains("doesn't support guests yet") || line.toLowerCase().contains("island disallows guests"))) {
                                         r = 255;
                                         g = b = 0F;

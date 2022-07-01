@@ -7,7 +7,6 @@ import com.luna.synthesis.features.utilities.SearchMode;
 import com.luna.synthesis.mixins.accessors.GuiChatAccessor;
 import com.luna.synthesis.mixins.accessors.GuiContainerAccessor;
 import com.luna.synthesis.utils.MixinUtils;
-import com.luna.synthesis.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiContainer;

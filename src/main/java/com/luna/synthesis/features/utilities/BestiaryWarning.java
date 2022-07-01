@@ -5,26 +5,19 @@ import gg.essential.api.EssentialAPI;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import com.luna.synthesis.utils.ChatLib;
-import com.luna.synthesis.utils.Utils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.ContainerChest;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.StringUtils;
-import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.item.ItemSkull;
 
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.lang.Thread;
 import java.util.List;
 import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.util.Timer;
 
 public class BestiaryWarning {
 

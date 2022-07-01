@@ -5,11 +5,9 @@ import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import com.luna.synthesis.events.MessageSentEvent;
 import com.luna.synthesis.utils.ChatLib;
-import com.luna.synthesis.utils.MixinUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.item.ItemStack;
@@ -21,17 +19,8 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClients;
 import org.lwjgl.input.Mouse;
 
 import java.io.IOException;
@@ -175,7 +164,7 @@ public class Share {
     }
 
     private void doTheMagic(ItemStack itemParam, String messageParam, String whateverWasMatchedParam) {
-        if (itemParam == null || messageParam == null) {return;}
+        if (itemParam == null || messageParam == null || whateverWasMatchedParam == null) {return;}
         NBTTagCompound extraAttributes = itemParam.getSubCompound("ExtraAttributes", false);
         JsonArray loreArray = new JsonArray();
         NBTTagList lore = itemParam.getSubCompound("display", false).getTagList("Lore", 8);

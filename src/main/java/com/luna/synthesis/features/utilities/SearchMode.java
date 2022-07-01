@@ -4,7 +4,6 @@ import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import com.luna.synthesis.mixins.accessors.GuiNewChatAccessor;
 import com.luna.synthesis.utils.MixinUtils;
-import com.luna.synthesis.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
 import net.minecraft.client.gui.GuiChat;
@@ -18,7 +17,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
