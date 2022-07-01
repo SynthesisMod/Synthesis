@@ -978,7 +978,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Enable Senither and Lily weight search",
-            description = "The toggle to enable/disable checking for someone's weights in both the Senither calculation system and the Lily calculation system. (Type \"[weight <username>]\" in chat to check someone's weight calculations, or \"[weight]\" to check your own.)\n§cDisabled by default for a variety of reasons, including accidental chat infractions and being resource intensive-even on the most advanced computers.§l§cEnable with caution!",
+            description = "The toggle to enable/disable checking for someone's weights in both the Senither calculation system and the Lily calculation system. §e(Type \"[weight <username>]\" in chat to check someone's weight calculations, or \"[weight]\" to check your own.)\n§cDisabled by default as this is resource intensive-even on the most advanced computers.§l§cEnable with caution!",
             category = "Utilities"
     )
     public boolean utilitiesCheckWeight = false;
