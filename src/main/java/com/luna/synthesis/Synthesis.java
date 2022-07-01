@@ -60,6 +60,7 @@ public class Synthesis {
         MinecraftForge.EVENT_BUS.register(new LoreCleanup());
         MinecraftForge.EVENT_BUS.register(new AncestralSpade());
         MinecraftForge.EVENT_BUS.register(new BestiaryWarning());
+        MinecraftForge.EVENT_BUS.register(new FindSomeonesSkyblockInfo());
         config.preload();
         new SynthesisCommand().register();
         new CopyToClipboardCommand().register();

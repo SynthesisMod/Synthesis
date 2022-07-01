@@ -42,6 +42,7 @@ public class Share {
     @SubscribeEvent
     public void onMessageSent(MessageSentEvent event) {
         String message = event.message;
+        if (event.message.startsWith("[weight")) {return;}
         if (message.endsWith(config.utilitiesShareText)) {
             event.setCanceled(true);
             doTheMagic(Minecraft.getMinecraft().thePlayer.getHeldItem(), message, config.utilitiesShareText);
@@ -222,6 +223,7 @@ public class Share {
                     String share = "{SynthesisShare:" + shareId + "}";
                     //Can't write event.message because this is a thread
                     Minecraft.getMinecraft().thePlayer.sendChatMessage(messageParam.replace(whateverWasMatchedParam, share));
+                    ChatLib.chat(messageParam.replace(whateverWasMatchedParam, share));
                 }
             } catch (IOException e) {
                 ChatLib.chat("Something went wrong trying to upload share. Check logs maybe?");

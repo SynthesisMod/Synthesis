@@ -12,6 +12,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.io.IOUtils;
 
 import java.io.InputStream;
+import java.util.Map;
+import java.util.Set;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -19,19 +21,21 @@ import java.nio.charset.StandardCharsets;
 import com.google.gson.*;
 
 //because writing it in SynthesisCommand.java won't be fun!
-public class FindSomeonesSkyblockWeight {
+public class FindSomeonesSkyblockInfo {
     private final Config config = Synthesis.getInstance().getConfig();
 
     @SubscribeEvent
     public void onMessageSent(MessageSentEvent event) {
         String nameToCheck = "";
-        if ((event.message.contains("/syn weight") || event.message.contains("/synth weight") || event.message.contains("/synthesis weight"))) {
-            if (event.message.endsWith(" weight")) {
+        if (event.message.endsWith(config.utilitiesShareText) || event.message.endsWith(config.utilitiesShareBootsText) || event.message.endsWith(config.utilitiesShareHelmetText) || event.message.endsWith(config.utilitiesShareLeggingsText) || event.message.endsWith(config.utilitiesShareChestplateText)) {return;}
+        if (!config.utilitiesCheckWeight) {return;}
+        if (event.message.startsWith("[weight")) {
+            if (event.message.endsWith("[weight]")) {
                 nameToCheck = Minecraft.getMinecraft().thePlayer.getName().toLowerCase();
             } else {
-                String[] split = (((event.message.toLowerCase().replace("/syn weight ", "")).replace("/synth weight ", "")).replace("/synthesis weight ", "")).split(" ");
-                nameToCheck = split[0];
+                nameToCheck = (event.message.toLowerCase().replace("[weight ", "").replace("]", "")).replace(" ", "");
             }
+            event.setCanceled(true);
         }
         try {
             URL url = new URL("https://sky.shiiyu.moe/api/v2/profile/" + nameToCheck);
@@ -44,21 +48,29 @@ public class FindSomeonesSkyblockWeight {
             http.connect();
             try (InputStream instream = http.getInputStream()) {
                 if (http.getResponseCode() != 200) {
-                    ChatLib.chat("Synthesis did not get an A-OK response from SkyCrypt. Aborting mission.");
+                    ChatLib.chat("Synthesis did not get an A-OK response from SkyCrypt. The response code Synthesis got instead was " + http.getResponseCode() + ". Aborting mission.");
                     return;
                 }
                 JsonParser parser = new JsonParser();
-                JsonObject sbProfileAsJson = parser.parse(new String(IOUtils.toByteArray(instream), StandardCharsets.UTF_8)).getAsJsonObject();
-                if (!sbProfileAsJson.has("profiles")) {
-                    ChatLib.chat("Synthesis failed in getting information from SkyCrypt. Aborting mission.");
+                JsonObject data = parser.parse(new String(IOUtils.toByteArray(instream), StandardCharsets.UTF_8)).getAsJsonObject();
+                if (!data.has("profiles")) {
+                    ChatLib.chat("Synthesis failed in getting information from SkyCrypt. Either their API is down or this player doesn't have any profiles at all. Aborting mission.");
                     return;
                 }
 
-                JsonObject currentSbProfile = sbProfileAsJson.getAsJsonArray().get(0).getAsJsonObject();
-                JsonObject weightData = ((JsonObject)((JsonObject)(currentSbProfile.get("data"))).get("weight"));
+                JsonObject profiles = data.get("profiles").getAsJsonObject();
+                Set<Map.Entry<String, JsonElement>> profileSet = profiles.entrySet();
+                JsonElement currentSbProfileWeightData = null;
 
-                int overallSenitherWeight = ((int)((JsonObject)(weightData.get("senither"))).get("overall").getAsDouble());
-                int overallLilyWeight = ((int)((JsonObject)(weightData.get("lily"))).get("total").getAsDouble());
+                for (Map.Entry<String,JsonElement> me : profileSet)
+                {
+                    if (me.getValue().getAsJsonObject().get("current").getAsBoolean()) {
+                        currentSbProfileWeightData = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("weight");
+                    }
+                }
+
+                int overallSenitherWeight = ((int)((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("senither")).get("overall").getAsDouble());
+                int overallLilyWeight = ((int)((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("lily")).get("total").getAsDouble());
 
                 ChatLib.chat(nameToCheck + "'s Senither weight to the nearest integer is " + overallSenitherWeight + " and their Lily weight to the nearest integer is " + overallLilyWeight + ".");
                 
