@@ -28,7 +28,7 @@ public class FindSomeonesSkyblockInfo {
     public void onMessageSent(MessageSentEvent event) {
         String nameToCheck = "";
         if (event.message.endsWith(config.utilitiesShareText) || event.message.endsWith(config.utilitiesShareBootsText) || event.message.endsWith(config.utilitiesShareHelmetText) || event.message.endsWith(config.utilitiesShareLeggingsText) || event.message.endsWith(config.utilitiesShareChestplateText)) {return;}
-        if (!config.utilitiesCheckWeight) {return;}
+        if (!config.utilitiesCheckWeight && event.message.startsWith("[weight")) {event.setCanceled(true); ChatLib.chat("You have the setting disabled. Please enable it and try again, but do so with extreme caution.");return;}
         if (event.message.startsWith("[weight")) {
             if (event.message.endsWith("[weight]")) {
                 nameToCheck = Minecraft.getMinecraft().thePlayer.getName().toLowerCase();
@@ -36,6 +36,8 @@ public class FindSomeonesSkyblockInfo {
                 nameToCheck = (event.message.toLowerCase().replace("[weight ", "").replace("]", "")).replace(" ", "");
             }
             event.setCanceled(true);
+        } else {
+            return;
         }
         try {
             URL url = new URL("https://sky.shiiyu.moe/api/v2/profile/" + nameToCheck);
