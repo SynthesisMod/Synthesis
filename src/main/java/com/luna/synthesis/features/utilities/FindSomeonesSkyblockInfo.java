@@ -164,7 +164,7 @@ public class FindSomeonesSkyblockInfo {
                 cuteName = (EnumChatFormatting.GOLD + cuteName);
                 String totalXp = (EnumChatFormatting.DARK_AQUA + "" + totalSkillXp + " total skill experience");
                 String avgXpRank = (EnumChatFormatting.YELLOW + "Ranked #" + avgSkillXpRank + " in skill average");
-                String fairySoulFraction = (EnumChatFormatting.LIGHT_PURPLE + "Collected " + collectedFairySouls + "/" + totalFairySouls);
+                String fairySoulFraction = (EnumChatFormatting.LIGHT_PURPLE + "Collected " + collectedFairySouls + "/" + totalFairySouls + " fairy souls");
                 String catacombsLvlString = (EnumChatFormatting.GRAY + "Catacombs Level " + catacombsLevel);
 
                 ChatLib.chat("Here are " + displayName + "'s stats on their " + cuteName + "§rprofile:\n §7- " + skillAvg + "\n §7- " + avgXpRank + "\n §7- " + totalXp + "\n §7- " + slayerXP + "\n §7- " + firstJoinText + "\n §7- " + fairySoulFraction + "\n §7- " + catacombsLvlString);
