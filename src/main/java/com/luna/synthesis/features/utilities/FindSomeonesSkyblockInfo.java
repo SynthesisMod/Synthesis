@@ -158,16 +158,16 @@ public class FindSomeonesSkyblockInfo {
                     }
                 }
                 
-                String skillAvg = (EnumChatFormatting.BLUE + "" + currentSbProfileSkillAverage + " skill average");
+                String skillAvg = (EnumChatFormatting.BLUE + "" + currentSbProfileSkillAverage + " Skill Average");
                 String slayerXP = (EnumChatFormatting.RED + "" + currentSbProfileSlayerXp + " Slayer XP");
                 firstJoinText = (EnumChatFormatting.GREEN + "First joined " + firstJoinText);
                 cuteName = (EnumChatFormatting.GOLD + cuteName);
-                String totalXp = (EnumChatFormatting.DARK_AQUA + "" + totalSkillXp + " total skill experience");
-                String avgXpRank = (EnumChatFormatting.YELLOW + "Ranked #" + avgSkillXpRank + " in skill average");
+                String totalXp = (EnumChatFormatting.DARK_AQUA + "" + totalSkillXp + " total Skill XP");
+                String avgXpRank = (EnumChatFormatting.YELLOW + "Ranked #" + avgSkillXpRank + " in Skill Average");
                 String fairySoulFraction = (EnumChatFormatting.LIGHT_PURPLE + "Collected " + collectedFairySouls + "/" + totalFairySouls + " fairy souls");
-                String catacombsLvlString = (EnumChatFormatting.GRAY + "Catacombs Level " + catacombsLevel);
+                String catacombsLvlString = (EnumChatFormatting.DARK_AQUA + "Catacombs Level " + catacombsLevel);
 
-                ChatLib.chat("Here are " + displayName + "'s stats on their " + cuteName + "§rprofile:\n §7- " + skillAvg + "\n §7- " + avgXpRank + "\n §7- " + totalXp + "\n §7- " + slayerXP + "\n §7- " + firstJoinText + "\n §7- " + fairySoulFraction + "\n §7- " + catacombsLvlString);
+                ChatLib.chat("Here are " + displayName + "'s stats on their " + cuteName + "§r profile:\n §7- " + skillAvg + "\n §7- " + avgXpRank + "\n §7- " + totalXp + "\n §7- " + slayerXP + "\n §7- " + fairySoulFraction + "\n §7- " + catacombsLvlString + "\n §7- " + firstJoinText);
             } catch (Exception e) {
                 ChatLib.chat("Synthesis ran into a problem checking content from SkyCrypt. See logs.");
                 System.out.println("Synthesis ran into a problem checking content from SkyCrypt. See logs.");
