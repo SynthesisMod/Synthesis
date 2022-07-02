@@ -148,7 +148,13 @@ public class FindSomeonesSkyblockInfo {
                         totalSkillXp = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("total_skill_xp").getAsInt();
                         collectedFairySouls = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("fairy_souls")).get("collected")).getAsInt();
                         totalFairySouls = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("fairy_souls")).get("total")).getAsInt();
-                        catacombsLevel = (((JsonObject)((JsonObject)((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("dungeons")).get("catacombs")).get("level")).get("level")).getAsInt();
+                        try {
+                            catacombsLevel = (((JsonObject)((JsonObject)((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("dungeons")).get("catacombs")).get("level")).get("level")).getAsInt();
+                        } catch (Exception e) {
+                            ChatLib.chat("It looks like" + theNameToCheck + "has not explored the Catacombs yet. See logs.");
+                            System.out.println("It looks like" + theNameToCheck + "has not explored the Catacombs yet. See logs.");
+                            e.printStackTrace();
+                        }
                     }
                 }
                 
@@ -159,7 +165,7 @@ public class FindSomeonesSkyblockInfo {
                 String totalXp = (EnumChatFormatting.DARK_AQUA + "" + totalSkillXp + " total skill experience");
                 String avgXpRank = (EnumChatFormatting.YELLOW + "Ranked #" + avgSkillXpRank + " in skill average");
                 String fairySoulFraction = (EnumChatFormatting.LIGHT_PURPLE + "Collected " + collectedFairySouls + "/" + totalFairySouls);
-                String catacombsLvlString = (EnumChatFormatting.GRAY + "Catacombs Level" + catacombsLevel);
+                String catacombsLvlString = (EnumChatFormatting.GRAY + "Catacombs Level " + catacombsLevel);
 
                 ChatLib.chat("Here are " + displayName + "'s stats on their " + cuteName + "§rprofile:\n §7- " + skillAvg + "\n §7- " + avgXpRank + "\n §7- " + totalXp + "\n §7- " + slayerXP + "\n §7- " + firstJoinText + "\n §7- " + fairySoulFraction + "\n §7- " + catacombsLvlString);
             } catch (Exception e) {
