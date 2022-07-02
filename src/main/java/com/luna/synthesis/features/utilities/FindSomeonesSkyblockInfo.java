@@ -128,12 +128,14 @@ public class FindSomeonesSkyblockInfo {
                 int currentSbProfileSkillAverage = 0;
                 int currentSbProfileSlayerXp = 0;
                 String displayName = "";
+                String cuteName = "";
                 String firstJoinText = "";
 
                 for (Map.Entry<String,JsonElement> me : profileSet)
                 {
                     if (me.getValue().getAsJsonObject().get("current").getAsBoolean()) {
                         displayName = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("display_name").getAsString();
+                        cuteName = me.getValue().getAsJsonObject().get("cute_name").getAsString();
                         currentSbProfileSkillAverage = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("average_level").getAsInt();
                         currentSbProfileSlayerXp = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("slayer_xp").getAsInt();
                         firstJoinText = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("first_join")).get("text")).getAsString();
@@ -143,8 +145,9 @@ public class FindSomeonesSkyblockInfo {
                 String skillAvg = (EnumChatFormatting.BLUE + "" + currentSbProfileSkillAverage + " skill average");
                 String slayerXP = (EnumChatFormatting.RED + "" + currentSbProfileSlayerXp + " Slayer XP");
                 firstJoinText = (EnumChatFormatting.GREEN + "First joined " + firstJoinText);
+                cuteName = (EnumChatFormatting.GOLD + cuteName);
 
-                ChatLib.chat("Here are " + displayName + "'s stats:\n §7- " + skillAvg + "\n §7- " + slayerXP + "\n §7- " + firstJoinText);
+                ChatLib.chat("Here are " + displayName + "'s stats on their " + cuteName + "§rprofile:\n §7- " + skillAvg + "\n §7- " + slayerXP + "\n §7- " + firstJoinText);
             } catch (Exception e) {
                 ChatLib.chat("Synthesis ran into a problem checking content from SkyCrypt. See logs.");
                 System.out.println("Synthesis ran into a problem checking content from SkyCrypt. See logs.");
