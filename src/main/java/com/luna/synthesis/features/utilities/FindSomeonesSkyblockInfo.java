@@ -130,6 +130,11 @@ public class FindSomeonesSkyblockInfo {
                 String displayName = "";
                 String cuteName = "";
                 String firstJoinText = "";
+                int avgSkillXpRank = 0;
+                int totalSkillXp = 0;
+                int collectedFairySouls = 0;
+                int totalFairySouls = 0;
+                int catacombsLevel = 0;
 
                 for (Map.Entry<String,JsonElement> me : profileSet)
                 {
@@ -139,6 +144,11 @@ public class FindSomeonesSkyblockInfo {
                         currentSbProfileSkillAverage = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("average_level").getAsInt();
                         currentSbProfileSlayerXp = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("slayer_xp").getAsInt();
                         firstJoinText = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("first_join")).get("text")).getAsString();
+                        avgSkillXpRank = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("average_level_rank").getAsInt();
+                        totalSkillXp = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("total_skill_xp").getAsInt();
+                        collectedFairySouls = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("fairy_souls")).get("collected")).getAsInt();
+                        totalFairySouls = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("fairy_souls")).get("total")).getAsInt();
+                        catacombsLevel = (((JsonObject)((JsonObject)((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("dungeons")).get("catacombs")).get("level")).get("level")).getAsInt();
                     }
                 }
                 
@@ -146,8 +156,12 @@ public class FindSomeonesSkyblockInfo {
                 String slayerXP = (EnumChatFormatting.RED + "" + currentSbProfileSlayerXp + " Slayer XP");
                 firstJoinText = (EnumChatFormatting.GREEN + "First joined " + firstJoinText);
                 cuteName = (EnumChatFormatting.GOLD + cuteName);
+                String totalXp = (EnumChatFormatting.DARK_AQUA + "" + totalSkillXp + " total skill experience");
+                String avgXpRank = (EnumChatFormatting.YELLOW + "Ranked #" + avgSkillXpRank + " in skill average");
+                String fairySoulFraction = (EnumChatFormatting.LIGHT_PURPLE + "Collected " + collectedFairySouls + "/" + totalFairySouls);
+                String catacombsLvlString = (EnumChatFormatting.GRAY + "Catacombs Level" + catacombsLevel);
 
-                ChatLib.chat("Here are " + displayName + "'s stats on their " + cuteName + "§rprofile:\n §7- " + skillAvg + "\n §7- " + slayerXP + "\n §7- " + firstJoinText);
+                ChatLib.chat("Here are " + displayName + "'s stats on their " + cuteName + "§rprofile:\n §7- " + skillAvg + "\n §7- " + avgXpRank + "\n §7- " + totalXp + "\n §7- " + slayerXP + "\n §7- " + firstJoinText + "\n §7- " + fairySoulFraction + "\n §7- " + catacombsLvlString);
             } catch (Exception e) {
                 ChatLib.chat("Synthesis ran into a problem checking content from SkyCrypt. See logs.");
                 System.out.println("Synthesis ran into a problem checking content from SkyCrypt. See logs.");
