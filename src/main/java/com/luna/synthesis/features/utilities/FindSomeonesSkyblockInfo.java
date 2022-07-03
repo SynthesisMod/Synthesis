@@ -6,13 +6,17 @@ import com.luna.synthesis.events.MessageSentEvent;
 import com.luna.synthesis.utils.ChatLib;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.inventory.ContainerChest;
 import net.minecraft.util.EnumChatFormatting;
-
+import net.minecraft.util.StringUtils;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import org.apache.commons.io.IOUtils;
 
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.Map;
 import java.util.Set;
 import java.net.HttpURLConnection;
@@ -24,6 +28,7 @@ import com.google.gson.*;
 //because writing it in SynthesisCommand.java won't be fun!
 public class FindSomeonesSkyblockInfo {
     private final Config config = Synthesis.getInstance().getConfig();
+    private String chestMenuName;
 
     @SubscribeEvent
     public void onMessageSent(MessageSentEvent event) {
@@ -92,6 +97,18 @@ public class FindSomeonesSkyblockInfo {
         }
     }
 
+    @SubscribeEvent
+    public void onGuiScreen(GuiScreenEvent.BackgroundDrawnEvent e) {
+        if (Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
+            chestMenuName = StringUtils.stripControlCodes((((ContainerChest)((GuiChest)(Minecraft.getMinecraft().currentScreen)).inventorySlots).getLowerChestInventory().getDisplayName().getUnformattedText()));
+            if (chestMenuName.startsWith("You")) {
+                String theCommandToRun = ("[stats " + chestMenuName.replace("You", "").replaceAll(" ", "") + "]").toLowerCase();
+                if (config.utilitiesContainerChat){ChatLib.chat("This is a friendly reminder to run \"" + theCommandToRun + "\" (without any quotation marks) to determine if this person is a suspicious individual or not. You are receiving this notification now as you have the \"Container Chat\" feature enabled and can type the message manually.");return;}
+                else {ChatLib.chat("Running analysis on " + (chestMenuName.replace("You", "").replaceAll(" ", "")) + "...");Minecraft.getMinecraft().thePlayer.sendChatMessage(theCommandToRun);}
+            }
+        }
+    }
+
     public void checkSomeonesStats(String thatOneParameter) {
         String theNameToCheck = "";
         if (thatOneParameter.endsWith(config.utilitiesShareText) || thatOneParameter.endsWith(config.utilitiesShareBootsText) || thatOneParameter.endsWith(config.utilitiesShareHelmetText) || thatOneParameter.endsWith(config.utilitiesShareLeggingsText) || thatOneParameter.endsWith(config.utilitiesShareChestplateText) || thatOneParameter.startsWith("[weight")) {return;}
@@ -128,6 +145,7 @@ public class FindSomeonesSkyblockInfo {
                 int currentSbProfileSkillAverage = 0;
                 int currentSbProfileSlayerXp = 0;
                 String displayName = "";
+                String uuidFromJson = "";
                 String cuteName = "";
                 String firstJoinText = "";
                 int avgSkillXpRank = 0;
@@ -135,11 +153,21 @@ public class FindSomeonesSkyblockInfo {
                 int collectedFairySouls = 0;
                 int totalFairySouls = 0;
                 int catacombsLevel = 0;
+                int iceEssence = 0;
+                int witherEssence = 0;
+                int spiderEssence = 0;
+                int undeadEssence = 0;
+                int diamondEssence = 0;
+                int dragonEssence = 0;
+                int goldEssence = 0;
+                int crimsonEssence = 0;
+                int totalEssence = 0;
 
                 for (Map.Entry<String,JsonElement> me : profileSet)
                 {
                     if (me.getValue().getAsJsonObject().get("current").getAsBoolean()) {
                         displayName = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("display_name").getAsString();
+                        uuidFromJson = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("uuid").getAsString();
                         cuteName = me.getValue().getAsJsonObject().get("cute_name").getAsString();
                         currentSbProfileSkillAverage = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("average_level").getAsInt();
                         currentSbProfileSlayerXp = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("slayer_xp").getAsInt();
@@ -151,23 +179,42 @@ public class FindSomeonesSkyblockInfo {
                         try {
                             catacombsLevel = (((JsonObject)((JsonObject)((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("dungeons")).get("catacombs")).get("level")).get("level")).getAsInt();
                         } catch (Exception e) {
-                            ChatLib.chat("It looks like" + theNameToCheck + "has not explored the Catacombs yet. See logs.");
-                            System.out.println("It looks like" + theNameToCheck + "has not explored the Catacombs yet. See logs.");
+                            ChatLib.chat("It looks like " + displayName + " has not explored the Catacombs yet!");
+                            System.out.println("It looks like " + displayName + " has not explored the Catacombs yet! See below.");
                             e.printStackTrace();
                         }
+                        iceEssence = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("essence")).get("ice")).getAsInt();
+                        witherEssence = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("essence")).get("wither")).getAsInt();
+                        spiderEssence = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("essence")).get("spider")).getAsInt();
+                        undeadEssence = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("essence")).get("undead")).getAsInt();
+                        diamondEssence = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("essence")).get("diamond")).getAsInt();
+                        dragonEssence = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("essence")).get("dragon")).getAsInt();
+                        goldEssence = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("essence")).get("gold")).getAsInt();
+                        crimsonEssence = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("essence")).get("crimson")).getAsInt();
+                        totalEssence = iceEssence + witherEssence + spiderEssence + undeadEssence + diamondEssence + dragonEssence + goldEssence + crimsonEssence;
                     }
                 }
-                
+
+                String prefix = ("\n §7- ");
                 String skillAvg = (EnumChatFormatting.BLUE + "" + currentSbProfileSkillAverage + " Skill Average");
                 String slayerXP = (EnumChatFormatting.RED + "" + currentSbProfileSlayerXp + " Slayer XP");
                 firstJoinText = (EnumChatFormatting.GREEN + "First joined " + firstJoinText);
                 cuteName = (EnumChatFormatting.GOLD + cuteName);
+                uuidFromJson = (EnumChatFormatting.GRAY + "UUID: " + EnumChatFormatting.DARK_GREEN + uuidFromJson);
                 String totalXp = (EnumChatFormatting.DARK_AQUA + "" + totalSkillXp + " total Skill XP");
                 String avgXpRank = (EnumChatFormatting.YELLOW + "Ranked #" + avgSkillXpRank + " in Skill Average");
                 String fairySoulFraction = (EnumChatFormatting.LIGHT_PURPLE + "Collected " + collectedFairySouls + "/" + totalFairySouls + " fairy souls");
-                String catacombsLvlString = (EnumChatFormatting.DARK_AQUA + "Catacombs Level " + catacombsLevel);
+                String catacombsLvlString = (EnumChatFormatting.DARK_RED + "Catacombs Level " + catacombsLevel);
+                String essenceString = (EnumChatFormatting.DARK_PURPLE + "Total essence: §r" + totalEssence + " Essence (of which they have " + EnumChatFormatting.BLUE + iceEssence + " Ice, " + EnumChatFormatting.GRAY + witherEssence + " Wither, " + EnumChatFormatting.DARK_RED + spiderEssence + " Spider, " + EnumChatFormatting.DARK_PURPLE + undeadEssence + " Undead, " + EnumChatFormatting.AQUA + diamondEssence + " Diamond, " + EnumChatFormatting.YELLOW + dragonEssence + " Dragon, " + EnumChatFormatting.GOLD + goldEssence + " Gold, and " + EnumChatFormatting.RED + crimsonEssence + " Crimson§r)");
 
-                ChatLib.chat("Here are " + displayName + "'s stats on their " + cuteName + "§r profile:\n §7- " + skillAvg + "\n §7- " + avgXpRank + "\n §7- " + totalXp + "\n §7- " + slayerXP + "\n §7- " + fairySoulFraction + "\n §7- " + catacombsLvlString + "\n §7- " + firstJoinText);
+                ChatLib.chat("Here are " + displayName + "'s stats on their " + cuteName + "§r profile:" + prefix + skillAvg + prefix + avgXpRank + prefix + totalXp + prefix + slayerXP + prefix + fairySoulFraction + prefix + catacombsLvlString + prefix + firstJoinText + prefix + uuidFromJson + prefix + essenceString);
+                if (displayName.equals("Technoblade")) {
+                    Calendar c = Calendar.getInstance();
+                    ChatLib.chat("Please donate to the Sarcoma Foundation of America (https://www.curesarcoma.org/technoblade-tribute/), or buy his memorial merchandise at https://technoblade.com.");
+                    if (c.get(Calendar.YEAR) == 2022 && c.get(Calendar.MONTH) == 6) {
+                        ChatLib.chat("Make sure you visit Technoblade's memorial at the main Hypixel lobby and speak to the Book Keeper NPC there as well.");
+                    }
+                }
             } catch (Exception e) {
                 ChatLib.chat("Synthesis ran into a problem checking content from SkyCrypt. See logs.");
                 System.out.println("Synthesis ran into a problem checking content from SkyCrypt. See logs.");
