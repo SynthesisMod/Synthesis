@@ -52,10 +52,6 @@ public class FindSomeonesSkyblockInfo {
             http.setRequestProperty("Method", "GET");
             http.connect();
             try (InputStream instream = http.getInputStream()) {
-                if (http.getResponseCode() != 200) {
-                    ChatLib.chat("Synthesis did not get an A-OK response from SkyCrypt. The response code Synthesis got instead was " + http.getResponseCode() + ". Aborting mission.");
-                    return;
-                }
                 JsonParser parser = new JsonParser();
                 JsonObject data = parser.parse(new String(IOUtils.toByteArray(instream), StandardCharsets.UTF_8)).getAsJsonObject();
                 if (!data.has("profiles")) {
@@ -79,16 +75,17 @@ public class FindSomeonesSkyblockInfo {
                 int overallSenitherWeight = ((int)((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("senither")).get("overall").getAsDouble());
                 int overallLilyWeight = ((int)((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("lily")).get("total").getAsDouble());
 
-                ChatLib.chat(displayName + "'s Senither weight to the nearest integer is " + overallSenitherWeight + " and their Lily weight to the nearest integer is " + overallLilyWeight + ".");
+                ChatLib.chat(displayName + "'s weight info is as follows: ");
+                ChatLib.chat("Overall Lily Weight: " + overallLilyWeight + "\nOverall Senither Weight: " + overallSenitherWeight);
                 
             } catch (Exception e) {
-                ChatLib.chat("Synthesis ran into a problem checking content from SkyCrypt. See logs.");
-                System.out.println("Synthesis ran into a problem checking content from SkyCrypt. See logs.");
-                e.printStackTrace();
+                ChatLib.chat("Synthesis did not get an A-OK response from SkyCrypt. The response code Synthesis got instead was " + http.getResponseCode() + ". Aborting mission.");
+                System.out.println("Synthesis did not get an A-OK response from SkyCrypt. The response code Synthesis got instead was " + http.getResponseCode() + ". Aborting mission, see below.");
+                return;
             }
         } catch (Exception e) {
             ChatLib.chat("Synthesis ran into a problem checking " + nameToCheck + "'s weight. See logs.");
-            System.out.println("Synthesis ran into a problem checking " + nameToCheck + "'s weight. See logs.");
+            System.out.println("Synthesis ran into a problem checking " + nameToCheck + "'s weight. See below.");
             e.printStackTrace();
         }
     }
@@ -157,6 +154,7 @@ public class FindSomeonesSkyblockInfo {
                 int goldEssence = 0;
                 int crimsonEssence = 0;
                 int totalEssence = 0;
+                JsonElement currentSbProfileWeightData = null;
 
                 for (Map.Entry<String,JsonElement> me : profileSet)
                 {
@@ -186,10 +184,11 @@ public class FindSomeonesSkyblockInfo {
                         goldEssence = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("essence")).get("gold")).getAsInt();
                         crimsonEssence = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("essence")).get("crimson")).getAsInt();
                         totalEssence = iceEssence + witherEssence + spiderEssence + undeadEssence + diamondEssence + dragonEssence + goldEssence + crimsonEssence;
+                        currentSbProfileWeightData = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("weight");
                     }
                 }
 
-                String prefix = ("\n §8- ");
+                String linePrefix = ("\n §8- ");
                 String skillAvg = (EnumChatFormatting.BLUE + "" + currentSbProfileSkillAverage + " Skill Average");
                 String slayerXP = (EnumChatFormatting.RED + "" + currentSbProfileSlayerXp + " Slayer XP");
                 firstJoinText = (EnumChatFormatting.GREEN + "First joined " + firstJoinText);
@@ -199,8 +198,11 @@ public class FindSomeonesSkyblockInfo {
                 String fairySoulFraction = (EnumChatFormatting.LIGHT_PURPLE + "Collected " + collectedFairySouls + "/" + totalFairySouls + " fairy souls");
                 String catacombsLvlString = (EnumChatFormatting.DARK_RED + "Catacombs Level " + catacombsLevel);
                 String essenceString = (EnumChatFormatting.DARK_PURPLE + "Total essence: §r" + totalEssence + " Essence (of which they have " + EnumChatFormatting.BLUE + iceEssence + " Ice, " + EnumChatFormatting.GRAY + witherEssence + " Wither, " + EnumChatFormatting.DARK_RED + spiderEssence + " Spider, " + EnumChatFormatting.DARK_PURPLE + undeadEssence + " Undead, " + EnumChatFormatting.AQUA + diamondEssence + " Diamond, " + EnumChatFormatting.YELLOW + dragonEssence + " Dragon, " + EnumChatFormatting.GOLD + goldEssence + " Gold, and " + EnumChatFormatting.RED + crimsonEssence + " Crimson§r)");
+                double overallSenitherWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("senither")).get("overall").getAsDouble());
+                double overallLilyWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("lily")).get("total").getAsDouble());
+                String weightString = (EnumChatFormatting.YELLOW + "Overall Lily Weight: " + overallLilyWeight + linePrefix + "Overall Senither Weight: " + overallSenitherWeight);
 
-                ChatLib.chat("Here are " + displayName + "'s stats on their " + cuteName + "§r profile:" + prefix + skillAvg + prefix + totalXp + prefix + slayerXP + prefix + fairySoulFraction + prefix + catacombsLvlString + prefix + firstJoinText + prefix + uuidFromJson + prefix + essenceString);
+                ChatLib.chat("Here are " + displayName + "'s stats on their " + cuteName + "§r profile:" + linePrefix + skillAvg + linePrefix + totalXp + linePrefix + slayerXP + linePrefix + fairySoulFraction + linePrefix + catacombsLvlString + linePrefix + firstJoinText + linePrefix + uuidFromJson + linePrefix + essenceString + linePrefix + weightString);
                 if (displayName.equals("Technoblade")) {
                     Calendar c = Calendar.getInstance();
                     ChatLib.chat("Please donate to the Sarcoma Foundation of America (https://www.curesarcoma.org/technoblade-tribute/), or buy his memorial merchandise at https://technoblade.com.");
@@ -209,13 +211,14 @@ public class FindSomeonesSkyblockInfo {
                     }
                 }
             } catch (Exception e) {
-                ChatLib.chat("Synthesis ran into a problem checking content from SkyCrypt. See logs.");
-                System.out.println("Synthesis ran into a problem checking content from SkyCrypt. See logs.");
+                ChatLib.chat("Synthesis did not get an A-OK response from SkyCrypt. The response code Synthesis got instead was " + http.getResponseCode() + ". Aborting mission.");
+                System.out.println("Synthesis did not get an A-OK response from SkyCrypt. The response code Synthesis got instead was " + http.getResponseCode() + ". See below.");
                 e.printStackTrace();
+                return;
             }
         } catch (Exception e) {
             ChatLib.chat("Synthesis ran into a problem checking " + theNameToCheck + "'s weight. See logs.");
-            System.out.println("Synthesis ran into a problem checking " + theNameToCheck + "'s weight. See logs.");
+            System.out.println("Synthesis ran into a problem checking " + theNameToCheck + "'s weight. See below.");
             e.printStackTrace();
         }
     }
