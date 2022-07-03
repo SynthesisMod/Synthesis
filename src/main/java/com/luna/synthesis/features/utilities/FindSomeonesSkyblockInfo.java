@@ -148,7 +148,6 @@ public class FindSomeonesSkyblockInfo {
                 String uuidFromJson = "";
                 String cuteName = "";
                 String firstJoinText = "";
-                int avgSkillXpRank = 0;
                 int totalSkillXp = 0;
                 int collectedFairySouls = 0;
                 int totalFairySouls = 0;
@@ -172,7 +171,6 @@ public class FindSomeonesSkyblockInfo {
                         currentSbProfileSkillAverage = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("average_level").getAsInt();
                         currentSbProfileSlayerXp = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("slayer_xp").getAsInt();
                         firstJoinText = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("first_join")).get("text")).getAsString();
-                        avgSkillXpRank = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("average_level_rank").getAsInt();
                         totalSkillXp = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("total_skill_xp").getAsInt();
                         collectedFairySouls = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("fairy_souls")).get("collected")).getAsInt();
                         totalFairySouls = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("fairy_souls")).get("total")).getAsInt();
@@ -202,12 +200,11 @@ public class FindSomeonesSkyblockInfo {
                 cuteName = (EnumChatFormatting.GOLD + cuteName);
                 uuidFromJson = (EnumChatFormatting.GRAY + "UUID: " + EnumChatFormatting.DARK_GREEN + uuidFromJson);
                 String totalXp = (EnumChatFormatting.DARK_AQUA + "" + totalSkillXp + " total Skill XP");
-                String avgXpRank = (EnumChatFormatting.YELLOW + "Ranked #" + avgSkillXpRank + " in Skill Average");
                 String fairySoulFraction = (EnumChatFormatting.LIGHT_PURPLE + "Collected " + collectedFairySouls + "/" + totalFairySouls + " fairy souls");
                 String catacombsLvlString = (EnumChatFormatting.DARK_RED + "Catacombs Level " + catacombsLevel);
                 String essenceString = (EnumChatFormatting.DARK_PURPLE + "Total essence: §r" + totalEssence + " Essence (of which they have " + EnumChatFormatting.BLUE + iceEssence + " Ice, " + EnumChatFormatting.GRAY + witherEssence + " Wither, " + EnumChatFormatting.DARK_RED + spiderEssence + " Spider, " + EnumChatFormatting.DARK_PURPLE + undeadEssence + " Undead, " + EnumChatFormatting.AQUA + diamondEssence + " Diamond, " + EnumChatFormatting.YELLOW + dragonEssence + " Dragon, " + EnumChatFormatting.GOLD + goldEssence + " Gold, and " + EnumChatFormatting.RED + crimsonEssence + " Crimson§r)");
 
-                ChatLib.chat("Here are " + displayName + "'s stats on their " + cuteName + "§r profile:" + prefix + skillAvg + prefix + avgXpRank + prefix + totalXp + prefix + slayerXP + prefix + fairySoulFraction + prefix + catacombsLvlString + prefix + firstJoinText + prefix + uuidFromJson + prefix + essenceString);
+                ChatLib.chat("Here are " + displayName + "'s stats on their " + cuteName + "§r profile:" + prefix + skillAvg + prefix + totalXp + prefix + slayerXP + prefix + fairySoulFraction + prefix + catacombsLvlString + prefix + firstJoinText + prefix + uuidFromJson + prefix + essenceString);
                 if (displayName.equals("Technoblade")) {
                     Calendar c = Calendar.getInstance();
                     ChatLib.chat("Please donate to the Sarcoma Foundation of America (https://www.curesarcoma.org/technoblade-tribute/), or buy his memorial merchandise at https://technoblade.com.");
