@@ -102,6 +102,7 @@ public class FindSomeonesSkyblockInfo {
     public void checkSomeonesStats(String thatOneParameter) {
         String theNameToCheck = "";
         if (thatOneParameter.endsWith(config.utilitiesShareText) || thatOneParameter.endsWith(config.utilitiesShareBootsText) || thatOneParameter.endsWith(config.utilitiesShareHelmetText) || thatOneParameter.endsWith(config.utilitiesShareLeggingsText) || thatOneParameter.endsWith(config.utilitiesShareChestplateText) || thatOneParameter.startsWith("[weight")) {return;}
+        if (!config.utilitiesCheckStats) {return;}
         if (thatOneParameter.startsWith("[stats") && thatOneParameter.endsWith("]")) {
             if (thatOneParameter.endsWith("[stats]")) {
                 theNameToCheck = Minecraft.getMinecraft().thePlayer.getName();
@@ -200,7 +201,7 @@ public class FindSomeonesSkyblockInfo {
                 String essenceString = (EnumChatFormatting.DARK_PURPLE + "Total essence: §r" + totalEssence + " Essence (of which they have " + EnumChatFormatting.BLUE + iceEssence + " Ice, " + EnumChatFormatting.GRAY + witherEssence + " Wither, " + EnumChatFormatting.DARK_RED + spiderEssence + " Spider, " + EnumChatFormatting.DARK_PURPLE + undeadEssence + " Undead, " + EnumChatFormatting.AQUA + diamondEssence + " Diamond, " + EnumChatFormatting.YELLOW + dragonEssence + " Dragon, " + EnumChatFormatting.GOLD + goldEssence + " Gold, and " + EnumChatFormatting.RED + crimsonEssence + " Crimson§r)");
                 double overallSenitherWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("senither")).get("overall").getAsDouble());
                 double overallLilyWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("lily")).get("total").getAsDouble());
-                String weightString = (EnumChatFormatting.YELLOW + "Overall Lily Weight: " + overallLilyWeight + linePrefix + "Overall Senither Weight: " + overallSenitherWeight);
+                String weightString = (EnumChatFormatting.YELLOW + "Overall Lily Weight: " + overallLilyWeight + linePrefix + "§eOverall Senither Weight: " + overallSenitherWeight);
 
                 ChatLib.chat("Here are " + displayName + "'s stats on their " + cuteName + "§r profile:" + linePrefix + skillAvg + linePrefix + totalXp + linePrefix + slayerXP + linePrefix + fairySoulFraction + linePrefix + catacombsLvlString + linePrefix + firstJoinText + linePrefix + uuidFromJson + linePrefix + essenceString + linePrefix + weightString);
                 if (displayName.equals("Technoblade")) {
