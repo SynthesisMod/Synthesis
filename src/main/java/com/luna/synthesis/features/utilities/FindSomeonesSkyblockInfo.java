@@ -6,11 +6,8 @@ import com.luna.synthesis.events.MessageSentEvent;
 import com.luna.synthesis.utils.ChatLib;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.inventory.ContainerChest;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StringUtils;
-import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import org.apache.commons.io.IOUtils;
@@ -28,14 +25,13 @@ import com.google.gson.*;
 //because writing it in SynthesisCommand.java won't be fun!
 public class FindSomeonesSkyblockInfo {
     private final Config config = Synthesis.getInstance().getConfig();
-    private String chestMenuName;
 
     @SubscribeEvent
     public void onMessageSent(MessageSentEvent event) {
         String nameToCheck = "";
         if (event.message.endsWith(config.utilitiesShareText) || event.message.endsWith(config.utilitiesShareBootsText) || event.message.endsWith(config.utilitiesShareHelmetText) || event.message.endsWith(config.utilitiesShareLeggingsText) || event.message.endsWith(config.utilitiesShareChestplateText)) {return;}
         if (!config.utilitiesCheckWeight && event.message.startsWith("[weight")) {event.setCanceled(true); ChatLib.chat("You have the setting disabled. Please enable it and try again, but do so with extreme caution.");return;}
-        if (event.message.startsWith("[stats")) {checkSomeonesStats(event.message); event.setCanceled(true); return;}
+        if (event.message.startsWith("[stats") && event.message.endsWith("]")) {checkSomeonesStats(event.message); event.setCanceled(true); return;}
         if (event.message.startsWith("[weight")) {
             if (event.message.endsWith("[weight]")) {
                 nameToCheck = Minecraft.getMinecraft().thePlayer.getName();
@@ -98,26 +94,26 @@ public class FindSomeonesSkyblockInfo {
     }
 
     @SubscribeEvent
-    public void onGuiScreen(GuiScreenEvent.BackgroundDrawnEvent e) {
-        if (Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
-            chestMenuName = StringUtils.stripControlCodes((((ContainerChest)((GuiChest)(Minecraft.getMinecraft().currentScreen)).inventorySlots).getLowerChestInventory().getDisplayName().getUnformattedText()));
-            if (chestMenuName.startsWith("You")) {
-                String theCommandToRun = ("[stats " + chestMenuName.replace("You", "").replaceAll(" ", "") + "]").toLowerCase();
-                if (config.utilitiesContainerChat){ChatLib.chat("This is a friendly reminder to run \"" + theCommandToRun + "\" (without any quotation marks) to determine if this person is a suspicious individual or not. You are receiving this notification now as you have the \"Container Chat\" feature enabled and can type the message manually.");return;}
-                else {ChatLib.chat("Running analysis on " + (chestMenuName.replace("You", "").replaceAll(" ", "")) + "...");Minecraft.getMinecraft().thePlayer.sendChatMessage(theCommandToRun);}
-            }
-        }
+    public void onGuiScreen(ClientChatReceivedEvent e) {
+        String message = e.message.getUnformattedText();
+        if (!(message.startsWith("You have sent a trade request to "))) {return;}
+        String theirName = message.replace("You have sent a trade request to ", "").replace(".", "");
+        ChatLib.chat("Running analysis on " + theirName + "...");
+        checkSomeonesStats("[stats " + theirName + "]");
     }
 
     public void checkSomeonesStats(String thatOneParameter) {
         String theNameToCheck = "";
         if (thatOneParameter.endsWith(config.utilitiesShareText) || thatOneParameter.endsWith(config.utilitiesShareBootsText) || thatOneParameter.endsWith(config.utilitiesShareHelmetText) || thatOneParameter.endsWith(config.utilitiesShareLeggingsText) || thatOneParameter.endsWith(config.utilitiesShareChestplateText) || thatOneParameter.startsWith("[weight")) {return;}
-        if (thatOneParameter.startsWith("[stats")) {
+        if (thatOneParameter.startsWith("[stats") && thatOneParameter.endsWith("]")) {
             if (thatOneParameter.endsWith("[stats]")) {
                 theNameToCheck = Minecraft.getMinecraft().thePlayer.getName();
             } else {
                 theNameToCheck = (thatOneParameter.toLowerCase().replace("[stats ", "").replace("]", "")).replace(" ", "");
             }
+        } else {
+            ChatLib.chat("Are you sure you have a coherent username whose stats you want to see?");
+            return;
         }
         try {
             URL url = new URL("https://sky.shiiyu.moe/api/v2/profile/" + theNameToCheck);
@@ -193,7 +189,7 @@ public class FindSomeonesSkyblockInfo {
                     }
                 }
 
-                String prefix = ("\n §7- ");
+                String prefix = ("\n §8- ");
                 String skillAvg = (EnumChatFormatting.BLUE + "" + currentSbProfileSkillAverage + " Skill Average");
                 String slayerXP = (EnumChatFormatting.RED + "" + currentSbProfileSlayerXp + " Slayer XP");
                 firstJoinText = (EnumChatFormatting.GREEN + "First joined " + firstJoinText);
