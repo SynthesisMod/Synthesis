@@ -206,7 +206,11 @@ public class LoreCleanup {
         }
         // UUID — THIS MUST BE OUTSIDE THE WHILE LOOP TO PREVENT TOOLTIP CO-MODIFICATION CRASHES
         if (item.getSubCompound("ExtraAttributes", false) != null && item.getSubCompound("ExtraAttributes", false).hasKey("uuid") && !inPetsMenuAndIsAPet && config.utilitiesLoreItemUUID) {
-            event.toolTip.add("§d[Synthesis]§7 Item UUID: " + item.getSubCompound("ExtraAttributes", false).getString("uuid"));
+            event.toolTip.add("§d[Synthesis]§7 Item UUID: §l" + item.getSubCompound("ExtraAttributes", false).getString("uuid"));
+        }
+
+        if (config.utilitiesLoreOriginTag && item.getSubCompound("ExtraAttributes", false) != null && item.getSubCompound("ExtraAttributes", false).getString("originTag") != null && !inPetsMenuAndIsAPet) {
+            event.toolTip.add("§d[Synthesis]§7 Item origin: §l" + item.getSubCompound("ExtraAttributes", false).getString("originTag"));
         }
     }
 }
