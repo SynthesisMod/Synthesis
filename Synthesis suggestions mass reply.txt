@@ -25,7 +25,7 @@ Suggestion 31: HOW DARE YOU CALL NEU REDUN—*clears throat* sorry there. Point 
 
 Suggestion 32: Grandma Wolf pet was released before you made that suggestion (January 2022). Lots of other mods already had this feature by then.
 
-Suggestion 33: `https://sky.shiiyu.moe/api/v2/profile/<username>` is a good start... I'll look into it.
+Suggestion 33: `https://sky.shiiyu.moe/api/v2/profile/<username>` is a good start... I'll look into it. Update: DONE
 
 Suggestion 38: Skyclient Updater should provide similar features for a much wider range of mods.
 
@@ -91,7 +91,7 @@ Suggestion 80: ...do you not have a phone to do this?
 
 Suggestion 82: "auto send specific message in party chat after server sends specific message for it." So if the server has already sent the message for it, why repeat it in party chat?
 
-Suggestion 83: Sure, but where though? Grabbing the info is easy enough, but with NEU's custom trade menu in the equation... (I guess sending it to chat and leaving it up to user to find it via Container Chat is the best option. I'll look into it.)
+Suggestion 83: Sure, but where though? Grabbing the info is easy enough, but with NEU's custom trade menu in the equation... (I guess sending it to chat and leaving it up to user to find it via Container Chat is the best option. I'll look into it.) Update: DONE
 
 Suggestion 84: Given how many edits I've made to pet item lore for Synthesis, my best option is to edit an item tooltip line noting the percentage situation. I will need around 20 million coins to test this, though. Update: ALMOST THERE
 
@@ -119,7 +119,7 @@ Suggestion 97: Actually a decent suggestion and I hope this isn't a problem in v
 
 Suggestion 98: IS IT THAT HARD TO PRESS THE 'T' KEY???
 
-Suggestion 99: Decent suggestion but much like my earlier ventures with pet names in the pet menu, this COULD fuck with Skytils again. Probably not but eh. I'll look into it. UPDATE: ALMOST THERE
+Suggestion 99: Decent suggestion but much like my earlier ventures with pet names in the pet menu, this COULD fuck with Skytils again. Probably not but eh. I'll look into it.
 
 Suggestion 100: Already implemented.
 

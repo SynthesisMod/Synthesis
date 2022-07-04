@@ -91,10 +91,11 @@ public class FindSomeonesSkyblockInfo {
     }
 
     @SubscribeEvent
-    public void onGuiScreen(ClientChatReceivedEvent e) {
+    public void onChatEvent(ClientChatReceivedEvent e) {
         String message = e.message.getUnformattedText();
         if (!(message.startsWith("You have sent a trade request to "))) {return;}
         String theirName = message.replace("You have sent a trade request to ", "").replace(".", "");
+        if (!config.utilitiesCheckStats) {ChatLib.chat("You have currently disabled player analyses at this time. Run away as far as possible from " + theirName + " to cancel the trade and re-enable the setting in the config if you want to get an analysis on them."); return;}
         ChatLib.chat("Running analysis on " + theirName + "...");
         checkSomeonesStats("[stats " + theirName + "]");
     }
@@ -102,7 +103,7 @@ public class FindSomeonesSkyblockInfo {
     public void checkSomeonesStats(String thatOneParameter) {
         String theNameToCheck = "";
         if (thatOneParameter.endsWith(config.utilitiesShareText) || thatOneParameter.endsWith(config.utilitiesShareBootsText) || thatOneParameter.endsWith(config.utilitiesShareHelmetText) || thatOneParameter.endsWith(config.utilitiesShareLeggingsText) || thatOneParameter.endsWith(config.utilitiesShareChestplateText) || thatOneParameter.startsWith("[weight")) {return;}
-        if (!config.utilitiesCheckStats) {return;}
+        if (!config.utilitiesCheckStats) {ChatLib.chat("You have currently disabled player analyses at this time. Re-enable the setting in the config if you want to get an analysis on them."); return;}
         if (thatOneParameter.startsWith("[stats") && thatOneParameter.endsWith("]")) {
             if (thatOneParameter.endsWith("[stats]")) {
                 theNameToCheck = Minecraft.getMinecraft().thePlayer.getName();
