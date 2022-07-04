@@ -194,7 +194,7 @@ public class FindSomeonesSkyblockInfo {
                 profileId = currentSbProfileData.get("profile").getAsJsonObject().get("profile_id").getAsString();
                 try {
                     gameMode = currentSbProfileData.get("profile").getAsJsonObject().get("game_mode").getAsString();
-                } catch (NullPointerException e) {
+                } catch (Exception e) {
                     gameMode = ("Classic");
                 }
                 currentSbProfileSkillAverage = currentSbProfileData.get("average_level").getAsInt();
