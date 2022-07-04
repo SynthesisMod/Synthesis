@@ -209,6 +209,7 @@ public class LoreCleanup {
             event.toolTip.add("§d[Synthesis]§7 Item UUID: §l" + item.getSubCompound("ExtraAttributes", false).getString("uuid"));
         }
 
+        // ITEM ORIGIN — MUST BE OUTSIDE WHILE LOOP TO PREVENT CRASHES
         if (config.utilitiesLoreOriginTag && item.getSubCompound("ExtraAttributes", false) != null && item.getSubCompound("ExtraAttributes", false).getString("originTag") != null && item.getSubCompound("ExtraAttributes", false).getString("originTag") != "" && !inPetsMenuAndIsAPet) {
             event.toolTip.add("§d[Synthesis]§7 Item origin: §l" + item.getSubCompound("ExtraAttributes", false).getString("originTag"));
         }
