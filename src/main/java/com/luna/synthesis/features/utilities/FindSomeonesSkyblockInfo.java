@@ -42,6 +42,7 @@ import com.google.gson.*;
 //because writing it in SynthesisCommand.java won't be fun!
 public class FindSomeonesSkyblockInfo {
     private final Config config = Synthesis.getInstance().getConfig();
+    private final String skyCryptURL = ("https://sky.shiiyu.moe/api/v2/profile/");
 
     @SubscribeEvent
     public void onMessageSent(MessageSentEvent event) {
@@ -60,7 +61,7 @@ public class FindSomeonesSkyblockInfo {
             return;
         }
         try {
-            URL url = new URL("https://sky.shiiyu.moe/api/v2/profile/" + nameToCheck);
+            URL url = new URL(skyCryptURL + nameToCheck);
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setDoOutput(true);
             http.setDoInput(true);
@@ -132,7 +133,7 @@ public class FindSomeonesSkyblockInfo {
             return;
         }
         try {
-            URL url = new URL("https://sky.shiiyu.moe/api/v2/profile/" + theNameToCheck);
+            URL url = new URL(skyCryptURL + theNameToCheck);
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setDoOutput(true);
             http.setDoInput(true);
@@ -159,6 +160,7 @@ public class FindSomeonesSkyblockInfo {
                 String displayName = "";
                 String uuidFromJson = "";
                 String cuteName = "";
+                String profileId = "";
                 String firstJoinText = "";
                 long totalSkillXp = 0;
                 int collectedFairySouls = 0;
@@ -174,43 +176,51 @@ public class FindSomeonesSkyblockInfo {
                 int crimsonEssence = 0;
                 int totalEssence = 0;
                 JsonElement currentSbProfileWeightData = null;
-                JsonElement currentSbProfileData = null;
+                JsonObject currentSbProfileData = null;
                 String rankPrefix = "";
+                String gameMode = "";
 
                 for (Map.Entry<String,JsonElement> me : profileSet)
                 {
                     if (me.getValue().getAsJsonObject().get("current").getAsBoolean()) {
-                        currentSbProfileData = ((JsonElement)(me.getValue().getAsJsonObject()));
+                        currentSbProfileData = ((me.getValue().getAsJsonObject().get("data").getAsJsonObject()));
                     }
                 }
 
-                displayName = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("display_name").getAsString();
-                uuidFromJson = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("uuid").getAsString();
-                rankPrefix = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("rank_prefix").getAsString();
-                cuteName = currentSbProfileData.getAsJsonObject().get("cute_name").getAsString();
-                currentSbProfileSkillAverage = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("average_level").getAsInt();
-                currentSbProfileSlayerXp = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("slayer_xp").getAsInt();
-                firstJoinText = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("first_join")).get("text")).getAsString();
-                totalSkillXp = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("total_skill_xp").getAsLong();
-                collectedFairySouls = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("fairy_souls")).get("collected")).getAsInt();
-                totalFairySouls = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("fairy_souls")).get("total")).getAsInt();
+                displayName = currentSbProfileData.get("display_name").getAsString();
+                uuidFromJson = currentSbProfileData.get("uuid").getAsString();
+                rankPrefix = currentSbProfileData.get("rank_prefix").getAsString();
+                cuteName = currentSbProfileData.get("profile").getAsJsonObject().get("cute_name").getAsString();
+                profileId = currentSbProfileData.get("profile").getAsJsonObject().get("profile_id").getAsString();
                 try {
-                    catacombsLevel = (((JsonObject)((JsonObject)((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("dungeons")).get("catacombs")).get("level")).get("level")).getAsInt();
+                    gameMode = currentSbProfileData.get("profile").getAsJsonObject().get("game_mode").getAsString();
+                } catch (NullPointerException e) {
+                    gameMode = ("Classic");
+                }
+                currentSbProfileSkillAverage = currentSbProfileData.get("average_level").getAsInt();
+                currentSbProfileSlayerXp = currentSbProfileData.get("slayer_xp").getAsInt();
+                firstJoinText = currentSbProfileData.get("first_join").getAsJsonObject().get("text").getAsString();
+                totalSkillXp = currentSbProfileData.get("total_skill_xp").getAsLong();
+                collectedFairySouls = currentSbProfileData.get("fairy_souls").getAsJsonObject().get("collected").getAsInt();
+                totalFairySouls = currentSbProfileData.get("fairy_souls").getAsJsonObject().get("total").getAsInt();
+                try {
+                    catacombsLevel = currentSbProfileData.get("dungeons").getAsJsonObject().get("catacombs").getAsJsonObject().get("level").getAsJsonObject().get("level").getAsInt();
                 } catch (Exception e) {
                     ChatLib.chat("It looks like " + displayName + " has not explored the Catacombs yet!");
                     System.out.println("It looks like " + displayName + " has not explored the Catacombs yet! See below.");
                     e.printStackTrace();
                 }
-                iceEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("ice")).getAsInt();
-                witherEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("wither")).getAsInt();
-                spiderEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("spider")).getAsInt();
-                undeadEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("undead")).getAsInt();
-                diamondEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("diamond")).getAsInt();
-                dragonEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("dragon")).getAsInt();
-                goldEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("gold")).getAsInt();
-                crimsonEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("crimson")).getAsInt();
+                JsonObject essenceData = currentSbProfileData.get("essence").getAsJsonObject();
+                iceEssence = essenceData.get("ice").getAsInt();
+                witherEssence = essenceData.get("wither").getAsInt();
+                spiderEssence = essenceData.get("spider").getAsInt();
+                undeadEssence = essenceData.get("undead").getAsInt();
+                diamondEssence = essenceData.get("diamond").getAsInt();
+                dragonEssence = essenceData.get("dragon").getAsInt();
+                goldEssence = essenceData.get("gold").getAsInt();
+                crimsonEssence = essenceData.get("crimson").getAsInt();
                 totalEssence = iceEssence + witherEssence + spiderEssence + undeadEssence + diamondEssence + dragonEssence + goldEssence + crimsonEssence;
-                currentSbProfileWeightData = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("weight");
+                currentSbProfileWeightData = currentSbProfileData.get("weight");
 
                 String linePrefix = ("\n §8- ");
                 String skillAvg = (EnumChatFormatting.BLUE + "" + currentSbProfileSkillAverage + " Skill Average");
@@ -225,6 +235,8 @@ public class FindSomeonesSkyblockInfo {
                 double overallSenitherWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("senither")).get("overall").getAsDouble());
                 double overallLilyWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("lily")).get("total").getAsDouble());
                 String weightString = (EnumChatFormatting.YELLOW + "Overall Lily Weight: " + ((int)(overallLilyWeight)) + linePrefix + "§eOverall Senither Weight: " + ((int)(overallSenitherWeight)));
+                profileId = (EnumChatFormatting.DARK_BLUE + "Profile ID: " + profileId);
+                gameMode = (EnumChatFormatting.GOLD + "" + Character.toUpperCase(gameMode.charAt(0)) + gameMode.substring(1));
                 if (rankPrefix.equals("")) {
                     rankPrefix = ("§7");
                 } else {
@@ -256,7 +268,19 @@ public class FindSomeonesSkyblockInfo {
                     possessiveApostrophe = "'";
                 }
 
-                ChatLib.chat("Here are " + rankPrefix + displayName + "§r" + possessiveApostrophe + " SkyCrypt stats on their " + cuteName + "§r profile:" + linePrefix + skillAvg + linePrefix + totalXp + linePrefix + slayerXP + linePrefix + fairySoulFraction + linePrefix + catacombsLvlString + linePrefix + firstJoinText + linePrefix + uuidFromJson + linePrefix + essenceString + linePrefix + weightString);
+                ChatLib.chat("Here are " + rankPrefix + displayName + "§r" + possessiveApostrophe
+                            + " SkyCrypt stats on their " + cuteName + "§r profile with gamemode " + gameMode + ":"
+                                + linePrefix + skillAvg
+                                + linePrefix + totalXp
+                                + linePrefix + slayerXP
+                                + linePrefix + fairySoulFraction
+                                + linePrefix + catacombsLvlString
+                                + linePrefix + firstJoinText
+                                + linePrefix + essenceString
+                                + linePrefix + weightString
+                                + linePrefix + uuidFromJson
+                                + linePrefix + profileId
+                            );
                 if (displayName.equals("Technoblade")) {
                     Calendar c = Calendar.getInstance();
                     ChatLib.chat("Please donate to the Sarcoma Foundation of America (https://www.curesarcoma.org/technoblade-tribute/), or buy his memorial merchandise at https://technoblade.com.");
