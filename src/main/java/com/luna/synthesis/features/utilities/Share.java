@@ -46,7 +46,19 @@ public class Share {
         if (message.endsWith(config.utilitiesShareText)) {
             event.setCanceled(true);
             doTheMagic(Minecraft.getMinecraft().thePlayer.getHeldItem(), message, config.utilitiesShareText);
-        } else if (message.endsWith(config.utilitiesShareHelmetText)) {
+        }
+        /**
+         * 
+         * Suggestion #29 by AstroFuture#0932
+         * suggested this before but it disappeared randomly, 
+         * in addition to [item], have [helmet], [chestplate],
+         * [leggings] and [boots] to make it easier to show armour
+         * pieces without having to take them off and hold them
+         * which is a pain especially when you have armour pieces
+         * slot bound via neu
+         * 
+        */
+        else if (message.endsWith(config.utilitiesShareHelmetText)) {
             event.setCanceled(true);
             doTheMagic(Minecraft.getMinecraft().thePlayer.getEquipmentInSlot(4), message, config.utilitiesShareHelmetText);
         } else if (message.endsWith(config.utilitiesShareChestplateText)) {

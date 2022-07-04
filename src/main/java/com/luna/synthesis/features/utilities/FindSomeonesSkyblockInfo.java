@@ -22,6 +22,23 @@ import java.nio.charset.StandardCharsets;
 
 import com.google.gson.*;
 
+
+/**
+ * <pre>
+ * FindSomeonesSkyblockInfo
+ * A Java class by Erymanthus | RayDeeUx for Synthesis-NONCANON.
+ * 
+ * Suggestion #33 by OutlawMC#0001
+ * Add the commands "/lilyweight" and "/senweight"
+ * to get ingame weight calcs (basically same as
+ * sbe has but add options to view both)
+ * 
+ * Suggestion #83 by Shy#9999
+ * Show a short version of a players stats in trade menu's
+ * so you can determine you SUSSY they are
+ * 
+ * </pre>
+ **/
 //because writing it in SynthesisCommand.java won't be fun!
 public class FindSomeonesSkyblockInfo {
     private final Config config = Synthesis.getInstance().getConfig();
@@ -143,7 +160,7 @@ public class FindSomeonesSkyblockInfo {
                 String uuidFromJson = "";
                 String cuteName = "";
                 String firstJoinText = "";
-                int totalSkillXp = 0;
+                long totalSkillXp = 0;
                 int collectedFairySouls = 0;
                 int totalFairySouls = 0;
                 int catacombsLevel = 0;
@@ -157,17 +174,19 @@ public class FindSomeonesSkyblockInfo {
                 int crimsonEssence = 0;
                 int totalEssence = 0;
                 JsonElement currentSbProfileWeightData = null;
+                String rankPrefix = "";
 
                 for (Map.Entry<String,JsonElement> me : profileSet)
                 {
                     if (me.getValue().getAsJsonObject().get("current").getAsBoolean()) {
                         displayName = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("display_name").getAsString();
                         uuidFromJson = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("uuid").getAsString();
+                        rankPrefix = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("rank_prefix").getAsString();
                         cuteName = me.getValue().getAsJsonObject().get("cute_name").getAsString();
                         currentSbProfileSkillAverage = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("average_level").getAsInt();
                         currentSbProfileSlayerXp = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("slayer_xp").getAsInt();
                         firstJoinText = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("first_join")).get("text")).getAsString();
-                        totalSkillXp = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("total_skill_xp").getAsInt();
+                        totalSkillXp = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("total_skill_xp").getAsLong();
                         collectedFairySouls = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("fairy_souls")).get("collected")).getAsInt();
                         totalFairySouls = (((JsonObject)((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("fairy_souls")).get("total")).getAsInt();
                         try {
@@ -203,8 +222,38 @@ public class FindSomeonesSkyblockInfo {
                 double overallSenitherWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("senither")).get("overall").getAsDouble());
                 double overallLilyWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("lily")).get("total").getAsDouble());
                 String weightString = (EnumChatFormatting.YELLOW + "Overall Lily Weight: " + overallLilyWeight + linePrefix + "§eOverall Senither Weight: " + overallSenitherWeight);
+                if (rankPrefix.equals("")) {
+                    rankPrefix = ("§7");
+                } else {
+                    try {
+                        // things to remove!
+                    // <div class=\"rank-tag nice-colors-dark\">
+                    // <div class=\"rank-name\" style=\"background-color: var(--
+                    // )\">
+                    // </div>
+                    // <div class=\"rank-plus\" style=\"background-color: var(--
+                    // \n
+                    // " "
+                    rankPrefix = rankPrefix.replace("<div class=\"rank-tag nice-colors-dark\">", "")
+                    .replace("<div class=\"rank-name\" style=\"background-color: var(--", "")
+                    .replace(")\">", "").replace("</div>", "")
+                    .replace("<div class=\"rank-plus\" style=\"background-color: var(--", "")
+                    .replaceAll("\n", "")
+                    .replaceAll(" ", "");
+                    rankPrefix = rankPrefix.substring(0, 2) + "[" + rankPrefix + rankPrefix.substring(0, 2) + "] ";
+                    } catch (Exception e) {
+                        rankPrefix = "";
+                        ChatLib.chat("Synthesis tried to parse Hypixel rank information from SkyCrypt, but failed. See logs.");
+                        System.out.println("Synthesis tried to parse Hypixel rank information from SkyCrypt, but failed. See below.");
+                        e.printStackTrace();
+                    }
+                }
+                String possessiveApostrophe = "'s";
+                if (displayName.endsWith("s")) {
+                    possessiveApostrophe = "'";
+                }
 
-                ChatLib.chat("Here are " + displayName + "'s stats on their " + cuteName + "§r profile:" + linePrefix + skillAvg + linePrefix + totalXp + linePrefix + slayerXP + linePrefix + fairySoulFraction + linePrefix + catacombsLvlString + linePrefix + firstJoinText + linePrefix + uuidFromJson + linePrefix + essenceString + linePrefix + weightString);
+                ChatLib.chat("Here are " + rankPrefix + displayName + "§r" + possessiveApostrophe + " SkyCrypt stats on their " + cuteName + "§r profile:" + linePrefix + skillAvg + linePrefix + totalXp + linePrefix + slayerXP + linePrefix + fairySoulFraction + linePrefix + catacombsLvlString + linePrefix + firstJoinText + linePrefix + uuidFromJson + linePrefix + essenceString + linePrefix + weightString);
                 if (displayName.equals("Technoblade")) {
                     Calendar c = Calendar.getInstance();
                     ChatLib.chat("Please donate to the Sarcoma Foundation of America (https://www.curesarcoma.org/technoblade-tribute/), or buy his memorial merchandise at https://technoblade.com.");
@@ -213,8 +262,13 @@ public class FindSomeonesSkyblockInfo {
                     }
                 }
             } catch (Exception e) {
-                ChatLib.chat("Synthesis did not get an A-OK response from SkyCrypt. The response code Synthesis got instead was " + http.getResponseCode() + ". Aborting mission.");
-                System.out.println("Synthesis did not get an A-OK response from SkyCrypt. The response code Synthesis got instead was " + http.getResponseCode() + ". See below.");
+                if (http.getResponseCode() != 200) {
+                    ChatLib.chat("Synthesis did not get an A-OK response from SkyCrypt. The response code Synthesis got instead was " + http.getResponseCode() + ". Aborting mission.");
+                    System.out.println("Synthesis did not get an A-OK response from SkyCrypt. The response code Synthesis got instead was " + http.getResponseCode() + ". See below.");
+                } else {
+                    ChatLib.chat("Synthesis got information from SkyCrypt, but couldn't successfully parse it. See logs.");
+                    System.out.println("Synthesis got information from SkyCrypt, but couldn't successfully parse it. See below.");
+                }
                 e.printStackTrace();
                 return;
             }
