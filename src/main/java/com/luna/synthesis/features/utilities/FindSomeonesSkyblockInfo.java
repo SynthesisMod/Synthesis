@@ -185,32 +185,32 @@ public class FindSomeonesSkyblockInfo {
                 }
 
                 displayName = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("display_name").getAsString();
-                        uuidFromJson = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("uuid").getAsString();
-                        rankPrefix = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("rank_prefix").getAsString();
-                        cuteName = currentSbProfileData.getAsJsonObject().get("cute_name").getAsString();
-                        currentSbProfileSkillAverage = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("average_level").getAsInt();
-                        currentSbProfileSlayerXp = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("slayer_xp").getAsInt();
-                        firstJoinText = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("first_join")).get("text")).getAsString();
-                        totalSkillXp = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("total_skill_xp").getAsLong();
-                        collectedFairySouls = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("fairy_souls")).get("collected")).getAsInt();
-                        totalFairySouls = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("fairy_souls")).get("total")).getAsInt();
-                        try {
-                            catacombsLevel = (((JsonObject)((JsonObject)((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("dungeons")).get("catacombs")).get("level")).get("level")).getAsInt();
-                        } catch (Exception e) {
-                            ChatLib.chat("It looks like " + displayName + " has not explored the Catacombs yet!");
-                            System.out.println("It looks like " + displayName + " has not explored the Catacombs yet! See below.");
-                            e.printStackTrace();
-                        }
-                        iceEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("ice")).getAsInt();
-                        witherEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("wither")).getAsInt();
-                        spiderEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("spider")).getAsInt();
-                        undeadEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("undead")).getAsInt();
-                        diamondEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("diamond")).getAsInt();
-                        dragonEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("dragon")).getAsInt();
-                        goldEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("gold")).getAsInt();
-                        crimsonEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("crimson")).getAsInt();
-                        totalEssence = iceEssence + witherEssence + spiderEssence + undeadEssence + diamondEssence + dragonEssence + goldEssence + crimsonEssence;
-                        currentSbProfileWeightData = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("weight");
+                uuidFromJson = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("uuid").getAsString();
+                rankPrefix = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("rank_prefix").getAsString();
+                cuteName = currentSbProfileData.getAsJsonObject().get("cute_name").getAsString();
+                currentSbProfileSkillAverage = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("average_level").getAsInt();
+                currentSbProfileSlayerXp = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("slayer_xp").getAsInt();
+                firstJoinText = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("first_join")).get("text")).getAsString();
+                totalSkillXp = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("total_skill_xp").getAsLong();
+                collectedFairySouls = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("fairy_souls")).get("collected")).getAsInt();
+                totalFairySouls = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("fairy_souls")).get("total")).getAsInt();
+                try {
+                    catacombsLevel = (((JsonObject)((JsonObject)((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("dungeons")).get("catacombs")).get("level")).get("level")).getAsInt();
+                } catch (Exception e) {
+                    ChatLib.chat("It looks like " + displayName + " has not explored the Catacombs yet!");
+                    System.out.println("It looks like " + displayName + " has not explored the Catacombs yet! See below.");
+                    e.printStackTrace();
+                }
+                iceEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("ice")).getAsInt();
+                witherEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("wither")).getAsInt();
+                spiderEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("spider")).getAsInt();
+                undeadEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("undead")).getAsInt();
+                diamondEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("diamond")).getAsInt();
+                dragonEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("dragon")).getAsInt();
+                goldEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("gold")).getAsInt();
+                crimsonEssence = (((JsonObject)((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("essence")).get("crimson")).getAsInt();
+                totalEssence = iceEssence + witherEssence + spiderEssence + undeadEssence + diamondEssence + dragonEssence + goldEssence + crimsonEssence;
+                currentSbProfileWeightData = ((JsonObject)(currentSbProfileData.getAsJsonObject().get("data"))).get("weight");
 
                 String linePrefix = ("\n §8- ");
                 String skillAvg = (EnumChatFormatting.BLUE + "" + currentSbProfileSkillAverage + " Skill Average");
