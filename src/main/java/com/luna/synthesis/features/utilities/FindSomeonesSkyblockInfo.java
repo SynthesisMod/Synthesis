@@ -235,7 +235,7 @@ public class FindSomeonesSkyblockInfo {
                 double overallSenitherWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("senither")).get("overall").getAsDouble());
                 double overallLilyWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("lily")).get("total").getAsDouble());
                 String weightString = (EnumChatFormatting.YELLOW + "Overall Lily Weight: " + ((int)(overallLilyWeight)) + linePrefix + "§eOverall Senither Weight: " + ((int)(overallSenitherWeight)));
-                profileId = (EnumChatFormatting.DARK_BLUE + "Profile ID: " + profileId);
+                profileId = (EnumChatFormatting.GRAY + "Profile ID: " + EnumChatFormatting.DARK_GREEN + profileId);
                 gameMode = (EnumChatFormatting.GOLD + "" + Character.toUpperCase(gameMode.charAt(0)) + gameMode.substring(1));
                 if (rankPrefix.equals("")) {
                     rankPrefix = ("§7");
@@ -269,7 +269,7 @@ public class FindSomeonesSkyblockInfo {
                 }
 
                 ChatLib.chat("Here are " + rankPrefix + displayName + "§r" + possessiveApostrophe
-                            + " SkyCrypt stats on their " + cuteName + "§r profile with gamemode " + gameMode + ":"
+                            + " SkyCrypt stats on their " + cuteName + "§r profile with gamemode " + gameMode + "§r:"
                                 + linePrefix + skillAvg
                                 + linePrefix + totalXp
                                 + linePrefix + slayerXP
@@ -281,12 +281,14 @@ public class FindSomeonesSkyblockInfo {
                                 + linePrefix + uuidFromJson
                                 + linePrefix + profileId
                             );
-                if (displayName.equals("Technoblade")) {
+                if (displayName.equals("Technoblade") || uuidFromJson.contains("b876ec32e396476ba1158438d83c67d4")) {
                     Calendar c = Calendar.getInstance();
                     ChatLib.chat("Please donate to the Sarcoma Foundation of America (https://www.curesarcoma.org/technoblade-tribute/), or buy his memorial merchandise at https://technoblade.com.");
                     if (c.get(Calendar.YEAR) == 2022 && c.get(Calendar.MONTH) == 6) {
                         ChatLib.chat("Make sure you visit Technoblade's memorial at the main Hypixel lobby and speak to the Book Keeper NPC there as well.");
                     }
+                } else if (displayName.equals("SirDesco") || uuidFromJson.contains("e710ff36fe334c0e8401bda9d24fa121")) {
+                    ChatLib.chat("Oh look, it's the Synthesis developer!");
                 }
             } catch (Exception e) {
                 if (http.getResponseCode() != 200) {
