@@ -256,16 +256,15 @@ public class FindSomeonesSkyblockInfo {
 
                 String linePrefix = ("\n §8- ");
                 String skillAvg = ("§9" + currentSbProfileSkillAverage + " Skill Average");
-                String slayerXP = ("§c" + currentSbProfileSlayerXp + " Slayer XP");
                 firstJoinText = ("§aFirst joined " + firstJoinText);
                 cuteName = ("§6" + cuteName);
                 uuidFromJson = ("§7UUID: §2" + uuidFromJson);
-                String totalXp = ("§3" + totalSkillXp + " total Skill XP");
+                String totalAndSlayerXp = ("§3" + totalSkillXp + " total Skill XP§r | §c" + currentSbProfileSlayerXp + " Slayer XP");
                 String fairySoulFraction = ("§dCollected " + collectedFairySouls + "/" + totalFairySouls + " fairy souls");
                 String catacombsLvlString = ("§4Catacombs Level " + catacombsLevel);
-                String essenceString = ("§5Total essence: §r" + totalEssence + " Essence (of which they have §9" + iceEssence + " Ice, §7" + witherEssence + " Wither, §4" + spiderEssence + " Spider, §5" + undeadEssence + " Undead, §b" + diamondEssence + " Diamond, §e" + dragonEssence + " Dragon, §6" + goldEssence + " Gold, and §c" + crimsonEssence + " Crimson§r)");
-                String weightString = ("§eOverall Lily Weight: " + ((int)(overallLilyWeight)) + linePrefix + "§eOverall Senither Weight: " + ((int)(overallSenitherWeight)));
-                String purseString = ("§6Purse: " + purse);
+                String essenceString = ("§5Total essence: §r" + totalEssence + " Essence (§9" + iceEssence + " Ice§r, §7" + witherEssence + " Wither§r, §4" + spiderEssence + " Spider§r, §5" + undeadEssence + " Undead§r, §b" + diamondEssence + " Diamond§r, §e" + dragonEssence + " Dragon§r, §6" + goldEssence + " Gold§r, §c" + crimsonEssence + " Crimson§r)");
+                String weightString = ("§eOverall Lily Weight: " + ((int)(overallLilyWeight)) + " | Overall Senither Weight: " + ((int)(overallSenitherWeight)));
+                String purseString = ("§6Purse: " + purse + " coins");
                 profileId = ("§7Profile ID: §2" + profileId);
                 gameMode = ("§6" + Character.toUpperCase(gameMode.charAt(0)) + gameMode.substring(1));
                 if (rankPrefix.equals("")) {
@@ -303,12 +302,11 @@ public class FindSomeonesSkyblockInfo {
                 }
 
                 ChatLib.chat("Here are " + rankPrefix + displayName + "§r" + possessiveApostrophe
-                            + " SkyCrypt stats on their " + cuteName + "§r profile with gamemode " + gameMode + "§r:"
+                            + " SkyCrypt stats on their " + gameMode + "§r profile named " + cuteName + " §r(their most recent profile):"
                             + linePrefix + (isInGuild ? guildInfo : "§2They do not appear to be in a guild.")
                             + linePrefix + purseString
                             + linePrefix + skillAvg
-                            + linePrefix + totalXp
-                            + linePrefix + slayerXP
+                            + linePrefix + totalAndSlayerXp
                             + linePrefix + catacombsLvlString
                             + linePrefix + essenceString
                             + linePrefix + weightString
