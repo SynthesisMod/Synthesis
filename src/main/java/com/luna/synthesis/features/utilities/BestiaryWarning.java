@@ -19,6 +19,16 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/**
+ * <pre>
+ * BestiaryWarning
+ * A Java class by Erymanthus | RayDeeUx for Synthesis-NONCANON.
+ * 
+ * Suggestion #63 by minhperry#2803
+ * warning if you are near the 1m combat xp bestiary rhing
+ * </pre>
+ */
+
 public class BestiaryWarning {
 
     private final Config config = Synthesis.getInstance().getConfig();

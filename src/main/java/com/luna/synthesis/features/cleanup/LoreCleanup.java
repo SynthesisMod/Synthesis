@@ -43,6 +43,12 @@ public class LoreCleanup {
             if (config.cleanupPetDisplayName && inPetsMenuAndIsAPet && StringUtils.stripControlCodes(item.getDisplayName()).startsWith("[Lvl ") && StringUtils.stripControlCodes(item.getDisplayName()).contains("] ")){
                 item.setStackDisplayName(item.getDisplayName().replace("Lvl ", ""));
                 if (StringUtils.stripControlCodes(item.getDisplayName()).contains("Black Cat")) {
+                    /**
+                     * 
+                     * Suggestion #84 by minhperry#2803
+                     * "fix" black cat description
+                     * 
+                     */
                     isBlackCat = true;
                 }
             }
@@ -54,6 +60,7 @@ public class LoreCleanup {
                 previousLine = line;
                 if (config.cleanupLorePetType == 3 || line.contains("All Skills"))
                     if (isBlackCat) {
+                        //suggestion #84 implementation
                         event.toolTip.set(index, line.replace(line, "§7Note: Magic Find and Pet Luck increases are not additive, but rather percentage-based."));
                     } else {
                         iterator.remove();
@@ -66,10 +73,12 @@ public class LoreCleanup {
                         event.toolTip.set(index, line.replace(" Pet", "").replace(" Mount", "").replace(" Morph", "").replace(", feed to gain XP", ""));
                     }
                     if (isBlackCat) {
+                        //suggestion #84 implementation
                         event.toolTip.set(index, line.replace(line, line + " §7(Magic Find and Pet Luck increases are not additive, but rather percentage-based)"));
                     }
                 }
             } else if ((config.cleanupLorePetType == 0) && (isBlackCat)) {
+                //suggestion #84 implementation
                 event.toolTip.set(index, line.replace(line, line + " §7(Magic Find and Pet Luck increases are not additive, but rather percentage-based)"));
             } else if (config.cleanupLorePetPerkName && inPetsMenuAndIsAPet && line.startsWith("§6") && !line.contains("Held Item")) {
                 previousLine = line;
@@ -205,6 +214,11 @@ public class LoreCleanup {
             }
         }
         // UUID — THIS MUST BE OUTSIDE THE WHILE LOOP TO PREVENT TOOLTIP CO-MODIFICATION CRASHES
+        /*
+         * Suggestion #69 by aHuman#6726
+         * option to show uuid of an item in it's lore
+         * 
+         */
         if (item.getSubCompound("ExtraAttributes", false) != null && item.getSubCompound("ExtraAttributes", false).hasKey("uuid") && !inPetsMenuAndIsAPet && config.utilitiesLoreItemUUID) {
             event.toolTip.add("§d[Synthesis]§7 Item UUID: §l" + item.getSubCompound("ExtraAttributes", false).getString("uuid"));
         }

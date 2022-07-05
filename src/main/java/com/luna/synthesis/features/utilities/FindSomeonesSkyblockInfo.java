@@ -35,11 +35,12 @@ import com.google.gson.*;
  * 
  * Suggestion #83 by Shy#9999
  * Show a short version of a players stats in trade menu's
- * so you can determine you SUSSY they are
+ * so you can determine you (sic) SUSSY they are
  * 
  * </pre>
  **/
-//because writing it in SynthesisCommand.java won't be fun!
+//to #33: SIKE! IT'S IN `[share]` FORMAT—writing it in SynthesisCommand.java won't be fun!
+//to #83: SIKE! it's shown in chat instead because i do NOT want to mess with the custom NEU trade menu.
 public class FindSomeonesSkyblockInfo {
     private final Config config = Synthesis.getInstance().getConfig();
     private final String skyCryptURL = ("https://sky.shiiyu.moe/api/v2/profile/");
@@ -113,7 +114,7 @@ public class FindSomeonesSkyblockInfo {
         String message = e.message.getUnformattedText();
         if (!(message.startsWith("You have sent a trade request to "))) {return;}
         String theirName = message.replace("You have sent a trade request to ", "").replace(".", "");
-        if (!config.utilitiesCheckStats) {ChatLib.chat("You have currently disabled player analyses at this time. Run away as far as possible from " + theirName + " to cancel the trade and re-enable the setting in the config if you want to get an analysis on them."); return;}
+        if (!config.utilitiesCheckStats) {ChatLib.chat("You have currently disabled player analyses at this time. Run away as far as possible from " + theirName + " to cancel the trade and re-enable the setting in the config if you want to get an analysis on them."); /* Minecraft.getMinecraft().thePlayer.sendChatMessage("wait hold on a sec need to tweak my mod configs"); */ return;}
         ChatLib.chat("Running analysis on " + theirName + "...");
         checkSomeonesStats("[stats " + theirName + "]");
     }
