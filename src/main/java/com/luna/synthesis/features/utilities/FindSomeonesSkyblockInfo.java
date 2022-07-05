@@ -261,14 +261,14 @@ public class FindSomeonesSkyblockInfo {
                 String skillAvg = ("§9" + currentSbProfileSkillAverage + " Skill Average");
                 firstJoinText = ("§aFirst joined " + firstJoinText);
                 cuteName = ("§6" + cuteName);
-                uuidFromJson = ("§7UUID: §2" + uuidFromJson);
+                String uuidFromJsonString = ("§7UUID: §2" + uuidFromJson);
                 String totalAndSlayerXp = ("§3" + totalSkillXp + " total Skill XP§r | §c" + currentSbProfileSlayerXp + " Slayer XP");
                 String fairySoulFraction = ("§dCollected " + collectedFairySouls + "/" + totalFairySouls + " fairy souls");
                 catacombsLvlString = ("§4Catacombs Level " + catacombsLevel);
                 String essenceString = ("§5Total essence: §r" + totalEssence + " Essence (§9" + iceEssence + " Ice§r, §7" + witherEssence + " Wither§r, §4" + spiderEssence + " Spider§r, §5" + undeadEssence + " Undead§r, §b" + diamondEssence + " Diamond§r, §e" + dragonEssence + " Dragon§r, §6" + goldEssence + " Gold§r, §c" + crimsonEssence + " Crimson§r)");
                 String weightString = ("§eOverall Lily Weight: " + ((int)(overallLilyWeight)) + " §r| §eOverall Senither Weight: " + ((int)(overallSenitherWeight)));
                 String purseString = ("§6Purse: " + purse + " coin" + (purse != 1 ? "s" : ""));
-                profileId = ("§7Profile ID: §2" + profileId);
+                String profileIdString = ("§7Profile ID: §2" + profileId);
                 gameMode = ("§6" + Character.toUpperCase(gameMode.charAt(0)) + gameMode.substring(1));
                 if (rankPrefix.equals("")) {
                     rankPrefix = ("§7");
@@ -315,8 +315,8 @@ public class FindSomeonesSkyblockInfo {
                             + linePrefix + weightString
                             + linePrefix + firstJoinText
                             + linePrefix + fairySoulFraction
-                            + linePrefix + uuidFromJson
-                            + linePrefix + profileId
+                            + linePrefix + uuidFromJsonString
+                            + linePrefix + profileIdString
                         );
                 if (displayName.equals("Technoblade") || uuidFromJson.contains("b876ec32e396476ba1158438d83c67d4")) {
                     Calendar c = Calendar.getInstance();
