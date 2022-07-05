@@ -246,9 +246,9 @@ public class FindSomeonesSkyblockInfo {
                     currentAreaUpdatedFromJson = currentSbProfileData.get("current_area_updated").getAsBoolean();
                 } catch (Exception e) {currentAreaUpdatedFromJson = false;}
                 if (!currentAreaUpdatedFromJson) {
-                    lastActiveString = ("Last seen on " + new SimpleDateFormat("EEEE, MMM d, yyy h:mm:ss a z").format((new Date(currentSbProfileData.get("last_updated").getAsJsonObject().get("unix").getAsLong()))));
+                    lastActiveString = ("Last seen in SB on " + new SimpleDateFormat("EEEE, MMM d, yyy h:mm:ss a z").format((new Date(currentSbProfileData.get("last_updated").getAsJsonObject().get("unix").getAsLong()))));
                 } else {
-                    lastActiveString = "Probably online right now";
+                    lastActiveString = "Probably in Skyblock right now";
                 }
                 currentSbProfileWeightData = currentSbProfileData.get("weight");
                 double overallSenitherWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("senither")).get("overall").getAsDouble());
@@ -275,7 +275,7 @@ public class FindSomeonesSkyblockInfo {
 
                 String linePrefix = ("\n §8- ");
                 String skillAvg = ("§9" + currentSbProfileSkillAverage + " Skill Average");
-                firstJoinText = ("§aFirst joined on " + firstJoinText);
+                firstJoinText = ("§aProfile created " + firstJoinText);
                 String activityString = (firstJoinText + "§r | §a" + lastActiveString);
                 cuteName = ("§6" + cuteName);
                 String uuidFromJsonString = ("§7UUID: §2" + uuidFromJson);
@@ -325,8 +325,7 @@ public class FindSomeonesSkyblockInfo {
                             + " SkyCrypt stats on their " + gameMode + "§r profile named " + cuteName + " §r(their most recent profile):"
                             + linePrefix + (isInGuild ? guildInfo : "§2They do not appear to be in a guild.")
                             + linePrefix + coinsString
-                            + linePrefix + skillAvg
-                            + linePrefix + totalAndSlayerXp
+                            + linePrefix + skillAvg + "§r | " + totalAndSlayerXp
                             + linePrefix + (isCata ? catacombsLvlString : "§4They have not explored the Catacombs yet.")
                             + (isCata ? linePrefix + essenceString : "")
                             + linePrefix + weightString
