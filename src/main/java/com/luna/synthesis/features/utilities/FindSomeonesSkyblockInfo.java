@@ -271,7 +271,7 @@ public class FindSomeonesSkyblockInfo {
                 catacombsLvlString = ("§4Catacombs Level " + catacombsLevel);
                 String essenceString = ("§5Total essence: §r" + totalEssence + " Essence (§9" + iceEssence + " Ice§r, §7" + witherEssence + " Wither§r, §4" + spiderEssence + " Spider§r, §5" + undeadEssence + " Undead§r, §b" + diamondEssence + " Diamond§r, §e" + dragonEssence + " Dragon§r, §6" + goldEssence + " Gold§r, §c" + crimsonEssence + " Crimson§r)");
                 String weightString = ("§eOverall Lily Weight: " + ((int)(overallLilyWeight)) + " §r| §eOverall Senither Weight: " + ((int)(overallSenitherWeight)));
-                String coinsString = ("§6Purse: " + purse + " coin" + (purse != 1 ? "s" : "") + " §r| " + (bank != -1 ? "§6Bank: " + bank + (bank != 1 ? "s" : "") : "§cBank API disabled."));
+                String coinsString = ("§6Purse: " + purse + " coin" + (purse != 1 ? "s" : "") + " §r| " + (bank != -1 ? "§6Bank: " + bank + " coin" + (bank != 1 ? "s" : "") : "§cBank API disabled."));
                 String profileIdString = ("§7Profile ID: §2" + profileId);
                 gameMode = ("§6" + Character.toUpperCase(gameMode.charAt(0)) + gameMode.substring(1));
                 if (rankPrefix.equals("")) {
