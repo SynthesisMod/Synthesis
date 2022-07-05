@@ -191,6 +191,7 @@ public class FindSomeonesSkyblockInfo {
                 String guildMaster = "";
                 String guildInfo = "";
                 int purse = 0;
+                int bank = 0;
 
                 for (Map.Entry<String,JsonElement> me : profileSet)
                 {
@@ -233,7 +234,10 @@ public class FindSomeonesSkyblockInfo {
                     crimsonEssence = essenceData.get("crimson").getAsInt();
                     totalEssence = iceEssence + witherEssence + spiderEssence + undeadEssence + diamondEssence + dragonEssence + goldEssence + crimsonEssence;
                 }
-                purse = currentSbProfileData.get("purse").getAsInt();//purse
+                purse = currentSbProfileData.get("purse").getAsInt();
+                try {
+                    bank = currentSbProfileData.get("bank").getAsInt();
+                } catch (Exception e) {bank = -1;}
                 currentSbProfileWeightData = currentSbProfileData.get("weight");
                 double overallSenitherWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("senither")).get("overall").getAsDouble());
                 double overallLilyWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("lily")).get("total").getAsDouble());
@@ -267,7 +271,7 @@ public class FindSomeonesSkyblockInfo {
                 catacombsLvlString = ("§4Catacombs Level " + catacombsLevel);
                 String essenceString = ("§5Total essence: §r" + totalEssence + " Essence (§9" + iceEssence + " Ice§r, §7" + witherEssence + " Wither§r, §4" + spiderEssence + " Spider§r, §5" + undeadEssence + " Undead§r, §b" + diamondEssence + " Diamond§r, §e" + dragonEssence + " Dragon§r, §6" + goldEssence + " Gold§r, §c" + crimsonEssence + " Crimson§r)");
                 String weightString = ("§eOverall Lily Weight: " + ((int)(overallLilyWeight)) + " §r| §eOverall Senither Weight: " + ((int)(overallSenitherWeight)));
-                String purseString = ("§6Purse: " + purse + " coin" + (purse != 1 ? "s" : ""));
+                String coinsString = ("§6Purse: " + purse + " coin" + (purse != 1 ? "s" : "") + " §r| " + (bank != -1 ? "§6Bank: " + bank + (bank != 1 ? "s" : "") : "§cBank API disabled."));
                 String profileIdString = ("§7Profile ID: §2" + profileId);
                 gameMode = ("§6" + Character.toUpperCase(gameMode.charAt(0)) + gameMode.substring(1));
                 if (rankPrefix.equals("")) {
@@ -307,7 +311,7 @@ public class FindSomeonesSkyblockInfo {
                 ChatLib.chat("Here are " + rankPrefix + displayName + "§r" + possessiveApostrophe
                             + " SkyCrypt stats on their " + gameMode + "§r profile named " + cuteName + " §r(their most recent profile):"
                             + linePrefix + (isInGuild ? guildInfo : "§2They do not appear to be in a guild.")
-                            + linePrefix + purseString
+                            + linePrefix + coinsString
                             + linePrefix + skillAvg
                             + linePrefix + totalAndSlayerXp
                             + linePrefix + (isCata ? catacombsLvlString : "§4They have not explored the Catacombs yet.")
