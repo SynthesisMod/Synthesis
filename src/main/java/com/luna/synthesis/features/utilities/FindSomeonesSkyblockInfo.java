@@ -251,7 +251,7 @@ public class FindSomeonesSkyblockInfo {
                         guildMaster = "";
                     } else {
                         guildRank = "§2with guild rank §a\"" + guildRank + "\"";
-                        guildMaster = "Their guildmaster is §a" + guildMaster + ".";
+                        guildMaster = "Their guildmaster is §a" + guildMaster + "§2.";
                     }
                 } catch (Exception e) {
                     isInGuild = false;
