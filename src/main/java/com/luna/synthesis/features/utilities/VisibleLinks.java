@@ -17,6 +17,7 @@ public class VisibleLinks {
 
     private final Pattern domainPattern = Pattern.compile("(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]");
     //source: https://urlregex.com/
+    //it'll still falsely trigger on `...com` but fuck it
 
     // Low priority so it's compatible with bridge
     @SubscribeEvent(priority = EventPriority.LOW)
