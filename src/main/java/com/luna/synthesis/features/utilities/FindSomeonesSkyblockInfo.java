@@ -328,7 +328,7 @@ public class FindSomeonesSkyblockInfo {
                     ChatLib.chat("Oh look, it's the Synthesis developer!");
                 }
                 if (uuidFromJson.equals(profileId)) {
-                    ChatLib.chat("You may notice that their Minecraft UUID and Skyblock profile ID are the same. Why? Listen, I didn't make the rules, and neither did SkyCrypt devs. Don't ask us.");
+                    ChatLib.chat("You may notice that their Minecraft UUID and Skyblock profile ID are the same. Why? Listen, I didn't make the rules, and neither did SkyCrypt devs. Don't ask any of us.");
                 }
             } catch (Exception e) {
                 if (http.getResponseCode() != 200) {
