@@ -158,26 +158,26 @@ public class FindSomeonesSkyblockInfo {
 
                 JsonObject profiles = data.get("profiles").getAsJsonObject();
                 Set<Map.Entry<String, JsonElement>> profileSet = profiles.entrySet();
-                int currentSbProfileSkillAverage = 0;
-                int currentSbProfileSlayerXp = 0;
+                long currentSbProfileSkillAverage = 0;
+                long currentSbProfileSlayerXp = 0;
                 String displayName = "";
                 String uuidFromJson = "";
                 String cuteName = "";
                 String profileId = "";
                 String firstJoinText = "";
                 long totalSkillXp = 0;
-                int collectedFairySouls = 0;
-                int totalFairySouls = 0;
-                int catacombsLevel = 0;
-                int iceEssence = 0;
-                int witherEssence = 0;
-                int spiderEssence = 0;
-                int undeadEssence = 0;
-                int diamondEssence = 0;
-                int dragonEssence = 0;
-                int goldEssence = 0;
-                int crimsonEssence = 0;
-                int totalEssence = 0;
+                long collectedFairySouls = 0;
+                long totalFairySouls = 0;
+                long catacombsLevel = 0;
+                long iceEssence = 0;
+                long witherEssence = 0;
+                long spiderEssence = 0;
+                long undeadEssence = 0;
+                long diamondEssence = 0;
+                long dragonEssence = 0;
+                long goldEssence = 0;
+                long crimsonEssence = 0;
+                long totalEssence = 0;
                 JsonElement currentSbProfileWeightData = null;
                 JsonObject currentSbProfileData = null;
                 String rankPrefix = "";
@@ -188,13 +188,13 @@ public class FindSomeonesSkyblockInfo {
                 boolean currentAreaUpdatedFromJson = false;
                 String guildName = "";
                 String guildTag = "";
-                int guildMembers = 0;
-                int guildLevel = 0;
+                long guildMembers = 0;
+                long guildLevel = 0;
                 String guildRank = "";
                 String guildMaster = "";
                 String guildInfo = "";
-                int purse = 0;
-                int bank = 0;
+                long purse = 0;
+                long bank = 0;
                 String lastActiveString = "";
 
                 for (Map.Entry<String,JsonElement> me : profileSet)
@@ -214,33 +214,33 @@ public class FindSomeonesSkyblockInfo {
                 } catch (Exception e) {
                     gameMode = ("Classic");
                 }
-                currentSbProfileSkillAverage = currentSbProfileData.get("average_level").getAsInt();
-                currentSbProfileSlayerXp = currentSbProfileData.get("slayer_xp").getAsInt();
+                currentSbProfileSkillAverage = currentSbProfileData.get("average_level").getAsLong();
+                currentSbProfileSlayerXp = currentSbProfileData.get("slayer_xp").getAsLong();
                 firstJoinText = currentSbProfileData.get("first_join").getAsJsonObject().get("text").getAsString();
                 totalSkillXp = currentSbProfileData.get("total_skill_xp").getAsLong();
-                collectedFairySouls = currentSbProfileData.get("fairy_souls").getAsJsonObject().get("collected").getAsInt();
-                totalFairySouls = currentSbProfileData.get("fairy_souls").getAsJsonObject().get("total").getAsInt();
+                collectedFairySouls = currentSbProfileData.get("fairy_souls").getAsJsonObject().get("collected").getAsLong();
+                totalFairySouls = currentSbProfileData.get("fairy_souls").getAsJsonObject().get("total").getAsLong();
                 try {
-                    catacombsLevel = currentSbProfileData.get("dungeons").getAsJsonObject().get("catacombs").getAsJsonObject().get("level").getAsJsonObject().get("level").getAsInt();
+                    catacombsLevel = currentSbProfileData.get("dungeons").getAsJsonObject().get("catacombs").getAsJsonObject().get("level").getAsJsonObject().get("level").getAsLong();
                     isCata = true;
                 } catch (Exception e) {
                     isCata = false;
                 }
                 if (isCata) {
                     JsonObject essenceData = currentSbProfileData.get("essence").getAsJsonObject();
-                    iceEssence = essenceData.get("ice").getAsInt();
-                    witherEssence = essenceData.get("wither").getAsInt();
-                    spiderEssence = essenceData.get("spider").getAsInt();
-                    undeadEssence = essenceData.get("undead").getAsInt();
-                    diamondEssence = essenceData.get("diamond").getAsInt();
-                    dragonEssence = essenceData.get("dragon").getAsInt();
-                    goldEssence = essenceData.get("gold").getAsInt();
-                    crimsonEssence = essenceData.get("crimson").getAsInt();
+                    iceEssence = essenceData.get("ice").getAsLong();
+                    witherEssence = essenceData.get("wither").getAsLong();
+                    spiderEssence = essenceData.get("spider").getAsLong();
+                    undeadEssence = essenceData.get("undead").getAsLong();
+                    diamondEssence = essenceData.get("diamond").getAsLong();
+                    dragonEssence = essenceData.get("dragon").getAsLong();
+                    goldEssence = essenceData.get("gold").getAsLong();
+                    crimsonEssence = essenceData.get("crimson").getAsLong();
                     totalEssence = iceEssence + witherEssence + spiderEssence + undeadEssence + diamondEssence + dragonEssence + goldEssence + crimsonEssence;
                 }
-                purse = currentSbProfileData.get("purse").getAsInt();
+                purse = currentSbProfileData.get("purse").getAsLong();
                 try {
-                    bank = currentSbProfileData.get("bank").getAsInt();
+                    bank = currentSbProfileData.get("bank").getAsLong();
                 } catch (Exception e) {bank = -1;}
                 try {
                     currentAreaUpdatedFromJson = currentSbProfileData.get("current_area_updated").getAsBoolean();
@@ -258,8 +258,8 @@ public class FindSomeonesSkyblockInfo {
                     isInGuild = true;
                     guildName = guildData.get("name").getAsString();
                     guildTag = "[" + guildData.get("tag").getAsString() + "]";
-                    guildLevel = guildData.get("level").getAsInt();
-                    guildMembers = guildData.get("members").getAsInt();
+                    guildLevel = guildData.get("level").getAsLong();
+                    guildMembers = guildData.get("members").getAsLong();
                     guildRank = guildData.get("rank").getAsString();
                     guildMaster = guildData.get("gmUser").getAsJsonObject().get("display_name").getAsString();
                     if (guildRank.toLowerCase().contains("master")) {
