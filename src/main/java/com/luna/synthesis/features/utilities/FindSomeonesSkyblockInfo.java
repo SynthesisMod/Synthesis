@@ -248,7 +248,7 @@ public class FindSomeonesSkyblockInfo {
                 if (!currentAreaUpdatedFromJson) {
                     lastActiveString = ("Last seen on " + new SimpleDateFormat("EEEE, MMM d, yyy h:mm:ss a z").format((new Date(currentSbProfileData.get("last_updated").getAsJsonObject().get("unix").getAsLong()))));
                 } else {
-                    lastActiveString = "Online right now";
+                    lastActiveString = "Probably online right now";
                 }
                 currentSbProfileWeightData = currentSbProfileData.get("weight");
                 double overallSenitherWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("senither")).get("overall").getAsDouble());
