@@ -15,8 +15,8 @@ public class VisibleLinks {
 
     private final Config config = Synthesis.getInstance().getConfig();
 
-    private final Pattern domainPattern = Pattern.compile("(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]");
-    //source: https://urlregex.com/
+    private final Pattern domainPattern = Pattern.compile("((https?)://)?[-a-zA-Z0-9+&@#/%?=~_|!:,;]+\\.[-a-zA-Z0-9+&@#/%=~_|]");
+    //modified from the java regex of https://urlregex.com/
     //it'll still falsely trigger on `...com` but fuck it
 
     // Low priority so it's compatible with bridge
