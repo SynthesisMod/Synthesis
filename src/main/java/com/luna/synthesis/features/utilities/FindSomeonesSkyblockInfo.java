@@ -6,7 +6,6 @@ import com.luna.synthesis.events.MessageSentEvent;
 import com.luna.synthesis.utils.ChatLib;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -41,6 +40,7 @@ import com.google.gson.*;
  **/
 //to #33: SIKE! IT'S IN `[share]` FORMAT—writing it in SynthesisCommand.java won't be fun!
 //to #83: SIKE! it's shown in chat instead because i do NOT want to mess with the custom NEU trade menu.
+//event.setCanceled(true) abused because NO ONE should get muted over using this and going to appeals = going to limbo
 public class FindSomeonesSkyblockInfo {
     private final Config config = Synthesis.getInstance().getConfig();
     private final String skyCryptURL = ("https://sky.shiiyu.moe/api/v2/profile/");
@@ -222,41 +222,41 @@ public class FindSomeonesSkyblockInfo {
                 crimsonEssence = essenceData.get("crimson").getAsInt();
                 totalEssence = iceEssence + witherEssence + spiderEssence + undeadEssence + diamondEssence + dragonEssence + goldEssence + crimsonEssence;
                 currentSbProfileWeightData = currentSbProfileData.get("weight");
-
-                String linePrefix = ("\n §8- ");
-                String skillAvg = (EnumChatFormatting.BLUE + "" + currentSbProfileSkillAverage + " Skill Average");
-                String slayerXP = (EnumChatFormatting.RED + "" + currentSbProfileSlayerXp + " Slayer XP");
-                firstJoinText = (EnumChatFormatting.GREEN + "First joined " + firstJoinText);
-                cuteName = (EnumChatFormatting.GOLD + cuteName);
-                uuidFromJson = (EnumChatFormatting.GRAY + "UUID: " + EnumChatFormatting.DARK_GREEN + uuidFromJson);
-                String totalXp = (EnumChatFormatting.DARK_AQUA + "" + totalSkillXp + " total Skill XP");
-                String fairySoulFraction = (EnumChatFormatting.LIGHT_PURPLE + "Collected " + collectedFairySouls + "/" + totalFairySouls + " fairy souls");
-                String catacombsLvlString = (EnumChatFormatting.DARK_RED + "Catacombs Level " + catacombsLevel);
-                String essenceString = (EnumChatFormatting.DARK_PURPLE + "Total essence: §r" + totalEssence + " Essence (of which they have " + EnumChatFormatting.BLUE + iceEssence + " Ice, " + EnumChatFormatting.GRAY + witherEssence + " Wither, " + EnumChatFormatting.DARK_RED + spiderEssence + " Spider, " + EnumChatFormatting.DARK_PURPLE + undeadEssence + " Undead, " + EnumChatFormatting.AQUA + diamondEssence + " Diamond, " + EnumChatFormatting.YELLOW + dragonEssence + " Dragon, " + EnumChatFormatting.GOLD + goldEssence + " Gold, and " + EnumChatFormatting.RED + crimsonEssence + " Crimson§r)");
                 double overallSenitherWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("senither")).get("overall").getAsDouble());
                 double overallLilyWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("lily")).get("total").getAsDouble());
-                String weightString = (EnumChatFormatting.YELLOW + "Overall Lily Weight: " + ((int)(overallLilyWeight)) + linePrefix + "§eOverall Senither Weight: " + ((int)(overallSenitherWeight)));
-                profileId = (EnumChatFormatting.GRAY + "Profile ID: " + EnumChatFormatting.DARK_GREEN + profileId);
-                gameMode = (EnumChatFormatting.GOLD + "" + Character.toUpperCase(gameMode.charAt(0)) + gameMode.substring(1));
+
+                String linePrefix = ("\n §8- ");
+                String skillAvg = ("§9" + currentSbProfileSkillAverage + " Skill Average");
+                String slayerXP = ("§c" + currentSbProfileSlayerXp + " Slayer XP");
+                firstJoinText = ("§aFirst joined " + firstJoinText);
+                cuteName = ("§6" + cuteName);
+                uuidFromJson = ("§7UUID: §2" + uuidFromJson);
+                String totalXp = ("§3" + totalSkillXp + " total Skill XP");
+                String fairySoulFraction = ("§dCollected " + collectedFairySouls + "/" + totalFairySouls + " fairy souls");
+                String catacombsLvlString = ("§4Catacombs Level " + catacombsLevel);
+                String essenceString = ("§5Total essence: §r" + totalEssence + " Essence (of which they have §9" + iceEssence + " Ice, §7" + witherEssence + " Wither, §4" + spiderEssence + " Spider, §5" + undeadEssence + " Undead, §b" + diamondEssence + " Diamond, §e" + dragonEssence + " Dragon, §6" + goldEssence + " Gold, and §c" + crimsonEssence + " Crimson§r)");
+                String weightString = ("§eOverall Lily Weight: " + ((int)(overallLilyWeight)) + linePrefix + "§eOverall Senither Weight: " + ((int)(overallSenitherWeight)));
+                profileId = ("§7Profile ID: §2" + profileId);
+                gameMode = ("§6" + Character.toUpperCase(gameMode.charAt(0)) + gameMode.substring(1));
                 if (rankPrefix.equals("")) {
                     rankPrefix = ("§7");
                 } else {
                     try {
                         // things to remove!
-                    // <div class=\"rank-tag nice-colors-dark\">
-                    // <div class=\"rank-name\" style=\"background-color: var(--
-                    // )\">
-                    // </div>
-                    // <div class=\"rank-plus\" style=\"background-color: var(--
-                    // \n
-                    // " "
-                    rankPrefix = rankPrefix.replace("<div class=\"rank-tag nice-colors-dark\">", "")
-                    .replace("<div class=\"rank-name\" style=\"background-color: var(--", "")
-                    .replace(")\">", "").replace("</div>", "")
-                    .replace("<div class=\"rank-plus\" style=\"background-color: var(--", "")
-                    .replaceAll("\n", "")
-                    .replaceAll(" ", "");
-                    rankPrefix = rankPrefix.substring(0, 2) + "[" + rankPrefix + rankPrefix.substring(0, 2) + "] ";
+                        // <div class=\"rank-tag nice-colors-dark\">
+                        // <div class=\"rank-name\" style=\"background-color: var(--
+                        // )\">
+                        // </div>
+                        // <div class=\"rank-plus\" style=\"background-color: var(--
+                        // \n
+                        // " "
+                        rankPrefix = rankPrefix.replace("<div class=\"rank-tag nice-colors-dark\">", "")
+                        .replace("<div class=\"rank-name\" style=\"background-color: var(--", "")
+                        .replace(")\">", "").replace("</div>", "")
+                        .replace("<div class=\"rank-plus\" style=\"background-color: var(--", "")
+                        .replaceAll("\n", "")
+                        .replaceAll(" ", "");
+                        rankPrefix = rankPrefix.substring(0, 2) + "[" + rankPrefix + rankPrefix.substring(0, 2) + "] ";
                     } catch (Exception e) {
                         rankPrefix = "";
                         ChatLib.chat("Synthesis tried to parse Hypixel rank information from SkyCrypt, but failed. See logs.");

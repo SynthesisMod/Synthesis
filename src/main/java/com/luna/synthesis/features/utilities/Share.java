@@ -34,6 +34,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+//event.setCanceled(true) abused because NO ONE should get muted over using this and going to appeals = going to limbo
+
 public class Share {
 
     private final Pattern shareRegexPattern = Pattern.compile("\\{SynthesisShare:([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})}", Pattern.CASE_INSENSITIVE);
