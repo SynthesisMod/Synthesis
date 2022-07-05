@@ -180,7 +180,9 @@ public class FindSomeonesSkyblockInfo {
                 JsonObject currentSbProfileData = null;
                 String rankPrefix = "";
                 String gameMode = "";
+                String catacombsLvlString = "";
                 boolean isInGuild = false;
+                boolean isCata = false;
                 String guildName = "";
                 String guildTag = "";
                 int guildMembers = 0;
@@ -215,21 +217,22 @@ public class FindSomeonesSkyblockInfo {
                 totalFairySouls = currentSbProfileData.get("fairy_souls").getAsJsonObject().get("total").getAsInt();
                 try {
                     catacombsLevel = currentSbProfileData.get("dungeons").getAsJsonObject().get("catacombs").getAsJsonObject().get("level").getAsJsonObject().get("level").getAsInt();
+                    isCata = true;
                 } catch (Exception e) {
-                    ChatLib.chat("It looks like " + displayName + " has not explored the Catacombs yet!");
-                    System.out.println("It looks like " + displayName + " has not explored the Catacombs yet! See below.");
-                    e.printStackTrace();
+                    isCata = false;
                 }
-                JsonObject essenceData = currentSbProfileData.get("essence").getAsJsonObject();
-                iceEssence = essenceData.get("ice").getAsInt();
-                witherEssence = essenceData.get("wither").getAsInt();
-                spiderEssence = essenceData.get("spider").getAsInt();
-                undeadEssence = essenceData.get("undead").getAsInt();
-                diamondEssence = essenceData.get("diamond").getAsInt();
-                dragonEssence = essenceData.get("dragon").getAsInt();
-                goldEssence = essenceData.get("gold").getAsInt();
-                crimsonEssence = essenceData.get("crimson").getAsInt();
-                totalEssence = iceEssence + witherEssence + spiderEssence + undeadEssence + diamondEssence + dragonEssence + goldEssence + crimsonEssence;
+                if (isCata) {
+                    JsonObject essenceData = currentSbProfileData.get("essence").getAsJsonObject();
+                    iceEssence = essenceData.get("ice").getAsInt();
+                    witherEssence = essenceData.get("wither").getAsInt();
+                    spiderEssence = essenceData.get("spider").getAsInt();
+                    undeadEssence = essenceData.get("undead").getAsInt();
+                    diamondEssence = essenceData.get("diamond").getAsInt();
+                    dragonEssence = essenceData.get("dragon").getAsInt();
+                    goldEssence = essenceData.get("gold").getAsInt();
+                    crimsonEssence = essenceData.get("crimson").getAsInt();
+                    totalEssence = iceEssence + witherEssence + spiderEssence + undeadEssence + diamondEssence + dragonEssence + goldEssence + crimsonEssence;
+                }
                 purse = currentSbProfileData.get("purse").getAsInt();//purse
                 currentSbProfileWeightData = currentSbProfileData.get("weight");
                 double overallSenitherWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("senither")).get("overall").getAsDouble());
@@ -261,10 +264,10 @@ public class FindSomeonesSkyblockInfo {
                 uuidFromJson = ("§7UUID: §2" + uuidFromJson);
                 String totalAndSlayerXp = ("§3" + totalSkillXp + " total Skill XP§r | §c" + currentSbProfileSlayerXp + " Slayer XP");
                 String fairySoulFraction = ("§dCollected " + collectedFairySouls + "/" + totalFairySouls + " fairy souls");
-                String catacombsLvlString = ("§4Catacombs Level " + catacombsLevel);
+                catacombsLvlString = ("§4Catacombs Level " + catacombsLevel);
                 String essenceString = ("§5Total essence: §r" + totalEssence + " Essence (§9" + iceEssence + " Ice§r, §7" + witherEssence + " Wither§r, §4" + spiderEssence + " Spider§r, §5" + undeadEssence + " Undead§r, §b" + diamondEssence + " Diamond§r, §e" + dragonEssence + " Dragon§r, §6" + goldEssence + " Gold§r, §c" + crimsonEssence + " Crimson§r)");
-                String weightString = ("§eOverall Lily Weight: " + ((int)(overallLilyWeight)) + " | Overall Senither Weight: " + ((int)(overallSenitherWeight)));
-                String purseString = ("§6Purse: " + purse + " coins");
+                String weightString = ("§eOverall Lily Weight: " + ((int)(overallLilyWeight)) + " §r| §eOverall Senither Weight: " + ((int)(overallSenitherWeight)));
+                String purseString = ("§6Purse: " + purse + " coin" + (purse != 1 ? "s" : ""));
                 profileId = ("§7Profile ID: §2" + profileId);
                 gameMode = ("§6" + Character.toUpperCase(gameMode.charAt(0)) + gameMode.substring(1));
                 if (rankPrefix.equals("")) {
@@ -307,8 +310,8 @@ public class FindSomeonesSkyblockInfo {
                             + linePrefix + purseString
                             + linePrefix + skillAvg
                             + linePrefix + totalAndSlayerXp
-                            + linePrefix + catacombsLvlString
-                            + linePrefix + essenceString
+                            + linePrefix + (isCata ? catacombsLvlString : "§4They have not explored the Catacombs yet.")
+                            + (isCata ? linePrefix + essenceString : "")
                             + linePrefix + weightString
                             + linePrefix + firstJoinText
                             + linePrefix + fairySoulFraction
