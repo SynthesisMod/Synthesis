@@ -294,7 +294,7 @@ public class FindSomeonesSkyblockInfo {
                     }
                 }
                 if (isInGuild) {
-                    guildInfo = " §2In §a" + guildName + " §7" + guildTag + " " + guildRank + "§2, at §a" + guildMembers + " §2members and level §a" + guildLevel + "§2. " + guildMaster;
+                    guildInfo = " §2In §a" + guildName + " §7" + guildTag + " " + guildRank + "§2, at §a" + guildMembers + " §2members and guild level §a" + guildLevel + "§2. " + guildMaster;
                 }
                 String possessiveApostrophe = "'s";
                 if (displayName.endsWith("s")) {
