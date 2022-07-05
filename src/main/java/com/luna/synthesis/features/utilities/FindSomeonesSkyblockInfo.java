@@ -13,11 +13,13 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.InputStream;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 
 import com.google.gson.*;
 
@@ -183,6 +185,7 @@ public class FindSomeonesSkyblockInfo {
                 String catacombsLvlString = "";
                 boolean isInGuild = false;
                 boolean isCata = false;
+                boolean currentAreaUpdatedFromJson = false;
                 String guildName = "";
                 String guildTag = "";
                 int guildMembers = 0;
@@ -192,6 +195,7 @@ public class FindSomeonesSkyblockInfo {
                 String guildInfo = "";
                 int purse = 0;
                 int bank = 0;
+                String lastActiveString = "";
 
                 for (Map.Entry<String,JsonElement> me : profileSet)
                 {
@@ -238,6 +242,14 @@ public class FindSomeonesSkyblockInfo {
                 try {
                     bank = currentSbProfileData.get("bank").getAsInt();
                 } catch (Exception e) {bank = -1;}
+                try {
+                    currentAreaUpdatedFromJson = currentSbProfileData.get("current_area_updated").getAsBoolean();
+                } catch (Exception e) {currentAreaUpdatedFromJson = false;}
+                if (!currentAreaUpdatedFromJson) {
+                    lastActiveString = ("Last seen on " + new SimpleDateFormat("EEEE, MMM d, yyy h:mm:ss a z").format((new Date(currentSbProfileData.get("last_updated").getAsJsonObject().get("unix").getAsLong()))));
+                } else {
+                    lastActiveString = "Online right now";
+                }
                 currentSbProfileWeightData = currentSbProfileData.get("weight");
                 double overallSenitherWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("senither")).get("overall").getAsDouble());
                 double overallLilyWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("lily")).get("total").getAsDouble());
@@ -263,7 +275,8 @@ public class FindSomeonesSkyblockInfo {
 
                 String linePrefix = ("\n §8- ");
                 String skillAvg = ("§9" + currentSbProfileSkillAverage + " Skill Average");
-                firstJoinText = ("§aFirst joined " + firstJoinText);
+                firstJoinText = ("§aFirst joined on " + firstJoinText);
+                String activityString = (firstJoinText + "§r | §a" + lastActiveString);
                 cuteName = ("§6" + cuteName);
                 String uuidFromJsonString = ("§7UUID: §2" + uuidFromJson);
                 String totalAndSlayerXp = ("§3" + totalSkillXp + " total Skill XP§r | §c" + currentSbProfileSlayerXp + " Slayer XP");
@@ -317,7 +330,7 @@ public class FindSomeonesSkyblockInfo {
                             + linePrefix + (isCata ? catacombsLvlString : "§4They have not explored the Catacombs yet.")
                             + (isCata ? linePrefix + essenceString : "")
                             + linePrefix + weightString
-                            + linePrefix + firstJoinText
+                            + linePrefix + activityString
                             + linePrefix + fairySoulFraction
                             + linePrefix + uuidFromJsonString
                             + linePrefix + profileIdString
