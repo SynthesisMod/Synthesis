@@ -262,7 +262,7 @@ public class FindSomeonesSkyblockInfo {
                     guildMembers = guildData.get("members").getAsLong();
                     guildRank = guildData.get("rank").getAsString();
                     guildMaster = guildData.get("gmUser").getAsJsonObject().get("display_name").getAsString();
-                    if (guildRank.toLowerCase().contains("master")) {
+                    if (guildMaster.equals(displayName)) {
                         guildRank = "§2as §6the guildmaster";
                         guildMaster = "";
                     } else {
