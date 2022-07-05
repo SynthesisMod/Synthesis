@@ -327,6 +327,9 @@ public class FindSomeonesSkyblockInfo {
                 } else if (displayName.equals("SirDesco") || uuidFromJson.contains("e710ff36fe334c0e8401bda9d24fa121")) {
                     ChatLib.chat("Oh look, it's the Synthesis developer!");
                 }
+                if (uuidFromJson.equals(profileId)) {
+                    ChatLib.chat("You may notice that their Minecraft UUID and Skyblock profile ID are the same. Why? Listen, I didn't make the rules, and neither did SkyCrypt devs. Don't ask us.");
+                }
             } catch (Exception e) {
                 if (http.getResponseCode() != 200) {
                     ChatLib.chat("Synthesis did not get an A-OK response from SkyCrypt. The response code Synthesis got instead was " + http.getResponseCode() + ". Aborting mission.");
