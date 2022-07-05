@@ -180,6 +180,14 @@ public class FindSomeonesSkyblockInfo {
                 JsonObject currentSbProfileData = null;
                 String rankPrefix = "";
                 String gameMode = "";
+                boolean isInGuild = false;
+                String guildName = "";
+                String guildTag = "";
+                int guildMembers = 0;
+                int guildLevel = 0;
+                String guildRank = "";
+                String guildMaster = "";
+                String guildInfo = "";
 
                 for (Map.Entry<String,JsonElement> me : profileSet)
                 {
@@ -224,6 +232,25 @@ public class FindSomeonesSkyblockInfo {
                 currentSbProfileWeightData = currentSbProfileData.get("weight");
                 double overallSenitherWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("senither")).get("overall").getAsDouble());
                 double overallLilyWeight = (((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("lily")).get("total").getAsDouble());
+                try {
+                    JsonObject guildData = currentSbProfileData.get("guild").getAsJsonObject();
+                    isInGuild = true;
+                    guildName = guildData.get("name").getAsString();
+                    guildTag = "[" + guildData.get("tag").getAsString() + "]";
+                    guildLevel = guildData.get("level").getAsInt();
+                    guildMembers = guildData.get("members").getAsInt();
+                    guildRank = guildData.get("rank").getAsString();
+                    guildMaster = guildData.get("gmUser").getAsJsonObject().get("display_name").getAsString();
+                    if (guildRank.toLowerCase().contains("master")) {
+                        guildRank = "§2as §6the guildmaster";
+                        guildMaster = "";
+                    } else {
+                        guildRank = "§2with guild rank §a" + guildRank.toLowerCase();
+                        guildMaster = "Their guildmaster is §a" + guildMaster + ".";
+                    }
+                } catch (Exception e) {
+                    isInGuild = false;
+                }
 
                 String linePrefix = ("\n §8- ");
                 String skillAvg = ("§9" + currentSbProfileSkillAverage + " Skill Average");
@@ -264,6 +291,9 @@ public class FindSomeonesSkyblockInfo {
                         e.printStackTrace();
                     }
                 }
+                if (isInGuild) {
+                    guildInfo = " §2In §a" + guildName + " §7" + guildTag + " " + guildRank + "§2, at §a" + guildMembers + " §2members and level §a" + guildLevel + "§2. " + guildMaster;
+                }
                 String possessiveApostrophe = "'s";
                 if (displayName.endsWith("s")) {
                     possessiveApostrophe = "'";
@@ -271,17 +301,18 @@ public class FindSomeonesSkyblockInfo {
 
                 ChatLib.chat("Here are " + rankPrefix + displayName + "§r" + possessiveApostrophe
                             + " SkyCrypt stats on their " + cuteName + "§r profile with gamemode " + gameMode + "§r:"
-                                + linePrefix + skillAvg
-                                + linePrefix + totalXp
-                                + linePrefix + slayerXP
-                                + linePrefix + fairySoulFraction
-                                + linePrefix + catacombsLvlString
-                                + linePrefix + firstJoinText
-                                + linePrefix + essenceString
-                                + linePrefix + weightString
-                                + linePrefix + uuidFromJson
-                                + linePrefix + profileId
-                            );
+                            + linePrefix + (isInGuild ? guildInfo : "§2They do not appear to be in a guild.")
+                            + linePrefix + skillAvg
+                            + linePrefix + totalXp
+                            + linePrefix + slayerXP
+                            + linePrefix + fairySoulFraction
+                            + linePrefix + catacombsLvlString
+                            + linePrefix + firstJoinText
+                            + linePrefix + essenceString
+                            + linePrefix + weightString
+                            + linePrefix + uuidFromJson
+                            + linePrefix + profileId
+                        );
                 if (displayName.equals("Technoblade") || uuidFromJson.contains("b876ec32e396476ba1158438d83c67d4")) {
                     Calendar c = Calendar.getInstance();
                     ChatLib.chat("Please donate to the Sarcoma Foundation of America (https://www.curesarcoma.org/technoblade-tribute/), or buy his memorial merchandise at https://technoblade.com.");
