@@ -196,10 +196,6 @@ public class FindSomeonesSkyblockInfo {
                 long purse = 0;
                 long bank = 0;
                 String lastActiveString = "";
-                String[] dungeonClasses = {"healer", "mage", "berserk", "archer", "tank"};
-                boolean[] activeClasses = {false,false,false,false,false};
-                long[] classLevels = {0,0,0,0,0};
-                String[] classColorCodes = {"§a","§d","§6","§e","§2"};
                 String dClassesInfo = "";
 
                 for (Map.Entry<String,JsonElement> me : profileSet)
@@ -229,12 +225,20 @@ public class FindSomeonesSkyblockInfo {
                     JsonObject dungeonsData = currentSbProfileData.get("dungeons").getAsJsonObject();
                     catacombsLevel = dungeonsData.get("catacombs").getAsJsonObject().get("level").getAsJsonObject().get("level").getAsLong();
                     isCata = true;
-                    for (int i = 0; i < dungeonClasses.length; i++) {
-                        activeClasses[i] = dungeonsData.get(dungeonClasses[i]).getAsJsonObject().get("current").getAsBoolean();
-                        classLevels[i] = dungeonsData.get(dungeonClasses[i]).getAsJsonObject().get("experience").getAsJsonObject().get("level").getAsLong();
-                        dClassesInfo += classColorCodes[i] + ("" + dungeonClasses[i].charAt(0)).toUpperCase() + "§r:" + classColorCodes[i] + " " + classLevels[i] + ", ";
+                    String currentClass = "";
+                    if (dungeonsData.get("used_classes").getAsBoolean()) {
+                        currentClass = dungeonsData.get("selected_class").getAsString();
+                        JsonObject classData = dungeonsData.get("classes").getAsJsonObject();
+                        long healerLvl = classData.get("healer").getAsJsonObject().get("experience").getAsJsonObject().get("level").getAsLong();
+                        long mageLvl = classData.get("mage").getAsJsonObject().get("experience").getAsJsonObject().get("level").getAsLong();
+                        long berserkLvl = classData.get("berserk").getAsJsonObject().get("experience").getAsJsonObject().get("level").getAsLong();
+                        long archerLvl = classData.get("archer").getAsJsonObject().get("experience").getAsJsonObject().get("level").getAsLong();
+                        long tankLvl = classData.get("tank").getAsJsonObject().get("experience").getAsJsonObject().get("level").getAsLong();
+                        long avgClassLvl = ((healerLvl+mageLvl+berserkLvl+archerLvl+tankLvl)/(5L));
+                        dClassesInfo = "§r | §aH§r: §a" + healerLvl + "§r, §dM§r: §d" + mageLvl + "§r, §6B§r: §6" + berserkLvl + "§r, §eA§r: §e" + archerLvl + "§r, §2T§r: §2" + tankLvl + "§r, AVG: " + avgClassLvl;
+                        currentClass = ("" + currentClass.charAt(0)).toUpperCase();
+                        dClassesInfo = dClassesInfo.replace(currentClass, "§l§n§o" + currentClass);
                     }
-                    dClassesInfo = dClassesInfo.substring(0, dClassesInfo.length() - 2);
                 } catch (Exception e) {
                     isCata = false;
                     e.printStackTrace();
@@ -339,7 +343,7 @@ public class FindSomeonesSkyblockInfo {
                             + linePrefix + (isInGuild ? guildInfo : "§2They do not appear to be in a guild.")
                             + linePrefix + coinsString
                             + linePrefix + skillAvg + "§r | " + totalAndSlayerXp
-                            + linePrefix + (isCata ? catacombsLvlString + "§r | " + dClassesInfo : "§4They have not explored the Catacombs yet.")
+                            + linePrefix + (isCata ? catacombsLvlString + dClassesInfo : "§4They have not explored the Catacombs yet.")
                             + (isCata ? linePrefix + essenceString : "")
                             + linePrefix + weightString
                             + linePrefix + activityString
