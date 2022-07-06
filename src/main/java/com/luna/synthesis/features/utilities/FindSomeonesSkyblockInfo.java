@@ -237,6 +237,7 @@ public class FindSomeonesSkyblockInfo {
                     dClassesInfo = dClassesInfo.substring(0, dClassesInfo.length() - 2);
                 } catch (Exception e) {
                     isCata = false;
+                    e.printStackTrace();
                 }
                 if (isCata) {
                     JsonObject essenceData = currentSbProfileData.get("essence").getAsJsonObject();
