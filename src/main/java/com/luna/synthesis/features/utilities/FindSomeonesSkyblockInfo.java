@@ -196,6 +196,11 @@ public class FindSomeonesSkyblockInfo {
                 long purse = 0;
                 long bank = 0;
                 String lastActiveString = "";
+                String[] dungeonClasses = {"healer", "mage", "berserk", "archer", "tank"};
+                boolean[] activeClasses = {false,false,false,false,false};
+                long[] classLevels = {0,0,0,0,0};
+                String[] classColorCodes = {"§a","§d","§6","§e","§2"};
+                String dClassesInfo = "";
 
                 for (Map.Entry<String,JsonElement> me : profileSet)
                 {
@@ -221,8 +226,15 @@ public class FindSomeonesSkyblockInfo {
                 collectedFairySouls = currentSbProfileData.get("fairy_souls").getAsJsonObject().get("collected").getAsLong();
                 totalFairySouls = currentSbProfileData.get("fairy_souls").getAsJsonObject().get("total").getAsLong();
                 try {
-                    catacombsLevel = currentSbProfileData.get("dungeons").getAsJsonObject().get("catacombs").getAsJsonObject().get("level").getAsJsonObject().get("level").getAsLong();
+                    JsonObject dungeonsData = currentSbProfileData.get("dungeons").getAsJsonObject();
+                    catacombsLevel = dungeonsData.get("catacombs").getAsJsonObject().get("level").getAsJsonObject().get("level").getAsLong();
                     isCata = true;
+                    for (int i = 0; i < dungeonClasses.length; i++) {
+                        activeClasses[i] = dungeonsData.get(dungeonClasses[i]).getAsJsonObject().get("current").getAsBoolean();
+                        classLevels[i] = dungeonsData.get(dungeonClasses[i]).getAsJsonObject().get("experience").getAsJsonObject().get("level").getAsLong();
+                        dClassesInfo += classColorCodes[i] + ("" + dungeonClasses[i].charAt(0)).toUpperCase() + "§r:" + classColorCodes[i] + " " + classLevels[i] + ", ";
+                    }
+                    dClassesInfo = dClassesInfo.substring(0, dClassesInfo.length() - 2);
                 } catch (Exception e) {
                     isCata = false;
                 }
@@ -326,7 +338,7 @@ public class FindSomeonesSkyblockInfo {
                             + linePrefix + (isInGuild ? guildInfo : "§2They do not appear to be in a guild.")
                             + linePrefix + coinsString
                             + linePrefix + skillAvg + "§r | " + totalAndSlayerXp
-                            + linePrefix + (isCata ? catacombsLvlString : "§4They have not explored the Catacombs yet.")
+                            + linePrefix + (isCata ? catacombsLvlString + "§r | " + dClassesInfo : "§4They have not explored the Catacombs yet.")
                             + (isCata ? linePrefix + essenceString : "")
                             + linePrefix + weightString
                             + linePrefix + activityString
