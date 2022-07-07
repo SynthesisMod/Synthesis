@@ -28,18 +28,20 @@ public class ContainerChat {
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
         if (!config.utilitiesContainerChat) return;
-        sentHistoryCursor = Minecraft.getMinecraft().ingameGUI.getChatGUI().getSentMessages().size();
-        if (config.utilitiesReopenContainerChat && MixinUtils.inputField != null) {
-            if (event.gui == null) {
-                if (Minecraft.getMinecraft().currentScreen instanceof GuiContainer) {
-                    if (MixinUtils.inputField.isFocused()) {
-                        event.gui = new GuiChat(MixinUtils.inputField.getText());
+        try {
+            sentHistoryCursor = Minecraft.getMinecraft().ingameGUI.getChatGUI().getSentMessages().size();
+            if (config.utilitiesReopenContainerChat && MixinUtils.inputField != null) {
+                if (event.gui == null) {
+                    if (Minecraft.getMinecraft().currentScreen instanceof GuiContainer) {
+                        if (MixinUtils.inputField.isFocused()) {
+                            event.gui = new GuiChat(MixinUtils.inputField.getText());
+                        }
+                    } else {
+                        MixinUtils.inputField = null;
                     }
-                } else {
-                    MixinUtils.inputField = null;
                 }
             }
-        }
+        } catch (Exception e) {}
     }
 
     // Originally in mixin, had to rewrite because SBE and Cowlection would have bad compatibility issues.
