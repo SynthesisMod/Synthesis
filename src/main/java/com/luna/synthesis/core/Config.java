@@ -988,9 +988,9 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SELECTOR,
             name = "Master Star Display Options",
-            description = "Choose how you want master stars in item names to be displayed.\n§cMay not work with items renamed via NEU.",
+            description = "Choose how you want master stars in item names to be displayed.\n§cMay not apply to items renamed via NEU.",
             category = "Utilities",
-            options = {"Whatever Hypixel has right now", "Go old school", "Append to prior gold stars"}
+            options = {"Whatever Hypixel has right now (§6✪§6✪§6✪§6✪§6✪§6✪§c➓)", "Go old school (§c✪§c✪§c✪§c✪§6✪)"}
     )
     public int utilitiesMasterStarDisplay = 0;
 

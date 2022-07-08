@@ -259,18 +259,6 @@ public class LoreCleanup {
                     } else if (numMasters == 5) {
                         masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§c✪§c✪§c✪");
                     }
-                } else if (config.utilitiesMasterStarDisplay == 2) {
-                    if (numMasters == 1) {
-                        masterPlan = masterPlan.replace(maxStars, maxStars + "§c✪");
-                    } else if (numMasters == 2) {
-                        masterPlan = masterPlan.replace(maxStars, maxStars + "§c✪§c✪");
-                    } else if (numMasters == 3) {
-                        masterPlan = masterPlan.replace(maxStars, maxStars + "§c✪§c✪§c✪");
-                    } else if (numMasters == 4) {
-                        masterPlan = masterPlan.replace(maxStars, maxStars + "§c✪§c✪§c✪§c✪");
-                    } else if (numMasters == 5) {
-                        masterPlan = masterPlan.replace(maxStars, maxStars + "§c✪§c✪§c✪§c✪§c✪");
-                    }
                 }
                 item.setStackDisplayName(masterPlan);
             }
