@@ -990,7 +990,7 @@ public class Config extends Vigilant {
             name = "Master Star Display Options",
             description = "Choose how you want master stars in item names to be displayed.\n§cMay not apply to items renamed via NEU.",
             category = "Utilities",
-            options = {"Whatever Hypixel has right now (§6✪§6✪§6✪§6✪§6✪§c➓§r)", "Go old school (§c✪§c✪§c✪§c✪§6✪§r)"}
+            options = {"Whatever Hypixel has right now (§6✪§6✪§6✪§6✪§6✪§c➍§r)", "Go old school (§c✪§c✪§c✪§c✪§6✪§r)"}
     )
     public int utilitiesMasterStarDisplay = 0;
 
