@@ -244,20 +244,19 @@ public class LoreCleanup {
                                     .replace("§c➊","");
                 int numStarsOne = item.getSubCompound("ExtraAttributes", false).getInteger("upgrade_level");
                 int numStarsTwo = item.getSubCompound("ExtraAttributes", false).getInteger("dungeon_item_level");
-                System.out.println("For item with UUID " + item.getSubCompound("ExtraAttributes", false).getString("uuid") + " it has an \"upgrade_level\" of " + numStarsOne + " and a \"dungeon_item_level\" of " + numStarsTwo + ". Therefore, " + (numStarsTwo < numStarsOne ? numStarsOne : numStarsTwo) + " is greater and should be used in future calculations. It has a total of " + (((numStarsTwo < numStarsOne ? numStarsOne : numStarsTwo)) - 5) + " master stars.");
                 int numMasters = (((numStarsTwo < numStarsOne ? numStarsOne : numStarsTwo)) - 5);
+                String maxStars = "§6✪§6✪§6✪§6✪§6✪";
                 if (numMasters == 1) {
-                    masterPlan = masterPlan.replace("§6✪§6✪§6✪§6✪§6✪","§c✪§6✪§6✪§6✪§6✪");
+                    masterPlan = masterPlan.replace(maxStars,"§c✪§6✪§6✪§6✪§6✪");
                 } else if (numMasters == 2) {
-                    masterPlan = masterPlan.replace("§6✪§6✪§6✪§6✪§6✪","§c✪§c✪§6✪§6✪§6✪");
+                    masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§6✪§6✪§6✪");
                 } else if (numMasters == 3) {
-                    masterPlan = masterPlan.replace("§6✪§6✪§6✪§6✪§6✪","§c✪§c✪§c✪§6✪§6✪");
+                    masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§c✪§6✪§6✪");
                 } else if (numMasters == 4) {
-                    masterPlan = masterPlan.replace("§6✪§6✪§6✪§6✪§6✪","§c✪§c✪§c✪§c✪§6✪");
+                    masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§c✪§c✪§6✪");
                 } else if (numMasters == 5) {
-                    masterPlan = masterPlan.replace("§6✪§6✪§6✪§6✪§6✪","§c✪§c✪§c✪§c✪§c✪");
+                    masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§c✪§c✪§c✪");
                 }
-                System.out.println("Item UUID " + item.getSubCompound("ExtraAttributes", false).getString("uuid") + "'s new name is " + masterPlan + " because it has " + numMasters + " master stars.");
                 item.setStackDisplayName(masterPlan);
             }
         }
