@@ -1010,6 +1010,15 @@ public class Config extends Vigilant {
     )
     public boolean utilitiesCheckStats = false;
 
+    @Property(
+            type = PropertyType.SELECTOR,
+            name = "SkyCrypt Stats Level of Detail",
+            description = "Choose how much detail you should see when checking someone's SkyCrypt info.\n§eApplies to all players without exception regardless of your choice; choose wisely!\n§cDoes not influence load time of SkyCrypt player data.",
+            category = "Utilities",
+            options = {"\"give me the bare minimum\"", "\"Maybe a bit of extra info would be nice.\"", "\"I DEMAND TO KNOW EVERY SINGLE DETAIL!\""}
+    )
+    public int utilitiesCheckStatsLvlOfDetail = 0;
+
     //PATCHER
 
     @Property(
