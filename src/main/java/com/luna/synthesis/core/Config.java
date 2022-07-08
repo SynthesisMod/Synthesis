@@ -967,13 +967,14 @@ public class Config extends Vigilant {
     public int bestiaryMilestoneWarningDuration = 5;
 
     @Property(
-            type = PropertyType.SWITCH,
+            type = PropertyType.SELECTOR,
             name = "Show Item UUID at Item Lore",
             description = "Displays the item's UUID (if there is one) at the end of an item's tooltip.\n§cFor compatibility reasons, UUIDs for all pets while viewing the pet menu will not be displayed.",
             category = "Utilities",
-            subcategory = "Item Lore"
+            subcategory = "Item Lore",
+            options = {"Off", "With \"-\"s", "Without \"-\"s"}
     )
-    public boolean utilitiesLoreItemUUID = true;
+    public int utilitiesLoreItemUUID = 0;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -982,7 +983,16 @@ public class Config extends Vigilant {
             category = "Utilities",
             subcategory = "Item Lore"
     )
-    public boolean utilitiesLoreOriginTag = true;
+    public boolean utilitiesLoreOriginTag = false;
+
+    @Property(
+            type = PropertyType.SELECTOR,
+            name = "Master Star Display Options",
+            description = "Choose how you want master stars in item names to be displayed.\n§cMay not work with items renamed via NEU.",
+            category = "Utilities",
+            options = {"Whatever Hypixel has right now", "Go old school", "Append to prior gold stars"}
+    )
+    public int utilitiesMasterStarDisplay = 0;
 
     @Property(
             type = PropertyType.SWITCH,

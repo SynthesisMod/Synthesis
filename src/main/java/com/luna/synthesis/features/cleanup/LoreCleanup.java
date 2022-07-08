@@ -220,13 +220,14 @@ public class LoreCleanup {
              * 
              */
             // UUID — THIS MUST BE OUTSIDE THE WHILE LOOP TO PREVENT TOOLTIP CO-MODIFICATION CRASHES
-            if (item.getSubCompound("ExtraAttributes", false).hasKey("uuid") && config.utilitiesLoreItemUUID) {
-                event.toolTip.add("§d[Synthesis]§7 Item UUID: §l" + item.getSubCompound("ExtraAttributes", false).getString("uuid"));
+            if (item.getSubCompound("ExtraAttributes", false).hasKey("uuid") && config.utilitiesLoreItemUUID != 0) {
+                if (config.utilitiesLoreItemUUID == 1) {event.toolTip.add("§d[Synthesis]§7 Item UUID: §l" + item.getSubCompound("ExtraAttributes", false).getString("uuid"));}
+                if (config.utilitiesLoreItemUUID == 2) {event.toolTip.add("§d[Synthesis]§7 Item UUID: §l" + (item.getSubCompound("ExtraAttributes", false).getString("uuid")).replaceAll("-", ""));}
             }
 
             // ITEM ORIGIN — MUST BE OUTSIDE WHILE LOOP TO PREVENT CRASHES
             if (config.utilitiesLoreOriginTag && item.getSubCompound("ExtraAttributes", false).getString("originTag") != null && item.getSubCompound("ExtraAttributes", false).getString("originTag") != "") {
-                event.toolTip.add("§d[Synthesis]§7 Item origin: §l" + item.getSubCompound("ExtraAttributes", false).getString("originTag"));
+                event.toolTip.add("§d[Synthesis]§7 Item origin: §l" + item.getSubCompound("ExtraAttributes", false).getString("originTag").replaceAll("_", " "));
             }
             /* 
              * 
@@ -234,7 +235,7 @@ public class LoreCleanup {
              * old master stars
              * 
              */
-            if ((item.getDisplayName().contains("§6✪§c"))) {
+            if ((item.getDisplayName().contains("§6✪§c")) && config.utilitiesMasterStarDisplay != 0) {
                 //§c\u272a
                 String masterPlan = item.getDisplayName()
                                     .replace("§c➎","")
@@ -246,16 +247,30 @@ public class LoreCleanup {
                 int numStarsTwo = item.getSubCompound("ExtraAttributes", false).getInteger("dungeon_item_level");
                 int numMasters = (((numStarsTwo < numStarsOne ? numStarsOne : numStarsTwo)) - 5);
                 String maxStars = "§6✪§6✪§6✪§6✪§6✪";
-                if (numMasters == 1) {
-                    masterPlan = masterPlan.replace(maxStars,"§c✪§6✪§6✪§6✪§6✪");
-                } else if (numMasters == 2) {
-                    masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§6✪§6✪§6✪");
-                } else if (numMasters == 3) {
-                    masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§c✪§6✪§6✪");
-                } else if (numMasters == 4) {
-                    masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§c✪§c✪§6✪");
-                } else if (numMasters == 5) {
-                    masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§c✪§c✪§c✪");
+                if (config.utilitiesMasterStarDisplay == 1) {
+                    if (numMasters == 1) {
+                        masterPlan = masterPlan.replace(maxStars,"§c✪§6✪§6✪§6✪§6✪");
+                    } else if (numMasters == 2) {
+                        masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§6✪§6✪§6✪");
+                    } else if (numMasters == 3) {
+                        masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§c✪§6✪§6✪");
+                    } else if (numMasters == 4) {
+                        masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§c✪§c✪§6✪");
+                    } else if (numMasters == 5) {
+                        masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§c✪§c✪§c✪");
+                    }
+                } else if (config.utilitiesMasterStarDisplay == 2) {
+                    if (numMasters == 1) {
+                        masterPlan = masterPlan.replace(maxStars, maxStars + "§c✪");
+                    } else if (numMasters == 2) {
+                        masterPlan = masterPlan.replace(maxStars, maxStars + "§c✪§c✪");
+                    } else if (numMasters == 3) {
+                        masterPlan = masterPlan.replace(maxStars, maxStars + "§c✪§c✪§c✪");
+                    } else if (numMasters == 4) {
+                        masterPlan = masterPlan.replace(maxStars, maxStars + "§c✪§c✪§c✪§c✪");
+                    } else if (numMasters == 5) {
+                        masterPlan = masterPlan.replace(maxStars, maxStars + "§c✪§c✪§c✪§c✪§c✪");
+                    }
                 }
                 item.setStackDisplayName(masterPlan);
             }
