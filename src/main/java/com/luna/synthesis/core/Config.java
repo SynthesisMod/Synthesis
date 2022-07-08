@@ -1012,8 +1012,8 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SELECTOR,
-            name = "SkyCrypt Stats Level of Detail",
-            description = "Choose how much detail you should see when checking someone's SkyCrypt info.\n§eApplies to all players without exception regardless of your choice; choose wisely!\n§cDoes not influence load time of SkyCrypt player data.",
+            name = "SkyCrypt Stats Level of Detail (§dLOD§r)",
+            description = "Choose how much detail you should see when checking someone's SkyCrypt info.\n§eApplies to all players without exception regardless of your choice; choose wisely!\n§cDoes not influence load time of SkyCrypt player data.\nGo experiment!",
             category = "Utilities",
             options = {"\"give me the bare minimum\"", "\"Maybe a bit of extra info would be nice.\"", "\"I DEMAND TO KNOW EVERY SINGLE DETAIL!\""}
     )

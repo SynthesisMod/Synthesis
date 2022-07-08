@@ -293,15 +293,15 @@ public class FindSomeonesSkyblockInfo {
                 String linePrefix = ("\n §8- ");
                 String skillAvg = ("§9" + currentSbProfileSkillAverage + " Skill Average");
                 firstJoinText = ("§aProfile created " + firstJoinText);
-                String activityString = (firstJoinText + "§r | §a" + lastActiveString);
+                String activityString = (firstJoinText + ((config.utilitiesCheckStatsLvlOfDetail == 2) ? ("§r | §a" + lastActiveString) : ""));
                 cuteName = ("§6" + cuteName);
                 String uuidFromJsonString = ("§7UUID: §2" + uuidFromJson);
-                String totalAndSlayerXp = ("§3" + totalSkillXp + " total Skill XP§r | §c" + currentSbProfileSlayerXp + " Slayer XP");
+                String totalAndSlayerXp = ("§3" + totalSkillXp + " total Skill XP" + ((config.utilitiesCheckStatsLvlOfDetail == 2) ? ("§r | §c" + currentSbProfileSlayerXp + " Slayer XP") : ""));
                 String fairySoulFraction = ("§dCollected " + collectedFairySouls + "/" + totalFairySouls + " fairy souls");
                 catacombsLvlString = ("§4Catacombs Level " + catacombsLevel);
                 String essenceString = ("§5Total essence: §r" + totalEssence + " Essence (§9" + iceEssence + " Ice§r, §7" + witherEssence + " Wither§r, §4" + spiderEssence + " Spider§r, §5" + undeadEssence + " Undead§r, §b" + diamondEssence + " Diamond§r, §e" + dragonEssence + " Dragon§r, §6" + goldEssence + " Gold§r, §c" + crimsonEssence + " Crimson§r)");
-                String weightString = ("§eOverall Lily Weight: " + ((int)(overallLilyWeight)) + " §r| §eOverall Senither Weight: " + ((int)(overallSenitherWeight)));
-                String coinsString = ("§6Purse: " + purse + " coin" + (purse != 1 ? "s" : "") + " §r| " + (bank != -1 ? "§6Bank: " + bank + " coin" + (bank != 1 ? "s" : "") : "§cBank API disabled."));
+                String weightString = ("§eOverall Lily Weight: " + ((int)(overallLilyWeight)) + (config.utilitiesCheckStatsLvlOfDetail == 2 ? " §r| §eOverall Senither Weight: " + ((int)(overallSenitherWeight)) : ""));
+                String coinsString = ("§6Purse: " + purse + " coin" + (purse != 1 ? "s" : "") + ((config.utilitiesCheckStatsLvlOfDetail > 0) ? " §r| " + (bank != -1 ? "§6Bank: " + bank + " coin" + (bank != 1 ? "s" : "") : "§cBank API disabled.") : ""));
                 String profileIdString = ("§7Profile ID: §2" + profileId);
                 gameMode = ("§6" + Character.toUpperCase(gameMode.charAt(0)) + gameMode.substring(1));
                 if (rankPrefix.equals("")) {
@@ -339,17 +339,15 @@ public class FindSomeonesSkyblockInfo {
                 }
 
                 ChatLib.chat("Here are " + rankPrefix + displayName + "§r" + possessiveApostrophe
-                            + " SkyCrypt stats on their " + gameMode + "§r profile named " + cuteName + " §r(their most recent profile):"
-                            + linePrefix + (isInGuild ? guildInfo : "§2They do not appear to be in a guild.")
+                            + " SkyCrypt stats on their " + gameMode + "§r profile named " + cuteName + " §r(their most recent profile, with §dLOD " + config.utilitiesCheckStatsLvlOfDetail + "§r):"
+                            + ((config.utilitiesCheckStatsLvlOfDetail > 0) ? linePrefix + (isInGuild ? guildInfo : "§2They do not appear to be in a guild.") : "")
                             + linePrefix + coinsString
-                            + linePrefix + skillAvg + "§r | " + totalAndSlayerXp
-                            + linePrefix + (isCata ? catacombsLvlString + dClassesInfo : "§4They have not explored the Catacombs yet.")
-                            + (isCata ? linePrefix + essenceString : "")
+                            + linePrefix + skillAvg + ((config.utilitiesCheckStatsLvlOfDetail > 0) ? ("§r | " + totalAndSlayerXp) : "")
+                            + linePrefix + (isCata ? catacombsLvlString + ((config.utilitiesCheckStatsLvlOfDetail > 0) ? dClassesInfo : "") : "§4They have not explored the Catacombs yet.")
+                            + ((isCata && config.utilitiesCheckStatsLvlOfDetail == 2) ? linePrefix + essenceString : "")
                             + linePrefix + weightString
                             + linePrefix + activityString
-                            + linePrefix + fairySoulFraction
-                            + linePrefix + uuidFromJsonString
-                            + linePrefix + profileIdString
+                            + (config.utilitiesCheckStatsLvlOfDetail == 2 ? linePrefix + fairySoulFraction + linePrefix + uuidFromJsonString + linePrefix + profileIdString : "")
                         );
                 if (displayName.equals("Technoblade") || uuidFromJson.contains("b876ec32e396476ba1158438d83c67d4")) {
                     Calendar c = Calendar.getInstance();
@@ -360,7 +358,7 @@ public class FindSomeonesSkyblockInfo {
                 } else if (displayName.equals("SirDesco") || uuidFromJson.contains("e710ff36fe334c0e8401bda9d24fa121")) {
                     ChatLib.chat("Oh look, it's the Synthesis developer!");
                 }
-                if (uuidFromJson.equals(profileId)) {
+                if (uuidFromJson.equals(profileId) && config.utilitiesCheckStatsLvlOfDetail == 2) {
                     ChatLib.chat("You may notice that their Minecraft UUID and Skyblock profile ID are the same. Why? Listen, I didn't make the rules, and neither did SkyCrypt devs. Don't ask any of us.");
                 }
             } catch (Exception e) {
