@@ -237,31 +237,42 @@ public class LoreCleanup {
              */
             if ((item.getDisplayName().contains("§6✪§c")) && config.utilitiesMasterStarDisplay != 0) {
                 //§c\u272a
-                String masterPlan = item.getDisplayName()
-                                    .replace("§c➎","")
-                                    .replace("§c➍","")
-                                    .replace("§c➌","")
-                                    .replace("§c➋","")
-                                    .replace("§c➊","");
-                int numStarsOne = item.getSubCompound("ExtraAttributes", false).getInteger("upgrade_level");
-                int numStarsTwo = item.getSubCompound("ExtraAttributes", false).getInteger("dungeon_item_level");
-                int numMasters = (((numStarsTwo < numStarsOne ? numStarsOne : numStarsTwo)) - 5);
-                String maxStars = "§6✪§6✪§6✪§6✪§6✪";
-                if (config.utilitiesMasterStarDisplay == 1) {
-                    if (numMasters == 1) {
-                        masterPlan = masterPlan.replace(maxStars,"§c✪§6✪§6✪§6✪§6✪");
-                    } else if (numMasters == 2) {
-                        masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§6✪§6✪§6✪");
-                    } else if (numMasters == 3) {
-                        masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§c✪§6✪§6✪");
-                    } else if (numMasters == 4) {
-                        masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§c✪§c✪§6✪");
-                    } else if (numMasters == 5) {
-                        masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§c✪§c✪§c✪");
+                if (config.utilitiesMasterStarDisplay == 2) {
+                    item.setStackDisplayName(
+                        item.getDisplayName()
+                            .replace("§c➎","§c✪§c✪§c✪§c✪§c✪")
+                            .replace("§c➍","§c✪§c✪§c✪§c✪")
+                            .replace("§c➌","§c✪§c✪§c✪")
+                            .replace("§c➋","§c✪§c✪")
+                            .replace("§c➊","§c✪")
+                    );
+                } else {
+                        String masterPlan = item.getDisplayName()
+                                        .replace("§c➎","")
+                                        .replace("§c➍","")
+                                        .replace("§c➌","")
+                                        .replace("§c➋","")
+                                        .replace("§c➊","");
+                        int numStarsOne = item.getSubCompound("ExtraAttributes", false).getInteger("upgrade_level");
+                        int numStarsTwo = item.getSubCompound("ExtraAttributes", false).getInteger("dungeon_item_level");
+                        int numMasters = (((numStarsTwo < numStarsOne ? numStarsOne : numStarsTwo)) - 5);
+                        String maxStars = "§6✪§6✪§6✪§6✪§6✪";
+                        if (config.utilitiesMasterStarDisplay == 1) {
+                            if (numMasters == 1) {
+                                masterPlan = masterPlan.replace(maxStars,"§c✪§6✪§6✪§6✪§6✪");
+                            } else if (numMasters == 2) {
+                                masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§6✪§6✪§6✪");
+                            } else if (numMasters == 3) {
+                                masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§c✪§6✪§6✪");
+                            } else if (numMasters == 4) {
+                                masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§c✪§c✪§6✪");
+                            } else if (numMasters == 5) {
+                                masterPlan = masterPlan.replace(maxStars,"§c✪§c✪§c✪§c✪§c✪");
+                            }
+                        }
+                        item.setStackDisplayName(masterPlan);
                     }
                 }
-                item.setStackDisplayName(masterPlan);
-            }
         }
     }
 }

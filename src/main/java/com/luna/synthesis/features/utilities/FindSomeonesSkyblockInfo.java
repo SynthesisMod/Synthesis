@@ -52,7 +52,7 @@ public class FindSomeonesSkyblockInfo {
         String nameToCheck = "";
         if (event.message.endsWith(config.utilitiesShareText) || event.message.endsWith(config.utilitiesShareBootsText) || event.message.endsWith(config.utilitiesShareHelmetText) || event.message.endsWith(config.utilitiesShareLeggingsText) || event.message.endsWith(config.utilitiesShareChestplateText)) {return;}
         if (!config.utilitiesCheckWeight && event.message.startsWith("[weight")) {event.setCanceled(true); ChatLib.chat("You have the setting disabled. Please enable it and try again, but do so with extreme caution.");return;}
-        if (event.message.startsWith("[stats") && event.message.endsWith("]")) {checkSomeonesStats(event.message); event.setCanceled(true); return;}
+        if (event.message.startsWith("[stats") && event.message.endsWith("]")) {new Thread(() -> {checkSomeonesStats(event.message);}).start(); event.setCanceled(true); return;}
         if (event.message.startsWith("[weight")) {
             if (event.message.endsWith("[weight]")) {
                 nameToCheck = Minecraft.getMinecraft().thePlayer.getName();
@@ -118,7 +118,7 @@ public class FindSomeonesSkyblockInfo {
         String theirName = message.replace("You have sent a trade request to ", "").replace(".", "");
         if (!config.utilitiesCheckStats) {ChatLib.chat("You have currently disabled player analyses at this time. Run away as far as possible from " + theirName + " to cancel the trade and re-enable the setting in the config if you want to get an analysis on them."); /* Minecraft.getMinecraft().thePlayer.sendChatMessage("wait hold on a sec need to tweak my mod configs"); */ return;}
         ChatLib.chat("Running analysis on " + theirName + "...");
-        checkSomeonesStats("[stats " + theirName + "]");
+        new Thread(() -> {checkSomeonesStats("[stats " + theirName + "]");}).start();
     }
 
     public void checkSomeonesStats(String thatOneParameter) {
