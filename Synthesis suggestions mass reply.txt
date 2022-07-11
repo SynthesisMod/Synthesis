@@ -65,7 +65,7 @@ Suggestion 60: Seems like it's been implemented. GG!
 
 Suggestion 62: Just tab the person's username.
 
-Suggestion 63: Sounds interesting... but the only solution at the time is for the user to keep the bestiary stuff up to date via item tooltip tracking because Hypixel API is terrible with being informative. I'll look into it. Update: ALMOST THERE
+Suggestion 63: Sounds interesting... but the only solution at the time is for the user to keep the bestiary stuff up to date via item tooltip tracking because Hypixel API is terrible with being informative. I'll look into it. Update: DONE
 
 Suggestion 65: Patcher by Sk1er LLC.
 
@@ -115,7 +115,7 @@ Suggestion 95: Get the fuck out of this house.
 
 Suggestion 96: Hypixel commands are generally short enough that this is unnecessary. Longest command I can think of that I've ever used while on Hypixel is usually from a mod whose config I change once every time Technoblade uploads.
 
-Suggestion 97: Actually a decent suggestion and I hope this isn't a problem in v0.3.1 or the upcoming v0.4.0. I'll look into it. UPDATE: Done... somewhat?
+Suggestion 97: Actually a decent suggestion and I hope this isn't a problem in v0.3.1 or the upcoming v0.4.0. I'll look into it. UPDATE: DONE.
 
 Suggestion 98: IS IT THAT HARD TO PRESS THE 'T' KEY???
 
