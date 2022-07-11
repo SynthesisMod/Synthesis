@@ -49,12 +49,11 @@ public class FindSomeonesSkyblockInfo {
 
     @SubscribeEvent
     public void onMessageSent(MessageSentEvent event) {
-        event.setCanceled(true);
+        if (event.message.endsWith(config.utilitiesShareText) || event.message.endsWith(config.utilitiesShareBootsText) || event.message.endsWith(config.utilitiesShareHelmetText) || event.message.endsWith(config.utilitiesShareLeggingsText) || event.message.endsWith(config.utilitiesShareChestplateText)) {return;}
+        if (event.message.startsWith("[weight")) {event.setCanceled(true); if (!config.utilitiesCheckWeight){ChatLib.chat("You have the setting disabled. Please enable it and try again, but do so with extreme caution.");return;}}
+        if (event.message.startsWith("[stats") && event.message.endsWith("]")) {event.setCanceled(true); new Thread(() -> {checkSomeonesStats(event.message);}).start(); return;}
         new Thread(() -> {
             String nameToCheck = "";
-            if (event.message.endsWith(config.utilitiesShareText) || event.message.endsWith(config.utilitiesShareBootsText) || event.message.endsWith(config.utilitiesShareHelmetText) || event.message.endsWith(config.utilitiesShareLeggingsText) || event.message.endsWith(config.utilitiesShareChestplateText)) {return;}
-            if (!config.utilitiesCheckWeight && event.message.startsWith("[weight")) {event.setCanceled(true); ChatLib.chat("You have the setting disabled. Please enable it and try again, but do so with extreme caution.");return;}
-            if (event.message.startsWith("[stats") && event.message.endsWith("]")) {new Thread(() -> {checkSomeonesStats(event.message);}).start(); return;}
             if (event.message.startsWith("[weight")) {
                 if (event.message.endsWith("[weight]")) {
                     nameToCheck = Minecraft.getMinecraft().thePlayer.getName();
