@@ -997,7 +997,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Enable Senither and Lily weight search",
-            description = "The toggle to enable/disable checking exclusively for someone's weights in both the Senither calculation system and the Lily calculation system. §e(Type \"[weight <username>]\" in chat to check someone's weight calculations, or \"[weight]\" to check your own.)\n§cDisabled by default as this is resource intensive-even on the most advanced computers.\n§c§lEnable with caution!",
+            description = "The toggle to enable/disable checking exclusively for someone's weights in both the Senither calculation system and the Lily calculation system. §e(Type \"[weight <username>]\" in chat to check someone's weight calculations, or \"[weight]\" to check your own.)\n§c§lEnable with caution!",
             category = "Utilities"
     )
     public boolean utilitiesCheckWeight = false;
@@ -1005,7 +1005,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Enable checking for Player's SkyCrypt Stats",
-            description = "The toggle to enable/disable checking for someone's stats in the SkyCrypt API. §e(Type \"[stats <username>]\" in chat to check someone's SkyCrypt stats, or \"[stats]\" to check your own. Additionally, this also activates when sending trade requests to someone.)\n§cDisabled by default as this is resource intensive-even on the most advanced computers.\n§c§lEnable with caution!",
+            description = "The toggle to enable/disable checking for someone's stats in the SkyCrypt API. §e(Type \"[stats <username>]\" in chat to check someone's SkyCrypt stats, or \"[stats]\" to check your own. Additionally, this also activates when sending trade requests to someone.)\n§c§lEnable with caution!",
             category = "Utilities"
     )
     public boolean utilitiesCheckStats = false;
