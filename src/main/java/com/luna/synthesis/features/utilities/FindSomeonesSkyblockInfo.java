@@ -49,66 +49,68 @@ public class FindSomeonesSkyblockInfo {
 
     @SubscribeEvent
     public void onMessageSent(MessageSentEvent event) {
-        String nameToCheck = "";
-        if (event.message.endsWith(config.utilitiesShareText) || event.message.endsWith(config.utilitiesShareBootsText) || event.message.endsWith(config.utilitiesShareHelmetText) || event.message.endsWith(config.utilitiesShareLeggingsText) || event.message.endsWith(config.utilitiesShareChestplateText)) {return;}
-        if (!config.utilitiesCheckWeight && event.message.startsWith("[weight")) {event.setCanceled(true); ChatLib.chat("You have the setting disabled. Please enable it and try again, but do so with extreme caution.");return;}
-        if (event.message.startsWith("[stats") && event.message.endsWith("]")) {new Thread(() -> {checkSomeonesStats(event.message);}).start(); event.setCanceled(true); return;}
-        if (event.message.startsWith("[weight")) {
-            if (event.message.endsWith("[weight]")) {
-                nameToCheck = Minecraft.getMinecraft().thePlayer.getName();
+        event.setCanceled(true);
+        new Thread(() -> {
+            String nameToCheck = "";
+            if (event.message.endsWith(config.utilitiesShareText) || event.message.endsWith(config.utilitiesShareBootsText) || event.message.endsWith(config.utilitiesShareHelmetText) || event.message.endsWith(config.utilitiesShareLeggingsText) || event.message.endsWith(config.utilitiesShareChestplateText)) {return;}
+            if (!config.utilitiesCheckWeight && event.message.startsWith("[weight")) {event.setCanceled(true); ChatLib.chat("You have the setting disabled. Please enable it and try again, but do so with extreme caution.");return;}
+            if (event.message.startsWith("[stats") && event.message.endsWith("]")) {new Thread(() -> {checkSomeonesStats(event.message);}).start(); return;}
+            if (event.message.startsWith("[weight")) {
+                if (event.message.endsWith("[weight]")) {
+                    nameToCheck = Minecraft.getMinecraft().thePlayer.getName();
+                } else {
+                    nameToCheck = (event.message.toLowerCase().replace("[weight ", "").replace("]", "")).replace(" ", "");
+                }
             } else {
-                nameToCheck = (event.message.toLowerCase().replace("[weight ", "").replace("]", "")).replace(" ", "");
-            }
-            event.setCanceled(true);
-        } else {
-            return;
-        }
-        try {
-            URL url = new URL(skyCryptURL + nameToCheck);
-            HttpURLConnection http = (HttpURLConnection) url.openConnection();
-            http.setDoOutput(true);
-            http.setDoInput(true);
-            http.setRequestProperty("User-Agent", "SynthesisMod-NONCANON");
-            http.setRequestProperty("Accept", "application/json");
-            http.setRequestProperty("Method", "GET");
-            http.connect();
-            try (InputStream instream = http.getInputStream()) {
-                JsonParser parser = new JsonParser();
-                JsonObject data = parser.parse(new String(IOUtils.toByteArray(instream), StandardCharsets.UTF_8)).getAsJsonObject();
-                if (!data.has("profiles")) {
-                    ChatLib.chat("Synthesis failed in getting information from SkyCrypt. Either their API is down or this player doesn't have any profiles at all. Aborting mission.");
-                    return;
-                }
-
-                JsonObject profiles = data.get("profiles").getAsJsonObject();
-                Set<Map.Entry<String, JsonElement>> profileSet = profiles.entrySet();
-                JsonElement currentSbProfileWeightData = null;
-                String displayName = "";
-
-                for (Map.Entry<String,JsonElement> me : profileSet)
-                {
-                    if (me.getValue().getAsJsonObject().get("current").getAsBoolean()) {
-                        displayName = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("display_name").getAsString();
-                        currentSbProfileWeightData = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("weight");
-                    }
-                }
-
-                int overallSenitherWeight = ((int)((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("senither")).get("overall").getAsDouble());
-                int overallLilyWeight = ((int)((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("lily")).get("total").getAsDouble());
-
-                ChatLib.chat(displayName + "'s weight info is as follows: ");
-                ChatLib.chat("Overall Lily Weight: " + overallLilyWeight + "\nOverall Senither Weight: " + overallSenitherWeight);
-                
-            } catch (Exception e) {
-                ChatLib.chat("Synthesis did not get an A-OK response from SkyCrypt. The response code Synthesis got instead was " + http.getResponseCode() + ". Aborting mission.");
-                System.out.println("Synthesis did not get an A-OK response from SkyCrypt. The response code Synthesis got instead was " + http.getResponseCode() + ". Aborting mission, see below.");
                 return;
             }
-        } catch (Exception e) {
-            ChatLib.chat("Synthesis ran into a problem checking " + nameToCheck + "'s weight. See logs.");
-            System.out.println("Synthesis ran into a problem checking " + nameToCheck + "'s weight. See below.");
-            e.printStackTrace();
-        }
+            try {
+                URL url = new URL(skyCryptURL + nameToCheck);
+                HttpURLConnection http = (HttpURLConnection) url.openConnection();
+                http.setDoOutput(true);
+                http.setDoInput(true);
+                http.setRequestProperty("User-Agent", "SynthesisMod-NONCANON");
+                http.setRequestProperty("Accept", "application/json");
+                http.setRequestProperty("Method", "GET");
+                http.connect();
+                try (InputStream instream = http.getInputStream()) {
+                    JsonParser parser = new JsonParser();
+                    JsonObject data = parser.parse(new String(IOUtils.toByteArray(instream), StandardCharsets.UTF_8)).getAsJsonObject();
+                    if (!data.has("profiles")) {
+                        ChatLib.chat("Synthesis failed in getting information from SkyCrypt. Either their API is down or this player doesn't have any profiles at all. Aborting mission.");
+                        return;
+                    }
+
+                    JsonObject profiles = data.get("profiles").getAsJsonObject();
+                    Set<Map.Entry<String, JsonElement>> profileSet = profiles.entrySet();
+                    JsonElement currentSbProfileWeightData = null;
+                    String displayName = "";
+
+                    for (Map.Entry<String,JsonElement> me : profileSet)
+                    {
+                        if (me.getValue().getAsJsonObject().get("current").getAsBoolean()) {
+                            displayName = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("display_name").getAsString();
+                            currentSbProfileWeightData = ((JsonObject)(me.getValue().getAsJsonObject().get("data"))).get("weight");
+                        }
+                    }
+
+                    int overallSenitherWeight = ((int)((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("senither")).get("overall").getAsDouble());
+                    int overallLilyWeight = ((int)((JsonObject)(currentSbProfileWeightData).getAsJsonObject().get("lily")).get("total").getAsDouble());
+
+                    ChatLib.chat(displayName + "'s weight info is as follows: ");
+                    ChatLib.chat("Overall Lily Weight: " + overallLilyWeight + "\nOverall Senither Weight: " + overallSenitherWeight);
+                    
+                } catch (Exception e) {
+                    ChatLib.chat("Synthesis did not get an A-OK response from SkyCrypt. The response code Synthesis got instead was " + http.getResponseCode() + ". Aborting mission.");
+                    System.out.println("Synthesis did not get an A-OK response from SkyCrypt. The response code Synthesis got instead was " + http.getResponseCode() + ". Aborting mission, see below.");
+                    return;
+                }
+            } catch (Exception e) {
+                ChatLib.chat("Synthesis ran into a problem checking " + nameToCheck + "'s weight. See logs.");
+                System.out.println("Synthesis ran into a problem checking " + nameToCheck + "'s weight. See below.");
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     @SubscribeEvent
