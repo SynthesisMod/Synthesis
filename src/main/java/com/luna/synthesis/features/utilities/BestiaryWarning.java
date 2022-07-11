@@ -87,11 +87,8 @@ public class BestiaryWarning {
             event.message.getUnformattedText().indexOf("MILESTONE") != -1) {
                 ChatLib.chat("Ended friendly warning.");
                 levelProgress = 0;
-                ChatLib.chat("Bestiary level up detected! It was level " + (bestiaryLevel+1) + ". Updating that now...");
                 bestiaryLevel++;
-                ChatLib.chat("Config's original Bestiary level was " + config.personalBestiaryLevel + ". Writing new value into config...");
                 config.personalBestiaryLevel = bestiaryLevel; //write to config
-                ChatLib.chat("Config and local `bestiaryLevel` value have been updated to the following: bestiaryLevel = " + bestiaryLevel + ", config.personalBestiaryLevel = " + config.personalBestiaryLevel);
         }
     }
 
