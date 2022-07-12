@@ -143,7 +143,7 @@ public class OccupancyOverlay {
                                     }
                                 }
                                 Color bgColor = new Color(((int)(r)), ((int)(g)), ((int)(b)));
-                                System.out.println("[Synthesis] Inside the menu named " + menuName + ", the color " + bgColor + " was selected for the hub named " + hubName + " because it was at a capacity of " + currentCapacity + " / " + maxCapacity + " (" + ((currentCapacity/maxCapacity)*100) + "% full) and hasFriend was " + hasFriend + ", hasGuildmate was " + hasGuildmate + ", couldNotConnect was " + couldNotConnect + ", and alreadyConnected was " + alreadyConnected);
+                                System.out.println("[Synthesis — DEBUG] Inside the menu named " + menuName + ", the color " + bgColor + " was selected for the hub named " + hubName + " because it was at a capacity of " + currentCapacity + " / " + maxCapacity + " (" + ((currentCapacity/maxCapacity)*100) + "% full) and hasFriend was " + hasFriend + ", hasGuildmate was " + hasGuildmate + ", couldNotConnect was " + couldNotConnect + ", and alreadyConnected was " + alreadyConnected);
                                 GL11.glTranslated(0, 0, 1);
                                 Gui.drawRect(
                                     ((((new ScaledResolution(Minecraft.getMinecraft())).getScaledWidth() - 176) / 2) + s.xDisplayPosition),
