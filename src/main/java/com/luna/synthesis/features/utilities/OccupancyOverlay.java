@@ -50,7 +50,6 @@ public class OccupancyOverlay {
     private float r, g, b = 0F;
     private Float currentCapacity = 0F;
     private Float maxCapacity = 1F; //prevent ArithmeticExceptions
-    private int x, y = 0;
     private String menuName = "";
     private String hubName = "";
     private List<String> itemLore;
@@ -68,7 +67,6 @@ public class OccupancyOverlay {
                         /* PREVENT CACHING */
                         currentCapacity = 0F;
                         maxCapacity = 1F; //prevent ArithmeticExceptions
-                        x = y = 0;
                         hubName = "";
                         currentCapacity = 0F;
                         maxCapacity = 1F;
@@ -146,17 +144,19 @@ public class OccupancyOverlay {
                                 }
                                 Color bgColor = new Color(((int)(r)), ((int)(g)), ((int)(b)));
                                 System.out.println("[Synthesis] Inside the menu named" + menuName + ", the color " + bgColor + " was selected for the hub named " + hubName + " because it was at a capacity of " + currentCapacity + " / " + maxCapacity + " (" + ((currentCapacity/maxCapacity)*100) + "% full) and hasFriend was " + hasFriend + ", hasGuildmate was " + hasGuildmate + ", couldNotConnect was " + couldNotConnect + ", and alreadyConnected was " + alreadyConnected);
-                                /**
-                                 * The next six lines of code were taken from Danker's Skyblock Mod under the GPL 3.0 license.
-                                 * https://github.com/bowser0000/SkyblockMod/blob/master/LICENSE
-                                 * @author bowser0000
-                                 */
-                                //They are necessary to render the colors within the inventory menu.
-                                x = (((new ScaledResolution(Minecraft.getMinecraft())).getScaledWidth() - 176) / 2) + s.xDisplayPosition;
-                                y = (((new ScaledResolution(Minecraft.getMinecraft())).getScaledHeight() - 222) / 2) + s.yDisplayPosition;
-                                if (slots.size() != 90) y += (6 - (slots.size() - 36) / 9) * 9;
                                 GL11.glTranslated(0, 0, 1);
-                                Gui.drawRect(x, y, x + 16, y + 16, bgColor.getRGB());
+                                Gui.drawRect(
+                                    ((((new ScaledResolution(Minecraft.getMinecraft())).getScaledWidth() - 176) / 2) + s.xDisplayPosition),
+                                    ((slots.size() != 90) ?
+                                        (((((new ScaledResolution(Minecraft.getMinecraft())).getScaledHeight() - 222) / 2) + s.yDisplayPosition) +
+                                            ((6 - (slots.size() - 36) / 9) * 9)) :
+                                        ((((new ScaledResolution(Minecraft.getMinecraft())).getScaledHeight() - 222) / 2) + s.yDisplayPosition)),
+                                    (((((new ScaledResolution(Minecraft.getMinecraft())).getScaledWidth() - 176) / 2) + s.xDisplayPosition) + 16),
+                                    (((slots.size() != 90) ?
+                                        (((((new ScaledResolution(Minecraft.getMinecraft())).getScaledHeight() - 222) / 2) + s.yDisplayPosition) +
+                                            ((6 - (slots.size() - 36) / 9) * 9)) :
+                                        ((((new ScaledResolution(Minecraft.getMinecraft())).getScaledHeight() - 222) / 2) + s.yDisplayPosition)) + 16),
+                                    bgColor.getRGB());
                                 GL11.glTranslated(0, 0, -1);
                             }
                         }
