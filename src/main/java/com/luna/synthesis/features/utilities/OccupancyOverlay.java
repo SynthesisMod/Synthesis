@@ -43,7 +43,7 @@ import org.lwjgl.opengl.GL11;
 public class OccupancyOverlay {
 
     private final Config config = Synthesis.getInstance().getConfig();
-    private final Pattern playerCapacity = Pattern.compile("(?<num>[1-9][0-9]+)/(?<denom>[0-9]+).*");
+    private final Pattern playerCapacity = Pattern.compile("(?<num>[0-9]+)/(?<denom>[0-9]+).*");
     private boolean hasFriend, hasGuildmate, alreadyConnected, couldNotConnect = false;
     /* alreadyConnected and couldNotConnect are for debugging purposes in case
     * i ever get back to refining the regex solution */
