@@ -25,7 +25,11 @@ import java.util.regex.Pattern;
  * A Java class by Erymanthus | RayDeeUx for Synthesis-NONCANON.
  * 
  * Suggestion #63 by minhperry#2803
- * warning if you are near the 1m combat xp bestiary rhing
+ * warning if you are near the 1m combat xp bestiary rhing (sic)
+ * 
+ * two options: chat or essential notification
+ * options for duration (notification) and frequency
+ * stops when you've passed 1m combat xp neighborhood
  * </pre>
  */
 

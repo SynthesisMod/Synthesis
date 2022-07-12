@@ -236,7 +236,11 @@ public class LoreCleanup {
              * 
              */
             if ((item.getDisplayName().contains("§6✪§c")) && config.utilitiesMasterStarDisplay != 0) {
-                //§c\u272a
+                /* 
+                 * force .replace() everywhere. could've used while loops
+                 * but those didnt work apparently and .replace() is far
+                 * easier to manage
+                */
                 if (config.utilitiesMasterStarDisplay == 2) {
                     item.setStackDisplayName(
                         item.getDisplayName()
