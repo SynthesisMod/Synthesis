@@ -83,9 +83,9 @@ public class OccupancyOverlay {
                                     } else if (line != null && line.toLowerCase().contains("online guild")) {
                                         hasGuildmate = true;
                                     } else if (line != null && (line.toLowerCase().contains("players: "))) {
-                                        String apparentlyIHaveToDoThisNowToPreventFalseNegativeSearches = StringUtils.stripControlCodes(line);
-                                        apparentlyIHaveToDoThisNowToPreventFalseNegativeSearches = apparentlyIHaveToDoThisNowToPreventFalseNegativeSearches.replace("Players: ", "");
-                                        Matcher playerCapacityMatcher = playerCapacity.matcher(apparentlyIHaveToDoThisNowToPreventFalseNegativeSearches);
+                                        String avoidFalseNegatives = StringUtils.stripControlCodes(line);
+                                        avoidFalseNegatives = avoidFalseNegatives.replace("Players: ", "");
+                                        Matcher playerCapacityMatcher = playerCapacity.matcher(avoidFalseNegatives);
                                         if (playerCapacityMatcher.find()) {
                                             currentCapacity = Float.parseFloat(playerCapacityMatcher.group(1));
                                             maxCapacity = Float.parseFloat(playerCapacityMatcher.group(2));
@@ -93,9 +93,9 @@ public class OccupancyOverlay {
                                             //"What the fu...?" - [MCU] Spider-Man, Spider-Man: No Way Home (2021)
                                             System.out.println("[Synthesis — DEBUG] For some reason, Synthesis couldn't find the player capacity using regex. Here's the relevant info: Inside the menu named " + menuName + " at item slot " + s.getSlotIndex() + "'s item lore line `" + line + "` at itemLore.indexOf(line) " + itemLore.indexOf(line) +  " with hubName " + hubName + ". hasFriend was " + hasFriend + ", hasGuildmate was " + hasGuildmate + ", couldNotConnect was " + couldNotConnect + ", and alreadyConnected was " + alreadyConnected + ". -Erymanthus#5074");
                                             System.out.println("[Synthesis — DEBUG] Synthesis is now attempting a failsafe solution using Java's replace() and substring() methods. -Erymanthus#5074");
-                                            String apparentlyJavaRegexNeverWorksConsistently = apparentlyIHaveToDoThisNowToPreventFalseNegativeSearches.replace("Players: ", "");
-                                            currentCapacity = Float.parseFloat(apparentlyJavaRegexNeverWorksConsistently.substring(0, apparentlyJavaRegexNeverWorksConsistently.indexOf("/") + 1).replace("/", ""));
-                                            maxCapacity = Float.parseFloat(apparentlyJavaRegexNeverWorksConsistently.substring(apparentlyJavaRegexNeverWorksConsistently.indexOf("/"), apparentlyJavaRegexNeverWorksConsistently.length()).replace("/", ""));
+                                            String regexIsFun = avoidFalseNegatives.replace("Players: ", "");
+                                            currentCapacity = Float.parseFloat(regexIsFun.substring(0, regexIsFun.indexOf("/") + 1).replace("/", ""));
+                                            maxCapacity = Float.parseFloat(regexIsFun.substring(regexIsFun.indexOf("/"), regexIsFun.length()).replace("/", ""));
                                             //So why does Java regex never work 100% of the time? Beats me, but the user shouldn't be punished for it!
                                         }
                                         if (currentCapacity >= maxCapacity) {
