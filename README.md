@@ -3,6 +3,8 @@ Hypixel SkyBlock QoL Mod. A collection of random mod features that SirDesco coul
 
 > TLDR: Desco decided to rewrite the mod in Kotlin and Ery that wanted to add features decided to add new ones that he's sad he couldn't get in the base mod
 
+(Thanks to Ascynx and KTibow for the TLDR and fixing `build.yml` respectively)
+
 ***NOTE: These are noncanon builds of SirDesco's Synthesis mod. As in, because SirDesco wants to port v0.3.1 of Synthesis to Kotlin for v0.4.0 and I (Erymanthus | RayDeeUx) suck at Kotlin, this is an alternative take on Synthesis which includes some of the suggestions I liked that never made it into Synthesis. Use of any releases of these noncanon Synthesis builds—regardless of where, how, and when you obtained it—implies your understanding that some of the features in these non-canon builds of Synthesis will not make it into the Kotlin rewrite.***
 
 To prevent mayhem and in accordance with [GitHub's licensing guidelines](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository), this fork inherits the license as its parent previously assumed, which is ARR (all rights reserved):
