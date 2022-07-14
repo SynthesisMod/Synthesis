@@ -988,7 +988,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SELECTOR,
             name = "Master Star Display Options",
-            description = "Choose how you want master stars in item names to be displayed.\n§cMay not apply to items renamed via NEU.",
+            description = "Choose how you want master stars in item names to be displayed.\n§eWill affect output provided by SkyblockAddons' §r/sba dev §ecommand.\n§cMay not apply to items renamed via NEU.",
             category = "Utilities",
             options = {"Whatever Hypixel has right now (§6✪§6✪§6✪§6✪§6✪§c➍§r)", "Go old school (§c✪§c✪§c✪§c✪§6✪§r)", "Append to previous stars (§6✪§6✪§6✪§6✪§6✪§c✪§c✪§c✪§c✪§r)"}
     )
@@ -1018,6 +1018,14 @@ public class Config extends Vigilant {
             options = {"\"give me the bare minimum\"", "\"Maybe a bit of extra info would be nice.\"", "\"I DEMAND TO KNOW EVERY SINGLE DETAIL!\""}
     )
     public int utilitiesCheckStatsLvlOfDetail = 0;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Ignore Hypixel's Books GUIs",
+            description = "Automatically close any book GUI in Hypixel. Originally designed to auomate ignoring all those books about Hypixel's occasional sales on their online store.\n§c§lEnable with caution, and disable when necessary!",
+            category = "Miscellaneous"
+    )
+    public boolean miscIgnoreHypixelBooks = false;
 
     //PATCHER
 
