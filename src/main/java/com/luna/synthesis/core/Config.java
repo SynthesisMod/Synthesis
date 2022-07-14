@@ -1022,7 +1022,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Ignore Hypixel's Books GUIs",
-            description = "Automatically close any book GUI in all Hypixel lobbies. Originally designed to auomate ignoring all those books about Hypixel's occasional sales on their online store.\n§c§lEnable with caution, and disable when in doubt!",
+            description = "Automatically close any book GUI in all Hypixel lobbies. Originally designed to automate ignoring all those books about Hypixel's occasional sales on their online store.\n§c§lEnable with caution, and disable when in doubt!",
             category = "Miscellaneous"
     )
     public boolean miscIgnoreHypixelBooks = false;
