@@ -645,7 +645,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "AncestralSpade helper",
-            description = "Triangulates the location ancestral spade points to. §cLook straight up or down§r, se the item once, wait until the particle trail has disappeared, move away a bit and use it again. Make sure /pq is NOT \"off\".",
+            description = "Triangulates the location ancestral spade points to. §cLook straight up or down§r, use the item once, wait until the particle trail has disappeared, move away a bit and use it again. Make sure /pq is NOT \"off\".",
             category = "Utilities"
     )
     public boolean utilitiesAncestralSpade = false;
