@@ -30,21 +30,20 @@ public class PreventDeleteReset {
                 if (config.utilitiesPreventHOTMReset &&
                     (slot.getStack().getDisplayName().toLowerCase()
                     .contains("reset heart of the mountain"))) {
-                        e.setCanceled(true);
-                        preventThatClick("resetting", "HOTM tree");
+                        preventThatClick(e, "resetting", "HOTM tree");
                 }
     
                 if (config.utilitiesPreventProfileDeletion &&
                     slot.getStack().getDisplayName().toLowerCase()
                     .contains("delete profile")) {
-                        e.setCanceled(true);
-                        preventThatClick("deleting", "Skyblock profile");
+                        preventThatClick(e, "deleting", "Skyblock profile");
                 }
             }
         }
     }
 
-    private void preventThatClick(String action, String type) {
+    private void preventThatClick(GuiScreenEvent.MouseInputEvent.Pre e, String action, String type) {
+        e.setCanceled(true);
         Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, ((float)(0.5)));
         ChatLib.chat("Synthesis has prevented you from " + action + " your " + type + ". Check your configs if you actually wanted to do this.");
     }
