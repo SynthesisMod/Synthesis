@@ -324,6 +324,7 @@ public class FindSomeonesSkyblockInfo {
                         .replaceAll("\n", "")
                         .replaceAll(" ", "");
                         rankPrefix = rankPrefix.substring(0, 2) + "[" + rankPrefix + rankPrefix.substring(0, 2) + "] ";
+                        rankPrefix = rankPrefix.replace("§cYOUTUBE","§fYOUTUBE"); //edge case YT rank because skycrypt devs 
                     } catch (Exception e) {
                         rankPrefix = "";
                         ChatLib.chat("Synthesis tried to parse Hypixel rank information from SkyCrypt, but failed. See logs.");
