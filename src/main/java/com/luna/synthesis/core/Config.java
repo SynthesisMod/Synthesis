@@ -545,6 +545,14 @@ public class Config extends Vigilant {
     public boolean utilitiesMaxPerkLevelDisplay = false;
 
     @Property(
+        type = PropertyType.SWITCH,
+        name = "Prevent HOTM Reset",
+        description = "Automatically exit the GUI that finalizes HOTM resets.\n§c§lEnable with caution!",
+        category = "Utilities"
+)
+    public boolean utilitiesPreventHOTMReset = false;
+
+    @Property(
             type = PropertyType.SELECTOR,
             name = "Drop chance to drop rate",
             description = "Displays drop chances as drop rates in bestiary.",
@@ -564,6 +572,14 @@ public class Config extends Vigilant {
             category = "Utilities"
     )
     public boolean utilitiesBestiaryGlance = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Prevent Profile Deletion",
+        description = "Automatically exit the GUI that finalizes profile deletions.\n§c§lEnable with caution!",
+        category = "Utilities"
+)
+    public boolean utilitiesPreventProfileDeletion = false;
 
     @Property(
             type = PropertyType.SWITCH,
