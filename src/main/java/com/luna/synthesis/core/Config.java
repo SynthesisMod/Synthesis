@@ -547,7 +547,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Prevent HOTM Reset",
-        description = "Automatically exit the GUI that finalizes HOTM resets.\n§c§lEnable with caution!",
+        description = "Prevent clicking on that one button which resets your HOTM tree.",
         category = "Utilities"
 )
     public boolean utilitiesPreventHOTMReset = false;
@@ -576,7 +576,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Prevent Profile Deletion",
-        description = "Automatically exit the GUI that finalizes profile deletions.\n§c§lEnable with caution!",
+        description = "Prevent clicking on that one button which deletes your profiles.",
         category = "Utilities"
 )
     public boolean utilitiesPreventProfileDeletion = false;
