@@ -545,14 +545,6 @@ public class Config extends Vigilant {
     public boolean utilitiesMaxPerkLevelDisplay = false;
 
     @Property(
-        type = PropertyType.SWITCH,
-        name = "Prevent HOTM Reset",
-        description = "Prevent clicking on that one button which resets your HOTM tree.",
-        category = "Utilities"
-)
-    public boolean utilitiesPreventHOTMReset = false;
-
-    @Property(
             type = PropertyType.SELECTOR,
             name = "Drop chance to drop rate",
             description = "Displays drop chances as drop rates in bestiary.",
@@ -572,14 +564,6 @@ public class Config extends Vigilant {
             category = "Utilities"
     )
     public boolean utilitiesBestiaryGlance = false;
-
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "Prevent Profile Deletion",
-        description = "Prevent clicking on that one button which deletes your profiles.",
-        category = "Utilities"
-)
-    public boolean utilitiesPreventProfileDeletion = false;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -1034,6 +1018,46 @@ public class Config extends Vigilant {
             options = {"\"give me the bare minimum\"", "\"Maybe a bit of extra info would be nice.\"", "\"I DEMAND TO KNOW EVERY SINGLE DETAIL!\""}
     )
     public int utilitiesCheckStatsLvlOfDetail = 0;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Prevent HOTM Reset",
+        description = "Prevent clicking on that one button which resets your HOTM tree.",
+        category = "Utilities"
+)
+    public boolean utilitiesPreventHOTMReset = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Prevent Profile Deletion",
+        description = "Prevent clicking on that one button which deletes your profiles.",
+        category = "Utilities"
+)
+    public boolean utilitiesPreventProfileDeletion = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Prevent Voting for Barry",
+        description = "Prevent voting for Barry in Skyblock mayor elections.",
+        category = "Utilities"
+)
+    public boolean utilitiesPreventVotingBarry = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Prevent Voting for Diaz",
+        description = "Prevent voting for Barry in Skyblock mayor elections.",
+        category = "Utilities"
+)
+    public boolean utilitiesPreventVotingDiaz = false;
+    
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Prevent Portal Destruction",
+        description = "Prevent destroying portals on your private island.",
+        category = "Utilities"
+)
+    public boolean utilitiesPreventPortalDestruction = false;
 
     @Property(
             type = PropertyType.SWITCH,

@@ -38,6 +38,29 @@ public class PreventDeleteReset {
                     .contains("delete profile")) {
                         preventThatClick(e, "deleting", "Skyblock profile");
                 }
+
+                if (config.utilitiesPreventVotingBarry &&
+                    slot.getStack().getDisplayName().toLowerCase()
+                    .endsWith("barry") && (!(slot.getStack().getDisplayName().toLowerCase()
+                    .contains("mayor")))) {
+                        preventThatClick(e, "voting Barry as", "Skyblock mayor");
+                }
+
+                if (config.utilitiesPreventVotingDiaz &&
+                    slot.getStack().getDisplayName().toLowerCase()
+                    .endsWith("diaz") && (!(slot.getStack().getDisplayName().toLowerCase()
+                    .contains("mayor")))) {
+                        preventThatClick(e, "voting Diaz as", "Skyblock mayor");
+                }
+
+                if (slot.getStack().getDisplayName().toLowerCase()
+                    .contains("confirm")) {
+                        for (String string : slot.getStack().getTooltip(Minecraft.getMinecraft().thePlayer, false)) {
+                            if (string.contains("portal") && config.utilitiesPreventPortalDestruction) {
+                                preventThatClick(e, "destroying one of", "\"Warp to\" portals");
+                            }
+                        }
+                }
             }
         }
     }
