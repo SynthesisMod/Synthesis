@@ -2,6 +2,7 @@ package com.luna.synthesis.features.utilities;
 
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
+import com.luna.synthesis.utils.ChatLib;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -30,16 +31,21 @@ public class PreventDeleteReset {
                     (slot.getStack().getDisplayName().toLowerCase()
                     .contains("reset heart of the mountain"))) {
                         e.setCanceled(true);
-                        Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, ((float)(0.5)));
+                        preventThatClick("resetting", "HOTM tree");
                 }
     
                 if (config.utilitiesPreventProfileDeletion &&
                     slot.getStack().getDisplayName().toLowerCase()
                     .contains("delete profile")) {
                         e.setCanceled(true);
-                        Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, ((float)(0.5)));
+                        preventThatClick("deleting", "Skyblock profile");
                 }
             }
         }
+    }
+
+    private void preventThatClick(String action, String type) {
+        Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, ((float)(0.5)));
+        ChatLib.chat("Synthesis has prevented you from " + action + " your " + type + ". Check your configs if you actually wanted to do this.");
     }
 }
