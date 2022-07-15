@@ -57,7 +57,7 @@ public class PreventDeleteReset {
                     .contains("confirm")) {
                         for (String string : slot.getStack().getTooltip(Minecraft.getMinecraft().thePlayer, false)) {
                             if (string.contains("portal") && config.utilitiesPreventPortalDestruction) {
-                                preventThatClick(e, "destroying one of", "\"Warp to\" portals");
+                                preventThatClick(e, "destroying one of", "island's \"Warp to\" portals");
                                 break;
                             }
                         }
