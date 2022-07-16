@@ -62,6 +62,7 @@ public class Synthesis {
         MinecraftForge.EVENT_BUS.register(new BestiaryWarning());
         MinecraftForge.EVENT_BUS.register(new FindSomeonesSkyblockInfo());
         MinecraftForge.EVENT_BUS.register(new PreventDeleteReset());
+        MinecraftForge.EVENT_BUS.register(new TrophyFishingMoment());
         config.preload();
         new SynthesisCommand().register();
         new CopyToClipboardCommand().register();

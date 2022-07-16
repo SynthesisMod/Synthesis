@@ -740,6 +740,14 @@ public class Config extends Vigilant {
     public boolean utilitiesSuperpairsIDs = false;
 
     @Property(
+        type = PropertyType.SWITCH,
+        name = "Trophy Fishing Overlay",
+        description = "Colors a trophy fish in Odger's menu with the highest tier of it that you've caught.",
+        category = "Utilities"
+)
+    public boolean utilitiesTrophyFishingOverlay = false;
+
+    @Property(
             type = PropertyType.TEXT,
             name = "Share held item text",
             description = "Hold an item and type the text to show the item to other Synthesis users.",
