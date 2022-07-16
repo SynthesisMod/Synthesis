@@ -328,9 +328,9 @@ public class FindSomeonesSkyblockInfo {
                         if (rankPrefix.contains("YOUTUBE")) {
                             int temp = ((int)(Math.random() * ((double)(3D))));
                             if (temp == 1) {
-                                rankPrefix = ("§6[YT]");
+                                rankPrefix = ("§6[YT] ");
                             } else if (temp == 2) {
-                                rankPrefix = ("§6[§cYOU§fTUBE§6]");
+                                rankPrefix = ("§6[§cYOU§fTUBE§6] ");
                             }
                         }
                     } catch (Exception e) {
