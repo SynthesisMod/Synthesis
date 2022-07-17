@@ -15,15 +15,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class IgnoreHypixelBooks {
 
     private final Config config = Synthesis.getInstance().getConfig();
-    private boolean isLobby = false;
     
     @SubscribeEvent
     private void onBook(GuiOpenEvent e) {
         if (!config.miscIgnoreHypixelBooks) {return;}
         if ((EssentialAPI.getMinecraftUtil().isHypixel()) && (e.gui instanceof GuiScreenBook) && !(StringUtils.stripControlCodes(Minecraft.getMinecraft().theWorld.getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName()).contains("SKYBLOCK"))) {
-            if ((isLobby)) {
-                e.setCanceled(true);
-            }
+            e.setCanceled(true);
         }
     }
 }
