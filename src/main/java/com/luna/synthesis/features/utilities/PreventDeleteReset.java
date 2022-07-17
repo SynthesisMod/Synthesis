@@ -53,6 +53,13 @@ public class PreventDeleteReset {
                         preventThatClick(e, "voting Diaz as", "Skyblock mayor");
                 }
 
+                if (config.utilitiesPreventVotingDante &&
+                    slot.getStack().getDisplayName().toLowerCase()
+                    .endsWith("diaz") && (!(slot.getStack().getDisplayName().toLowerCase()
+                    .contains("mayor")))) {
+                        preventThatClick(e, "voting Dante as", "Skyblock mayor");
+                }
+
                 if (slot.getStack().getDisplayName().toLowerCase()
                     .contains("confirm")) {
                         for (String string : slot.getStack().getTooltip(Minecraft.getMinecraft().thePlayer, false)) {
@@ -69,6 +76,10 @@ public class PreventDeleteReset {
     private void preventThatClick(GuiScreenEvent.MouseInputEvent.Pre e, String action, String type) {
         e.setCanceled(true);
         Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, ((float)(0.5)));
-        ChatLib.chat("Synthesis has prevented you from " + action + " your " + type + ". Check your configs if you actually wanted to do this.");
+        if (action.equals("voting Dante as")) {
+            ChatLib.chat("Synthesis has prevented you from " + action + " your " + type + ". Why would you vote for that dictator again?");
+        } else {
+            ChatLib.chat("Synthesis has prevented you from " + action + " your " + type + ". Check your configs if you actually wanted to do this.");
+        }
     }
 }

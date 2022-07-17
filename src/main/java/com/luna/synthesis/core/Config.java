@@ -1032,7 +1032,7 @@ public class Config extends Vigilant {
         name = "Prevent HOTM Reset",
         description = "Prevent clicking on that one button which resets your HOTM tree.",
         category = "Utilities"
-)
+    )
     public boolean utilitiesPreventHOTMReset = false;
 
     @Property(
@@ -1040,7 +1040,7 @@ public class Config extends Vigilant {
         name = "Prevent Profile Deletion",
         description = "Prevent clicking on that one button which deletes your profiles.",
         category = "Utilities"
-)
+    )
     public boolean utilitiesPreventProfileDeletion = false;
 
     @Property(
@@ -1048,7 +1048,7 @@ public class Config extends Vigilant {
         name = "Prevent Voting for Barry",
         description = "Prevent voting for Barry in Skyblock mayor elections.",
         category = "Utilities"
-)
+    )
     public boolean utilitiesPreventVotingBarry = false;
 
     @Property(
@@ -1056,8 +1056,16 @@ public class Config extends Vigilant {
         name = "Prevent Voting for Diaz",
         description = "Prevent voting for Diaz in Skyblock mayor elections.",
         category = "Utilities"
-)
+    )
     public boolean utilitiesPreventVotingDiaz = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Prevent Voting for Dante",
+        description = "Prevent voting for Dante in Skyblock mayor elections.",
+        category = "Utilities"
+    )
+    public boolean utilitiesPreventVotingDante = false;
     
     @Property(
         type = PropertyType.SWITCH,
