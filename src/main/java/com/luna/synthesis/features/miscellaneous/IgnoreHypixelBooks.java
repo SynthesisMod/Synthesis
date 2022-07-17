@@ -21,6 +21,7 @@ public class IgnoreHypixelBooks {
 
     private final Config config = Synthesis.getInstance().getConfig();
     private boolean isLobby = false;
+    private boolean isLocraw = false;
     private int ticks = 0;
 
     @SubscribeEvent
@@ -29,6 +30,9 @@ public class IgnoreHypixelBooks {
         if (e.phase == TickEvent.Phase.START && Minecraft.getMinecraft().thePlayer != null) {
             if (++ticks == 20) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/locraw");
+                if (!isLocraw) {
+                    isLocraw = true;
+                }
             }
         }
     }
@@ -48,8 +52,10 @@ public class IgnoreHypixelBooks {
     @SubscribeEvent
     private void onBook(GuiOpenEvent e) {
         if (!config.miscIgnoreHypixelBooks) {return;}
-        if ((isLobby) && (EssentialAPI.getMinecraftUtil().isHypixel()) && (e.gui instanceof GuiScreenBook) && !(StringUtils.stripControlCodes(Minecraft.getMinecraft().theWorld.getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName()).contains("SKYBLOCK"))) {
-            e.setCanceled(true);
+        if ((EssentialAPI.getMinecraftUtil().isHypixel()) && (e.gui instanceof GuiScreenBook) && !(StringUtils.stripControlCodes(Minecraft.getMinecraft().theWorld.getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName()).contains("SKYBLOCK"))) {
+            if ((isLobby) || (!isLocraw)){
+                e.setCanceled(true);
+            }
         }
     }
 }
