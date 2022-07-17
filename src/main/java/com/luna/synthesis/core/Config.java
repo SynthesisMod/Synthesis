@@ -987,7 +987,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Show Item Origin at Item Lore",
-            description = "Displays the item's origin (if there is one) at the end of an item's tooltip.\n§cFor compatibility reasons, UUIDs for all pets while viewing the pet menu will not be displayed.",
+            description = "Displays the item's origin (if there is one) at the end of an item's tooltip.\n§cFor compatibility reasons, item origins for all pets while viewing the pet menu will not be displayed.",
             category = "Utilities",
             subcategory = "Item Lore"
     )
@@ -1054,7 +1054,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Prevent Voting for Diaz",
-        description = "Prevent voting for Barry in Skyblock mayor elections.",
+        description = "Prevent voting for Diaz in Skyblock mayor elections.",
         category = "Utilities"
 )
     public boolean utilitiesPreventVotingDiaz = false;

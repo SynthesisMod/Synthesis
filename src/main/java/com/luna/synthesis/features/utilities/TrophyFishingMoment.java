@@ -47,7 +47,7 @@ public class TrophyFishingMoment {
                     isTrophy = false;
                     trophyFishName = "";
 
-                    if (s.getStack() != null && s.getStack().hasDisplayName() && (!(s.getStack().getDisplayName().contains("§k"))) && (!(s.getStack().getDisplayName().contains("§c")))) {
+                    if (s.getStack() != null && s.getStack().hasDisplayName() && (!(s.getStack().getDisplayName().contains("§c§k")))) {
                         trophyFishName = StringUtils.stripControlCodes(s.getStack().getDisplayName());
                         itemLore = s.getStack().getTooltip(Minecraft.getMinecraft().thePlayer, false);
                         slotIndex = s.getSlotIndex();
