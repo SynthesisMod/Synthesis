@@ -67,7 +67,7 @@ public class TrophyFishingMoment {
                         if (highestTrophyName.contains("Diamond")) {
                             r = 85; b = g = 255;
                         } else if (highestTrophyName.contains("Gold")) {
-                            r = 255; b = 170; g = 0;
+                            r = 255; b = 0; g = 170;
                         } else if (highestTrophyName.contains("Silver")) {
                             r = b = g = 170;
                         } else if (highestTrophyName.contains("Bronze")) {
