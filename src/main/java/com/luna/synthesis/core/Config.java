@@ -977,7 +977,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SELECTOR,
             name = "Show Item UUID at Item Lore",
-            description = "Displays the item's UUID (if there is one) at the end of an item's tooltip.\n§cFor compatibility reasons, UUIDs for all pets while viewing the pet menu will not be displayed.",
+            description = "Displays the item's UUID (if there is one) at the end of an item's tooltip.\n§cFor compatibility reasons, UUIDs for all pets will not be displayed while viewing the pet menu.",
             category = "Utilities",
             subcategory = "Item Lore",
             options = {"Off", "With \"-\"s", "Without \"-\"s"}
@@ -987,7 +987,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Show Item Origin at Item Lore",
-            description = "Displays the item's origin (if there is one) at the end of an item's tooltip.\n§cFor compatibility reasons, item origins for all pets while viewing the pet menu will not be displayed.",
+            description = "Displays the item's origin (if there is one) at the end of an item's tooltip.\n§cFor compatibility reasons, item origins for all pets will not be displayed while viewing the pet menu.",
             category = "Utilities",
             subcategory = "Item Lore"
     )
