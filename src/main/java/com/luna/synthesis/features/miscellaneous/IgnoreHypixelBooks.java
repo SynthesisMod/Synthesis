@@ -18,7 +18,7 @@ public class IgnoreHypixelBooks {
     
     @SubscribeEvent
     private void onBook(GuiOpenEvent e) {
-        if (!config.miscIgnoreHypixelBooks) {return;}
+        if (!config.miscIgnoreHypixelBooks || e.gui == null) {return;}
         if ((EssentialAPI.getMinecraftUtil().isHypixel()) && (e.gui instanceof GuiScreenBook) && !(StringUtils.stripControlCodes(Minecraft.getMinecraft().theWorld.getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName()).contains("SKYBLOCK"))) {
             e.setCanceled(true);
         }
