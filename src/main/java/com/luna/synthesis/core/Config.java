@@ -1091,6 +1091,14 @@ public class Config extends Vigilant {
     )
     public boolean miscIgnoreHypixelBooks = false;
 
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "More burger",
+            description = "WHY WOULD YOU ENABLE THIS WHY.",
+            category = "Miscellaneous"
+    )
+    public boolean miscMoreBurgers = false;
+
     //PATCHER
 
     @Property(

@@ -8,6 +8,7 @@ import com.luna.synthesis.features.cleanup.CoopCleanup;
 import com.luna.synthesis.features.cleanup.DungeonCleanup;
 import com.luna.synthesis.features.cleanup.LoreCleanup;
 import com.luna.synthesis.features.future.ChunkBorders;
+import com.luna.synthesis.features.miscellaneous.*;
 import com.luna.synthesis.features.utilities.*;
 import com.luna.synthesis.managers.BackpackManager;
 import com.luna.synthesis.utils.ReflectionUtils;
@@ -63,6 +64,8 @@ public class Synthesis {
         MinecraftForge.EVENT_BUS.register(new FindSomeonesSkyblockInfo());
         MinecraftForge.EVENT_BUS.register(new PreventDeleteReset());
         MinecraftForge.EVENT_BUS.register(new TrophyFishingMoment());
+        MinecraftForge.EVENT_BUS.register(new IgnoreHypixelBooks());
+        MinecraftForge.EVENT_BUS.register(new MilaysWontStopAskingForBurgers());
         config.preload();
         new SynthesisCommand().register();
         new CopyToClipboardCommand().register();
