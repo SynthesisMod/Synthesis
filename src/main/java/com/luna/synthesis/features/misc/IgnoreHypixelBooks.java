@@ -1,4 +1,4 @@
-package com.luna.synthesis.features.miscellaneous;
+package com.luna.synthesis.features.misc;
 
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
