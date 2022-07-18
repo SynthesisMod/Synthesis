@@ -6,7 +6,6 @@ import com.luna.synthesis.core.Config;
 import com.luna.synthesis.events.packet.PacketEvent;
 import com.luna.synthesis.features.cleanup.*;
 import com.luna.synthesis.features.future.*;
-import com.luna.synthesis.features.misc.MilaysWontStopAskingForBurgers;
 import com.luna.synthesis.features.misc.*;
 import com.luna.synthesis.features.utilities.*;
 import com.luna.synthesis.managers.BackpackManager;
@@ -63,7 +62,7 @@ public class Synthesis {
         MinecraftForge.EVENT_BUS.register(new FindSomeonesSkyblockInfo());
         MinecraftForge.EVENT_BUS.register(new PreventDeleteReset());
         MinecraftForge.EVENT_BUS.register(new TrophyFishingMoment());
-        MinecraftForge.EVENT_BUS.register(new IgnoreHypixelBooks());
+        MinecraftForge.EVENT_BUS.register(new HypixelBooksAreStupid());
         MinecraftForge.EVENT_BUS.register(new MilaysWontStopAskingForBurgers());
         config.preload();
         new SynthesisCommand().register();

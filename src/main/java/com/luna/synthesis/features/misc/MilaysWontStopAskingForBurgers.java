@@ -23,7 +23,7 @@ public class MilaysWontStopAskingForBurgers {
             e.setCanceled(true);
             for (String s : bruh) {
                 s = s.replaceAll("§r", "");
-                s = s.substring(0, 2);
+                if (s.contains("§")) s = s.substring(0, 2); else s = "";
                 newMessage += s + "burger§r ";
             }
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(newMessage));

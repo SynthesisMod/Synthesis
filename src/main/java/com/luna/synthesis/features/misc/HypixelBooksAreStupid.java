@@ -11,7 +11,7 @@ import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class IgnoreHypixelBooks {
+public class HypixelBooksAreStupid {
 
     private final Config config = Synthesis.getInstance().getConfig();
     
