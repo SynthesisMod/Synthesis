@@ -53,11 +53,22 @@ public class PreventDeleteReset {
                         preventThatClick(e, "voting Diaz as", "Skyblock mayor");
                 }
 
-                if (config.utilitiesPreventVotingDante &&
+                if ((config.utilitiesPreventVotingDante || config.utilitiesPreventVotingSusSpecialMayors) &&
                     slot.getStack().getDisplayName().toLowerCase()
-                    .endsWith("diaz") && (!(slot.getStack().getDisplayName().toLowerCase()
+                    .endsWith("dante") && (!(slot.getStack().getDisplayName().toLowerCase()
                     .contains("mayor")))) {
                         preventThatClick(e, "voting Dante as", "Skyblock mayor");
+                }
+
+                if ((config.utilitiesPreventVotingSusSpecialMayors) &&
+                    slot.getStack().getDisplayName().toLowerCase()
+                    .contains("\u00a7d") && (!(slot.getStack().getDisplayName().toLowerCase()
+                    .contains("mayor"))) && (!(slot.getStack().getDisplayName().toLowerCase()
+                    .contains("derpy"))) && (!(slot.getStack().getDisplayName().toLowerCase()
+                    .contains("jerry"))) && (!(slot.getStack().getDisplayName().toLowerCase()
+                    .contains("dante"))) && (!(slot.getStack().getDisplayName().toLowerCase()
+                    .contains("scorpius")))) {
+                        preventThatClick(e, "voting an unknown special mayor as", "Skyblock mayor");
                 }
 
                 if (slot.getStack().getDisplayName().toLowerCase()

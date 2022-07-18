@@ -1066,6 +1066,14 @@ public class Config extends Vigilant {
         category = "Utilities"
     )
     public boolean utilitiesPreventVotingDante = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Prevent Voting for Unknown Special Mayors",
+        description = "Prevent voting for new special mayors besides Derpy, Jerry, or Scorpius in Skyblock mayor elections. Enabling this will prevent voting for Dante as well.",
+        category = "Utilities"
+    )
+    public boolean utilitiesPreventVotingSusSpecialMayors = false;
     
     @Property(
         type = PropertyType.SWITCH,
