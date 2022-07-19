@@ -62,13 +62,22 @@ public class PreventDeleteReset {
 
                 if ((config.utilitiesPreventVotingSusSpecialMayors) &&
                     slot.getStack().getDisplayName().toLowerCase()
-                    .contains("\u00a7d") && (!(slot.getStack().getDisplayName().toLowerCase()
-                    .contains("mayor"))) && (!(slot.getStack().getDisplayName().toLowerCase()
-                    .contains("derpy"))) && (!(slot.getStack().getDisplayName().toLowerCase()
-                    .contains("jerry"))) && (!(slot.getStack().getDisplayName().toLowerCase()
-                    .contains("dante"))) && (!(slot.getStack().getDisplayName().toLowerCase()
-                    .contains("scorpius")))) {
-                        preventThatClick(e, "voting an unknown special mayor as", "Skyblock mayor");
+                    .contains("\u00a7d")) {
+                        if ((!(slot.getStack().getDisplayName().toLowerCase()
+                            .contains("mayor"))) && (!(slot.getStack().getDisplayName().toLowerCase()
+                            .contains("derpy"))) && (!(slot.getStack().getDisplayName().toLowerCase()
+                            .contains("jerry"))) && (!(slot.getStack().getDisplayName().toLowerCase()
+                            .contains("aatrox"))) && (!(slot.getStack().getDisplayName().toLowerCase()
+                            .contains("barry"))) && (!(slot.getStack().getDisplayName().toLowerCase()
+                            .contains("cole"))) && (!(slot.getStack().getDisplayName().toLowerCase()
+                            .contains("diana"))) && (!(slot.getStack().getDisplayName().toLowerCase()
+                            .contains("diaz"))) && (!(slot.getStack().getDisplayName().toLowerCase()
+                            .contains("foxy"))) && (!(slot.getStack().getDisplayName().toLowerCase()
+                            .contains("marina"))) && (!(slot.getStack().getDisplayName().toLowerCase()
+                            .contains("paul"))) && (!(slot.getStack().getDisplayName().toLowerCase()
+                            .contains("scorpius")))) {
+                                preventThatClick(e, "voting an unknown special mayor as", "Skyblock mayor");
+                        }
                 }
 
                 if (slot.getStack().getDisplayName().toLowerCase()
