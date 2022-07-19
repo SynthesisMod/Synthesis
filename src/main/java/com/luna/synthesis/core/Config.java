@@ -1093,6 +1093,14 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
+            name = "Send Notifications When Book GUIs are ignored",
+            description = "Sends a notification if Synthesis ignores a book GUI. Only turn this off if you know what you're doing.",
+            category = "Miscellaneous"
+    )
+    public boolean miscIgnoreHypixelBooksWarning = true;
+
+    @Property(
+            type = PropertyType.SWITCH,
             name = "More burger",
             description = "WHY WOULD YOU ENABLE THIS WHY.",
             category = "Miscellaneous"
@@ -1144,6 +1152,7 @@ public class Config extends Vigilant {
         addDependency("occupancyOverlayGuildHighlght", "occupancyOverlay");
         addDependency("occupancyOverlayFriendAndGuildHighlght", "occupancyOverlay");
         addDependency("occupancyOverlayAlreadyConnectedHighlght", "occupancyOverlay");
+        addDependency("miscIgnoreHypixelBooksWarning", "miscIgnoreHypixelBooks");
         registerListener("utilitiesColorlessPanes", (z) -> Minecraft.getMinecraft().renderGlobal.loadRenderers());
     }
 }

@@ -2,13 +2,11 @@ package com.luna.synthesis.features.misc;
 
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
-import com.luna.synthesis.utils.ChatLib;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import gg.essential.api.EssentialAPI;
 import net.minecraft.client.gui.GuiScreenBook;
 
-import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class HypixelBooksAreStupid {
@@ -16,13 +14,13 @@ public class HypixelBooksAreStupid {
     private final Config config = Synthesis.getInstance().getConfig();
     
     @SubscribeEvent
-    private void onBook(GuiScreenEvent.KeyboardInputEvent e) {
+    public void onBook(GuiOpenEvent e) {
         if (!config.miscIgnoreHypixelBooks) {return;}
-        GuiScreen screen = Minecraft.getMinecraft().currentScreen;
-        if ((screen instanceof GuiScreenBook)) {
-            //e.setCanceled(true);
-            //Minecraft.getMinecraft().thePlayer.closeScreen();
-            ChatLib.chat("Ascynx won't be able to see this message in-game because BRUH");
+        if ((e.gui instanceof GuiScreenBook) && (EssentialAPI.getMinecraftUtil().isHypixel())) {
+            e.setCanceled(true);
+            if (config.miscIgnoreHypixelBooksWarning) {
+                EssentialAPI.getNotifications().push("§dSynthesis", ("Synthesis detected a book GUI and ignored it. Check the server you're on and review your configs if ignoring the book GUI was a mistake or if this notification was a mistake."), 5);
+            }
         }
     }
 }
