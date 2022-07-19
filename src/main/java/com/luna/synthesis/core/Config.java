@@ -1143,6 +1143,7 @@ public class Config extends Vigilant {
         hidePropertyIf("patcherCustomImagePreviewer", () -> !Loader.isModLoaded("patcher"));
         hidePropertyIf("utilitiesShareScroll", () -> !Loader.isModLoaded("text_overflow_scroll"));
         hidePropertyIf("utilitiesWishingCompassWaypoint", () -> !Loader.isModLoaded("skytils"));
+        hidePropertyIf("miscMoreBurgers", () -> (!(Minecraft.getMinecraft().getSession().getPlayerID().equalsIgnoreCase("1f20d60f1bc242dd82669a173a7af77c")) && !(Minecraft.getMinecraft().getSession().getPlayerID().equalsIgnoreCase("b43d74579da4408ba9fb51239022cec9"))));
         addDependency("utilitiesWishingCompassWaypoint", "utilitiesWishingCompass");
         addDependency("utilitiesBlockWishingCompass", "utilitiesWishingCompass");
         addDependency("utilitiesContainerControl", "utilitiesContainerChat");
