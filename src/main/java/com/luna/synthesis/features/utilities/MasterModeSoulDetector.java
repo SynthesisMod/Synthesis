@@ -47,24 +47,20 @@ public class MasterModeSoulDetector {
         for (Slot s : slots) {
             int numTrues = 0, numFalses = 0;
             if (s.getStack() != null) {
-                for (String str : s.getStack().getTooltip(Minecraft.getMinecraft().thePlayer, false)) {
-                    if (str.contains("Absorbed Souls")) {
-                        findSouls(s.getStack());
-                        for (boolean bool : whichOnesAreMasterSouls) if (bool) numTrues++; else numFalses++;
-                        if (!(whichOnesAreMasterSouls.isEmpty()) && numFalses != whichOnesAreMasterSouls.size()) {
-                            if ((numTrues == whichOnesAreMasterSouls.size())) {
-                                r = b = 0;
-                                g = 255;
-                            } else {
-                                r = g = 255;
-                                b = 0;
-                            }
-                            Color bgColor = new Color(r, g, b);
-                            GL11.glTranslated(0, 0, 1);
-                            Gui.drawRect(((((new ScaledResolution(Minecraft.getMinecraft())).getScaledWidth() - 176) / 2) + s.xDisplayPosition), ((slots.size() != 90) ? (((((new ScaledResolution(Minecraft.getMinecraft())).getScaledHeight() - 222) / 2) + s.yDisplayPosition) + ((6 - (slots.size() - 36) / 9) * 9)) : ((((new ScaledResolution(Minecraft.getMinecraft())).getScaledHeight() - 222) / 2) + s.yDisplayPosition)), (((((new ScaledResolution(Minecraft.getMinecraft())).getScaledWidth() - 176) / 2) + s.xDisplayPosition) + 16), (((slots.size() != 90) ? (((((new ScaledResolution(Minecraft.getMinecraft())).getScaledHeight() - 222) / 2) + s.yDisplayPosition) + ((6 - (slots.size() - 36) / 9) * 9)) : ((((new ScaledResolution(Minecraft.getMinecraft())).getScaledHeight() - 222) / 2) + s.yDisplayPosition)) + 16),bgColor.getRGB());
-                            GL11.glTranslated(0, 0, -1);
-                        }
+                findSouls(s.getStack());
+                for (boolean bool : whichOnesAreMasterSouls) if (bool) numTrues++; else numFalses++;
+                if (!(whichOnesAreMasterSouls.isEmpty()) && numFalses != whichOnesAreMasterSouls.size()) {
+                    if ((numTrues == whichOnesAreMasterSouls.size())) {
+                        r = b = 0;
+                        g = 255;
+                    } else {
+                        r = g = 255;
+                        b = 0;
                     }
+                    Color bgColor = new Color(r, g, b);
+                    GL11.glTranslated(0, 0, 1);
+                    Gui.drawRect(((((new ScaledResolution(Minecraft.getMinecraft())).getScaledWidth() - 176) / 2) + s.xDisplayPosition), ((slots.size() != 90) ? (((((new ScaledResolution(Minecraft.getMinecraft())).getScaledHeight() - 222) / 2) + s.yDisplayPosition) + ((6 - (slots.size() - 36) / 9) * 9)) : ((((new ScaledResolution(Minecraft.getMinecraft())).getScaledHeight() - 222) / 2) + s.yDisplayPosition)), (((((new ScaledResolution(Minecraft.getMinecraft())).getScaledWidth() - 176) / 2) + s.xDisplayPosition) + 16), (((slots.size() != 90) ? (((((new ScaledResolution(Minecraft.getMinecraft())).getScaledHeight() - 222) / 2) + s.yDisplayPosition) + ((6 - (slots.size() - 36) / 9) * 9)) : ((((new ScaledResolution(Minecraft.getMinecraft())).getScaledHeight() - 222) / 2) + s.yDisplayPosition)) + 16),bgColor.getRGB());
+                    GL11.glTranslated(0, 0, -1);
                 }
             }
         }
