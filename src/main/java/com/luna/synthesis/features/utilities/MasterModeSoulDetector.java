@@ -27,6 +27,7 @@ public class MasterModeSoulDetector {
 
     @SubscribeEvent
     public void onTooltip(ItemTooltipEvent e) {
+        if (!config.utilitiesMasterModeSoulDetection) return;
         if (e.toolTip == null) return;
         ItemStack itemStack = e.itemStack;
         List<String> tooltip = e.toolTip;
@@ -41,6 +42,7 @@ public class MasterModeSoulDetector {
 
     @SubscribeEvent
     public void guiRender(GuiScreenEvent.BackgroundDrawnEvent e) {
+        if (!config.utilitiesMasterModeSoulDetection) return;
         if (!(Minecraft.getMinecraft().currentScreen instanceof GuiChest)) return;
         if ((!(StringUtils.stripControlCodes(((ContainerChest)(Minecraft.getMinecraft().thePlayer.openContainer)).getLowerChestInventory().getDisplayName().getUnformattedText()).contains("You"))) && (!(StringUtils.stripControlCodes(((ContainerChest)(Minecraft.getMinecraft().thePlayer.openContainer)).getLowerChestInventory().getDisplayName().getUnformattedText()).contains("Auctions:"))) && (!(StringUtils.stripControlCodes(((ContainerChest)(Minecraft.getMinecraft().thePlayer.openContainer)).getLowerChestInventory().getDisplayName().getUnformattedText()).contains("Auction View")))) return;
         List<Slot> slots = ((GuiChest)(e.gui)).inventorySlots.inventorySlots;
@@ -67,6 +69,7 @@ public class MasterModeSoulDetector {
     }
 
     private void findSouls(ItemStack is) {
+        if (!config.utilitiesMasterModeSoulDetection) return;
         if (!(whichOnesAreMasterSouls.isEmpty())) whichOnesAreMasterSouls.clear();
         if (!(is.hasTagCompound())) return;
         if (is.getSubCompound("ExtraAttributes", false) == null || (!(is.getSubCompound("ExtraAttributes", false).hasKey("necromancer_souls")))) return;

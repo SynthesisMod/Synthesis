@@ -456,6 +456,8 @@ public class Config extends Vigilant {
     )
     public boolean futureChunkBorders = false;
 
+    //UTILITIES
+
     @Property(
             type = PropertyType.SWITCH,
             name = "Container chat",
@@ -1003,6 +1005,14 @@ public class Config extends Vigilant {
     public int utilitiesMasterStarDisplay = 0;
 
     @Property(
+        type = PropertyType.SWITCH,
+        name = "Master Mode Soul Detection per Item",
+        description = "Check if an item is filled §aexclusively§r or §epartially§r of Master Mode souls.\nAdditionally indicates which souls are from Master Mode on item tooltips.",
+        category = "Utilities"
+)
+    public boolean utilitiesMasterModeSoulDetection = true;
+
+    @Property(
             type = PropertyType.SWITCH,
             name = "Enable Senither and Lily weight search",
             description = "The toggle to enable/disable checking exclusively for someone's weights in both the Senither calculation system and the Lily calculation system. §e(Type \"[weight <username>]\" in chat to check someone's weight calculations, or \"[weight]\" to check your own.)\n§c§lEnable with caution!",
@@ -1091,6 +1101,8 @@ public class Config extends Vigilant {
         min = 1, max = 3
 )
     public int utilitiesPreventVotingXPerkMayors = 1;
+
+    //MISC
 
     @Property(
             type = PropertyType.SWITCH,
