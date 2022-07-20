@@ -57,6 +57,11 @@ public class PreventDeleteReset {
                         }
                 }
 
+                if (!(StringUtils.stripControlCodes(
+                    ((ContainerChest)(Minecraft.getMinecraft().thePlayer.openContainer))
+                    .getLowerChestInventory().getDisplayName().getUnformattedText())
+                    .contains("Election, Year "))) return;
+
                 if (config.utilitiesPreventVotingBarry &&
                     slot.getStack().getDisplayName().toLowerCase()
                     .endsWith("barry") && (!(slot.getStack().getDisplayName().toLowerCase()
@@ -102,11 +107,7 @@ public class PreventDeleteReset {
                         }
                 }
 
-                if (StringUtils.stripControlCodes(
-                    ((ContainerChest)(Minecraft.getMinecraft().thePlayer.openContainer))
-                    .getLowerChestInventory().getDisplayName().getUnformattedText())
-                    .contains("Election, Year ") &&
-                        config.utilitiesPreventVotingXPerkMayors != 1) {
+                if (config.utilitiesPreventVotingXPerkMayors != 1) {
                     String colorCode = slot.getStack().getDisplayName().substring(0, 2);
                     List<String> itemLore = slot.getStack().getTooltip(Minecraft.getMinecraft().thePlayer, false);
                     int numPerks = 0;
