@@ -2,7 +2,6 @@ package com.luna.synthesis.features.utilities;
 
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -15,11 +14,9 @@ import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.lwjgl.opengl.GL11;
 
 public class MasterModeSoulDetector {
@@ -31,10 +28,8 @@ public class MasterModeSoulDetector {
     @SubscribeEvent
     public void onTooltip(ItemTooltipEvent e) {
         if (e.toolTip == null) return;
-
         ItemStack itemStack = e.itemStack;
         List<String> tooltip = e.toolTip;
-
         for (String s : tooltip) {
             if (s.contains("Absorbed Souls")) {
                 findSouls(itemStack);
