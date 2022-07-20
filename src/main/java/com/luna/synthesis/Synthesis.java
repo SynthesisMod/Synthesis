@@ -64,6 +64,7 @@ public class Synthesis {
         MinecraftForge.EVENT_BUS.register(new TrophyFishingMoment());
         MinecraftForge.EVENT_BUS.register(new HypixelBooksAreStupid());
         MinecraftForge.EVENT_BUS.register(new MilaysWontStopAskingForBurgers());
+        MinecraftForge.EVENT_BUS.register(new MasterModeSoulDetector());
         config.preload();
         new SynthesisCommand().register();
         new CopyToClipboardCommand().register();

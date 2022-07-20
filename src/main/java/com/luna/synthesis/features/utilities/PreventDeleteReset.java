@@ -5,6 +5,7 @@ import com.luna.synthesis.core.Config;
 import com.luna.synthesis.utils.ChatLib;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.ContainerChest;
@@ -23,6 +24,7 @@ public class PreventDeleteReset {
     @SubscribeEvent
     public void onMouseClick(GuiScreenEvent.MouseInputEvent.Pre e) {
         boolean isBarry = false, isDiaz = false, isDante = false, isSpecialSus = false;
+        if (!(Minecraft.getMinecraft().currentScreen instanceof GuiChest)) return;
         if (!Mouse.getEventButtonState()) return;
 
         if (e.gui instanceof GuiContainer) {
