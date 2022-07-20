@@ -7,8 +7,13 @@ import com.luna.synthesis.utils.ChatLib;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.ContainerChest;
+
+import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.List;
 
 import org.lwjgl.input.Mouse;
 
@@ -17,6 +22,7 @@ public class PreventDeleteReset {
 
     @SubscribeEvent
     public void onMouseClick(GuiScreenEvent.MouseInputEvent.Pre e) {
+        boolean isBarry = false, isDiaz = false, isDante = false, isSpecialSus = false;
         if (!Mouse.getEventButtonState()) return;
 
         if (e.gui instanceof GuiContainer) {
@@ -39,11 +45,22 @@ public class PreventDeleteReset {
                         preventThatClick(e, "deleting", "Skyblock profile");
                 }
 
+                if (slot.getStack().getDisplayName().toLowerCase()
+                    .contains("confirm")) {
+                        for (String string : slot.getStack().getTooltip(Minecraft.getMinecraft().thePlayer, false)) {
+                            if (string.contains("portal") && config.utilitiesPreventPortalDestruction) {
+                                preventThatClick(e, "destroying one of", "island's \"Warp to\" portals");
+                                break;
+                            }
+                        }
+                }
+
                 if (config.utilitiesPreventVotingBarry &&
                     slot.getStack().getDisplayName().toLowerCase()
                     .endsWith("barry") && (!(slot.getStack().getDisplayName().toLowerCase()
                     .contains("mayor")))) {
                         preventThatClick(e, "voting Barry as", "Skyblock mayor");
+                        isBarry = true;
                 }
 
                 if (config.utilitiesPreventVotingDiaz &&
@@ -51,6 +68,7 @@ public class PreventDeleteReset {
                     .endsWith("diaz") && (!(slot.getStack().getDisplayName().toLowerCase()
                     .contains("mayor")))) {
                         preventThatClick(e, "voting Diaz as", "Skyblock mayor");
+                        isDiaz = true;
                 }
 
                 if ((config.utilitiesPreventVotingDante || config.utilitiesPreventVotingSusSpecialMayors) &&
@@ -58,6 +76,7 @@ public class PreventDeleteReset {
                     .endsWith("dante") && (!(slot.getStack().getDisplayName().toLowerCase()
                     .contains("mayor")))) {
                         preventThatClick(e, "voting Dante as", "Skyblock mayor");
+                        isDante = true;
                 }
 
                 if ((config.utilitiesPreventVotingSusSpecialMayors) &&
@@ -77,17 +96,31 @@ public class PreventDeleteReset {
                             .contains("paul"))) && (!(slot.getStack().getDisplayName().toLowerCase()
                             .contains("scorpius")))) {
                                 preventThatClick(e, "voting an unknown special mayor as", "Skyblock mayor");
+                                isSpecialSus = true;
                         }
                 }
 
-                if (slot.getStack().getDisplayName().toLowerCase()
-                    .contains("confirm")) {
-                        for (String string : slot.getStack().getTooltip(Minecraft.getMinecraft().thePlayer, false)) {
-                            if (string.contains("portal") && config.utilitiesPreventPortalDestruction) {
-                                preventThatClick(e, "destroying one of", "island's \"Warp to\" portals");
-                                break;
-                            }
+                if (StringUtils.stripControlCodes(
+                    ((ContainerChest)(Minecraft.getMinecraft().thePlayer.openContainer))
+                    .getLowerChestInventory().getDisplayName().getUnformattedText())
+                    .contains("Election, Year ") &&
+                        config.utilitiesPreventVotingXPerkMayors != 1) {
+                    String colorCode = slot.getStack().getDisplayName().substring(0, 2);
+                    List<String> itemLore = slot.getStack().getTooltip(Minecraft.getMinecraft().thePlayer, false);
+                    int numPerks = 0;
+                    for (String s : itemLore) {
+                        s = s.replaceAll("§5§o", "");
+                        if (s.startsWith(colorCode) &&
+                            !(s.contains("You voted for this candidate!")) &&
+                            !(s.contains("Leading in votes!")) &&
+                            !(s.contains("Click to vote for "))) {
+                                numPerks++;
                         }
+                    }
+                    if (isBarry || isDiaz || isDante || isSpecialSus) return;
+                    if (numPerks < config.utilitiesPreventVotingXPerkMayors) {
+                        preventThatClick(e, "voting for " + (StringUtils.stripControlCodes(slot.getStack().getDisplayName())) + " as", "Skyblock mayor because they only have " + numPerks + " perk" + ((numPerks != 1) ? "s" : ""));
+                    }
                 }
             }
         }
@@ -96,10 +129,12 @@ public class PreventDeleteReset {
     private void preventThatClick(GuiScreenEvent.MouseInputEvent.Pre e, String action, String type) {
         e.setCanceled(true);
         Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, ((float)(0.5)));
-        if (action.equals("voting Dante as")) {
-            ChatLib.chat("Synthesis has prevented you from " + action + " your " + type + ". Why would you vote for that dictator again?");
-        } else {
-            ChatLib.chat("Synthesis has prevented you from " + action + " your " + type + ". Check your configs if you actually wanted to do this.");
-        }
+        ChatLib.chat(
+            "Synthesis has prevented you from " + action + " your " + type + ". " +
+            ((action.equals("voting Dante as")) ?
+                "Why would you vote for that dictator again?" :
+                "Check your configs if you actually wanted to do this."
+            )
+        );
     }
 }

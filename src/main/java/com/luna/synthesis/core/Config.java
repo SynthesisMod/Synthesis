@@ -1045,6 +1045,14 @@ public class Config extends Vigilant {
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Prevent Portal Destruction",
+        description = "Prevent destroying portals on your private island.",
+        category = "Utilities"
+)
+    public boolean utilitiesPreventPortalDestruction = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Prevent Voting for Barry",
         description = "Prevent voting for Barry in Skyblock mayor elections.",
         category = "Utilities"
@@ -1074,14 +1082,15 @@ public class Config extends Vigilant {
         category = "Utilities"
     )
     public boolean utilitiesPreventVotingSusSpecialMayors = false;
-    
+
     @Property(
-        type = PropertyType.SWITCH,
-        name = "Prevent Portal Destruction",
-        description = "Prevent destroying portals on your private island.",
-        category = "Utilities"
+        type = PropertyType.NUMBER,
+        name = "Prevent Voting for Mayors with Less Than [number] Perks",
+        description = "If left at the default value of \"1\", Synthesis will not prevent you from voting for any mayors.\nHowever, if you chose \"2\", Synthesis would prevent you from voting for mayors with only one perk (as one is less than two).", //\"
+        category = "Utilities",
+        min = 1, max = 3
 )
-    public boolean utilitiesPreventPortalDestruction = false;
+    public int utilitiesPreventVotingXPerkMayors = 1;
 
     @Property(
             type = PropertyType.SWITCH,
