@@ -71,8 +71,7 @@ public class MasterModeSoulDetector {
     private void findSouls(ItemStack is) {
         if (!config.utilitiesMasterModeSoulDetection) return;
         if (!(whichOnesAreMasterSouls.isEmpty())) whichOnesAreMasterSouls.clear();
-        if (!(is.hasTagCompound())) return;
-        if (is.getSubCompound("ExtraAttributes", false) == null || (!(is.getSubCompound("ExtraAttributes", false).hasKey("necromancer_souls")))) return;
+        if ((!(is.hasTagCompound())) || (is.getSubCompound("ExtraAttributes", false) == null || (!(is.getSubCompound("ExtraAttributes", false).hasKey("necromancer_souls"))))) return;
         NBTTagList tl = ((NBTTagList)((is.getSubCompound("ExtraAttributes", false)).getTag("necromancer_souls")));
         if (tl.tagCount() == 0) return;
         numSouls = tl.tagCount();
