@@ -83,17 +83,14 @@ public class RenderItemMixin {
                     drawStringAsStackSize(progress.get(), xPosition, yPosition);
                     ci.cancel();
                 }
-            } else if ((title.contains(" Collection")) && stack.hasDisplayName() && !(stack.getDisplayName().isEmpty())) {
+            } else if ((title.contains(" Collection"))) {
                 boolean doTheHarlemShake = false;
                 String[] splitName = StringUtils.stripControlCodes(stack.getDisplayName()).split(" ");
+                if (splitName.length < 1) return;
                 String romanNumeral = splitName[(splitName.length - 1)];
                 if (!((romanNumeral.contains("I") && romanNumeral.contains("V") && romanNumeral.contains("X") && romanNumeral.contains("L") && romanNumeral.contains("C") && romanNumeral.contains("D") && romanNumeral.contains("M")))) return;
                 List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
-                for (String s : itemLore) {
-                    if (s.contains("View all your ")) {
-                        doTheHarlemShake = true;
-                    }
-                }
+                for (String s : itemLore) if (s.contains("View all your ")) doTheHarlemShake = true;
                 if (!doTheHarlemShake) return;
                 int finalResult = 0;
                 //BRUTEFORCE CONVERSION.
