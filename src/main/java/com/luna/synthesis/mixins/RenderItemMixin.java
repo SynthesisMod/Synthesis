@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Mixin(RenderItem.class)
@@ -82,6 +83,25 @@ public class RenderItemMixin {
                     drawStringAsStackSize(progress.get(), xPosition, yPosition);
                     ci.cancel();
                 }
+            } else if ((title.contains(" Collection")) && stack.hasDisplayName() && !(stack.getDisplayName().isEmpty())) {
+                boolean doTheHarlemShake = false;
+                String[] splitName = StringUtils.stripControlCodes(stack.getDisplayName()).split(" ");
+                String romanNumeral = splitName[(splitName.length - 1)];
+                if (!((romanNumeral.contains("I") && romanNumeral.contains("V") && romanNumeral.contains("X") && romanNumeral.contains("L") && romanNumeral.contains("C") && romanNumeral.contains("D") && romanNumeral.contains("M")))) return;
+                List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+                for (String s : itemLore) {
+                    if (s.contains("View all your ")) {
+                        doTheHarlemShake = true;
+                    }
+                }
+                if (!doTheHarlemShake) return;
+                int finalResult = 0;
+                //BRUTEFORCE CONVERSION.
+                //I SURE AS FUCK GOT NO TIME TO WRITE THAT ROMAN TO ARABIC NUMERAL CONVERSION FUNCTION.
+                //S_A_D ISTG IF YOU SCREENSHOT THIS I WILL COMMIT COPIOUS AMOUNTS OF VIDEO GAME CRIMES -ERY
+                if (romanNumeral.equals("I")) finalResult = 1; else if (romanNumeral.equals("II")) finalResult = 2; else if (romanNumeral.equals("III")) finalResult = 3; else if (romanNumeral.equals("IV")) finalResult = 4; else if (romanNumeral.equals("V")) finalResult = 5; else if (romanNumeral.equals("VI")) finalResult = 6; else if (romanNumeral.equals("VII")) finalResult = 7; else if (romanNumeral.equals("VIII")) finalResult = 8; else if (romanNumeral.equals("IX")) finalResult = 9; else if (romanNumeral.equals("X")) finalResult = 10; else if (romanNumeral.equals("XI")) finalResult = 11; else if (romanNumeral.equals("XII")) finalResult = 12; else if (romanNumeral.equals("XIII")) finalResult = 13; else if (romanNumeral.equals("XIV")) finalResult = 14; else if (romanNumeral.equals("XV")) finalResult = 15; else if (romanNumeral.equals("XVI")) finalResult = 16; else return;
+                drawStringAsStackSize(Integer.toString(finalResult), xPosition, yPosition);
+                ci.cancel();
             }
         }
         if (config.utilitiesWishingCompassUsesLeft) {

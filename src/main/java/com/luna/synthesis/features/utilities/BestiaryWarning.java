@@ -49,21 +49,25 @@ public class BestiaryWarning {
         if (!(Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerChest) || 
             !(StringUtils.stripControlCodes(event.itemStack.getDisplayName()).startsWith("Bestiary Milestone ")) ||
             !(event.itemStack.getItem() instanceof ItemSkull)) return;
-        bestiaryLevel = Integer.parseInt(StringUtils.stripControlCodes(event.itemStack.getDisplayName()).replace("Bestiary Milestone ", ""));
-        config.personalBestiaryLevel = bestiaryLevel; //write to config
-        if ((((bestiaryLevel+1) % 2) == 0) && ((bestiaryLevel+1) != 4) && ((bestiaryLevel+1) != 6) && ((bestiaryLevel+1) != 8)) { //source: https://hypixel-skyblock.fandom.com/wiki/Bestiary
-            isAboutToLevelUp = true;
-        }
-        List<String> lore = event.toolTip;
-        if (lore != null) {
-            for (String s : lore) {
-                if (s.endsWith("e10")) {
-                    levelProgress = Integer.parseInt(StringUtils.stripControlCodes(s).replaceAll("-", "").replaceAll(" ", "").replaceAll("/10", ""));
-                }
-                if (!isAboutToLevelUp && (s.contains("Combat"))) { //failsafe method to cover rare edge cases
-                    isAboutToLevelUp = true;
+        try {
+            bestiaryLevel = Integer.parseInt(StringUtils.stripControlCodes(event.itemStack.getDisplayName()).replace("Bestiary Milestone ", ""));
+            config.personalBestiaryLevel = bestiaryLevel; //write to config
+            if ((((bestiaryLevel+1) % 2) == 0) && ((bestiaryLevel+1) != 4) && ((bestiaryLevel+1) != 6) && ((bestiaryLevel+1) != 8)) { //source: https://hypixel-skyblock.fandom.com/wiki/Bestiary
+                isAboutToLevelUp = true;
+            }
+            List<String> lore = event.toolTip;
+            if (lore != null) {
+                for (String s : lore) {
+                    if (s.endsWith("e10")) {
+                        levelProgress = Integer.parseInt(StringUtils.stripControlCodes(s).replaceAll("-", "").replaceAll(" ", "").replaceAll("/10", ""));
+                    }
+                    if (!isAboutToLevelUp && (s.contains("Combat"))) { //failsafe method to cover rare edge cases
+                        isAboutToLevelUp = true;
+                    }
                 }
             }
+        } catch (Exception ex) {
+            ChatLib.chat("Please disable \"Skill Numerals\" within your Personal Settings in /sbmenu. This is a tempotary hotfix until v0.4.0 manages to get its own conversion system between the Roman and Arabic numeral systems.");
         }
     }
     
