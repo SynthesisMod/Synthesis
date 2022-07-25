@@ -99,6 +99,19 @@ public class RenderItemMixin {
                 if (romanNumeral.equals("I")) finalResult = 1; else if (romanNumeral.equals("II")) finalResult = 2; else if (romanNumeral.equals("III")) finalResult = 3; else if (romanNumeral.equals("IV")) finalResult = 4; else if (romanNumeral.equals("V")) finalResult = 5; else if (romanNumeral.equals("VI")) finalResult = 6; else if (romanNumeral.equals("VII")) finalResult = 7; else if (romanNumeral.equals("VIII")) finalResult = 8; else if (romanNumeral.equals("IX")) finalResult = 9; else if (romanNumeral.equals("X")) finalResult = 10; else if (romanNumeral.equals("XI")) finalResult = 11; else if (romanNumeral.equals("XII")) finalResult = 12; else if (romanNumeral.equals("XIII")) finalResult = 13; else if (romanNumeral.equals("XIV")) finalResult = 14; else if (romanNumeral.equals("XV")) finalResult = 15; else if (romanNumeral.equals("XVI")) finalResult = 16; else return;
                 drawStringAsStackSize(Integer.toString(finalResult), xPosition, yPosition);
                 ci.cancel();
+            } else if (title.contains("Crafted Minions")) {
+                if (!(stack.getItem() == Items.skull)) return;
+                if (!(stack.getDisplayName().contains(" Minion"))) return;
+                List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+                boolean isInMenu = false;
+                int numTiers = 0;
+                for (String s : itemLore) {
+                    if (s.contains("Tier ")) isInMenu = true;
+                    if (s.contains("a")) numTiers++; else if (s.contains("c")) break;
+                }
+                if (!isInMenu) return;
+                drawStringAsStackSize(Integer.toString(numTiers), xPosition, yPosition);
+                ci.cancel();
             }
         }
         if (config.utilitiesWishingCompassUsesLeft) {
