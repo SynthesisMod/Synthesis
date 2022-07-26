@@ -58,9 +58,14 @@ public class PreventDeleteReset {
                 }
 
                 if (!(StringUtils.stripControlCodes(
-                    ((ContainerChest)(Minecraft.getMinecraft().thePlayer.openContainer))
-                    .getLowerChestInventory().getDisplayName().getUnformattedText())
-                    .contains("Election, Year "))) return;
+                        ((ContainerChest)(Minecraft.getMinecraft().thePlayer.openContainer))
+                        .getLowerChestInventory().getDisplayName().getUnformattedText())
+                        .contains("Election, Year "))
+                    &&
+                    !(StringUtils.stripControlCodes(
+                        ((ContainerChest)(Minecraft.getMinecraft().thePlayer.openContainer))
+                        .getLowerChestInventory().getDisplayName().getUnformattedText())
+                        .equals("Election"))) return;
 
                 if (config.utilitiesPreventVotingBarry &&
                     slot.getStack().getDisplayName().toLowerCase()
