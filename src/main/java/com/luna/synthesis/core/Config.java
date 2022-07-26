@@ -574,7 +574,7 @@ public class Config extends Vigilant {
             category = "Utilities",
             subcategory = "Server occupancy overlay"
     )
-    public boolean occupancyOverlay = false;
+    public boolean utilitiesOccupancyOverlay = false;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -583,7 +583,7 @@ public class Config extends Vigilant {
             category = "Utilities",
             subcategory = "Server occupancy overlay"
     )
-    public boolean occupancyOverlayFriendHighlght = false;
+    public boolean utilitiesOccupancyOverlayFriendHighlght = false;
     
     @Property(
             type = PropertyType.SWITCH,
@@ -592,7 +592,7 @@ public class Config extends Vigilant {
             category = "Utilities",
             subcategory = "Server occupancy overlay"
     )
-    public boolean occupancyOverlayGuildHighlght = false;
+    public boolean utilitiesOccupancyOverlayGuildHighlght = false;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -601,7 +601,7 @@ public class Config extends Vigilant {
             category = "Utilities",
             subcategory = "Server occupancy overlay"
     )
-    public boolean occupancyOverlayFriendAndGuildHighlght = false;
+    public boolean utilitiesOccupancyOverlayFriendAndGuildHighlght = false;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -610,7 +610,7 @@ public class Config extends Vigilant {
             category = "Utilities",
             subcategory = "Server occupancy overlay"
     )
-    public boolean occupancyOverlayAlreadyConnectedHighlght = true;
+    public boolean utilitiesOccupancyOverlayAlreadyConnectedHighlght = true;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -954,7 +954,7 @@ public class Config extends Vigilant {
             subcategory = "Bestiary",
             options = {"Off", "Chat", "Notification"}
     )
-    public int bestiaryMilestoneWarningDeliveryMethod = 0;
+    public int utilitiesBestiaryMilestoneWarningDeliveryMethod = 0;
 
     @Property(
             type = PropertyType.NUMBER,
@@ -964,7 +964,7 @@ public class Config extends Vigilant {
             subcategory = "Bestiary",
             min = 5, max = 60
     )
-    public int bestiaryMilestoneWarningSeconds = 5;
+    public int utilitiesBestiaryMilestoneWarningSeconds = 5;
 
     @Property(
             type = PropertyType.NUMBER,
@@ -974,7 +974,7 @@ public class Config extends Vigilant {
             subcategory = "Bestiary",
             min = 5, max = 120
     )
-    public int bestiaryMilestoneWarningDuration = 5;
+    public int utilitiesBestiaryMilestoneWarningDuration = 5;
 
     @Property(
             type = PropertyType.SELECTOR,
@@ -1099,8 +1099,32 @@ public class Config extends Vigilant {
         description = "If left at the default value of \"1\", Synthesis will not prevent you from voting for any mayors.\nHowever, if you chose \"2\", Synthesis would prevent you from voting for mayors with only one perk (as one is less than two).", //\"
         category = "Utilities",
         min = 1, max = 3
-)
+    )
     public int utilitiesPreventVotingXPerkMayors = 1;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Show Collections as Stack Size",
+        description = "Filler line.",
+        category = "Utilities"
+    )
+    public boolean utilitiesShowCollectionStackSize = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Show Crafted Minions as Stack Size",
+        description = "Filler line.",
+        category = "Utilities"
+    )
+    public boolean utilitiesShowCraftedMinionsStackSize = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Show Skills as Stack Size",
+        description = "Filler line.",
+        category = "Utilities"
+    )
+    public boolean utilitiesShowSkillStackSize = false;
 
     //MISC
 
@@ -1170,10 +1194,10 @@ public class Config extends Vigilant {
         addDependency("utilitiesContainerControl", "utilitiesContainerChat");
         addDependency("cleanupDungeonBlessingMessages", "cleanupDungeonBlessingStatMessages");
         addDependency("utilitiesWitherImpactPerspectiveGlobal", "utilitiesWitherImpactPerspective");
-        addDependency("occupancyOverlayFriendHighlght", "occupancyOverlay");
-        addDependency("occupancyOverlayGuildHighlght", "occupancyOverlay");
-        addDependency("occupancyOverlayFriendAndGuildHighlght", "occupancyOverlay");
-        addDependency("occupancyOverlayAlreadyConnectedHighlght", "occupancyOverlay");
+        addDependency("utilitiesOccupancyOverlayFriendHighlght", "utilitiesOccupancyOverlay");
+        addDependency("utilitiesOccupancyOverlayGuildHighlght", "utilitiesOccupancyOverlay");
+        addDependency("utilitiesOccupancyOverlayFriendAndGuildHighlght", "utilitiesOccupancyOverlay");
+        addDependency("utilitiesOccupancyOverlayAlreadyConnectedHighlght", "utilitiesOccupancyOverlay");
         addDependency("miscIgnoreHypixelBooksWarning", "miscIgnoreHypixelBooks");
         registerListener("utilitiesColorlessPanes", (z) -> Minecraft.getMinecraft().renderGlobal.loadRenderers());
     }

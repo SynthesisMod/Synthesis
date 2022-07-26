@@ -43,7 +43,7 @@ import org.lwjgl.opengl.GL11;
 public class OccupancyOverlay {
 
     private final Config config = Synthesis.getInstance().getConfig();
-    private final Pattern playerCapacity = Pattern.compile("(?<num>[0-9]*)/(?<denom>[1-9]+).*");
+    private final Pattern playerCapacity = Pattern.compile("(?<num>[1-9][0-9]+)/(?<denom>[1-9]+).*");
     private boolean hasFriend, hasGuildmate, alreadyConnected, couldNotConnect = false;
     /* alreadyConnected and couldNotConnect are for debugging purposes in case
     * i ever get back to refining the regex solution */
@@ -57,7 +57,7 @@ public class OccupancyOverlay {
     
     @SubscribeEvent
     public void onGuiScreen(GuiScreenEvent.BackgroundDrawnEvent e) {
-        if (config.occupancyOverlay) {
+        if (config.utilitiesOccupancyOverlay) {
             if (Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
                 menuName = StringUtils.stripControlCodes((((ContainerChest)((GuiChest)(Minecraft.getMinecraft().currentScreen)).inventorySlots).getLowerChestInventory().getDisplayName().getUnformattedText()));
                 if (menuName.toLowerCase().contains("skyblock hub") || menuName.toLowerCase().contains("dungeon hub") || menuName.toLowerCase().startsWith("visit")) {
@@ -91,7 +91,7 @@ public class OccupancyOverlay {
                                             maxCapacity = Float.parseFloat(playerCapacityMatcher.group(2));
                                         } else {
                                             //"What the fu...?" - [MCU] Spider-Man, Spider-Man: No Way Home (2021)
-                                            System.out.println("[Synthesis — DEBUG] For some reason, Synthesis couldn't find the player capacity using regex. Here's the relevant info: Inside the menu named " + menuName + " at item slot " + s.getSlotIndex() + "'s item lore line `" + line + "` at itemLore.indexOf(line) " + itemLore.indexOf(line) +  " with hubName " + hubName + ". hasFriend was " + hasFriend + ", hasGuildmate was " + hasGuildmate + ", couldNotConnect was " + couldNotConnect + ", and alreadyConnected was " + alreadyConnected + ". -Erymanthus#5074");
+                                            System.out.println("[Synthesis — DEBUG] For some reason, Synthesis couldn't find the player capacity using regex. Here's the relevant info: Inside the menu named " + menuName + " at item slot " + s.getSlotIndex() + "'s item lore line `" + line + "` at itemLore.indexOf(line) " + itemLore.indexOf(line) + " with hubName " + hubName + ". hasFriend was " + hasFriend + ", hasGuildmate was " + hasGuildmate + ", couldNotConnect was " + couldNotConnect + ", and alreadyConnected was " + alreadyConnected + ". -Erymanthus#5074");
                                             System.out.println("[Synthesis — DEBUG] Synthesis is now attempting a failsafe solution using Java's replace() and substring() methods. -Erymanthus#5074");
                                             String regexIsFun = avoidFalseNegatives.replace("Players: ", "");
                                             currentCapacity = Float.parseFloat(regexIsFun.substring(0, regexIsFun.indexOf("/") + 1).replace("/", ""));
@@ -121,13 +121,13 @@ public class OccupancyOverlay {
                                             /*Disclaimer: usually not that noticable with skyblock hub selector npc because all hubs are usually close
                                             to full, try dungeon hub selector npc for better effect. i swear the code works as intended*/
                                         }
-                                    } else if (config.occupancyOverlayFriendAndGuildHighlght && hasFriend && hasGuildmate) {
+                                    } else if (config.utilitiesOccupancyOverlayFriendAndGuildHighlght && hasFriend && hasGuildmate) {
                                         r = b = 255F;
                                         g = 85F;
-                                    } else if (config.occupancyOverlayFriendHighlght && hasFriend) {
+                                    } else if (config.utilitiesOccupancyOverlayFriendHighlght && hasFriend) {
                                         r = g = 85F;
                                         b = 255F;
-                                    } else if (config.occupancyOverlayGuildHighlght && hasGuildmate) {
+                                    } else if (config.utilitiesOccupancyOverlayGuildHighlght && hasGuildmate) {
                                         r = b = 0F;
                                         g = 170F;
                                     } else if (line != null && (line.toLowerCase().contains("full") || line.toLowerCase().contains("offline") || line.toLowerCase().contains("doesn't support guests yet") || line.toLowerCase().contains("island disallows guests"))) {
@@ -135,7 +135,7 @@ public class OccupancyOverlay {
                                         g = b = 0F;
                                         couldNotConnect = true;
                                     } else if (line != null && (line.toLowerCase().contains("already "))) {
-                                        if (config.occupancyOverlayAlreadyConnectedHighlght) {
+                                        if (config.utilitiesOccupancyOverlayAlreadyConnectedHighlght) {
                                             r = 85F;
                                             g = b = 255F;
                                         }

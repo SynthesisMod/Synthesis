@@ -104,18 +104,18 @@ public class BestiaryWarning {
     public void sendTheWarning(TickEvent.ClientTickEvent event) {
         if (Minecraft.getMinecraft().thePlayer == null) {return;}
         if (event.phase != TickEvent.Phase.START){return;}
-        if (config.bestiaryMilestoneWarningDeliveryMethod == 0) {return;}
-        if (config.bestiaryMilestoneWarningSeconds < 5 || config.bestiaryMilestoneWarningSeconds > 60){config.bestiaryMilestoneWarningSeconds = 5;}
-        if (config.bestiaryMilestoneWarningDeliveryMethod != 0 && config.bestiaryMilestoneWarningDeliveryMethod != 1 && config.bestiaryMilestoneWarningDeliveryMethod != 2){config.bestiaryMilestoneWarningDeliveryMethod = 0;}
-        if (config.bestiaryMilestoneWarningDuration < 5 || config.bestiaryMilestoneWarningDuration > 120){config.bestiaryMilestoneWarningDuration = 5;}
+        if (config. utilitiesBestiaryMilestoneWarningDeliveryMethod == 0) {return;}
+        if (config.utilitiesBestiaryMilestoneWarningSeconds < 5 || config.utilitiesBestiaryMilestoneWarningSeconds > 60){config.utilitiesBestiaryMilestoneWarningSeconds = 5;}
+        if (config. utilitiesBestiaryMilestoneWarningDeliveryMethod != 0 && config. utilitiesBestiaryMilestoneWarningDeliveryMethod != 1 && config. utilitiesBestiaryMilestoneWarningDeliveryMethod != 2){config. utilitiesBestiaryMilestoneWarningDeliveryMethod = 0;}
+        if (config.utilitiesBestiaryMilestoneWarningDuration < 5 || config.utilitiesBestiaryMilestoneWarningDuration > 120){config.utilitiesBestiaryMilestoneWarningDuration = 5;}
         if (Minecraft.getMinecraft().thePlayer != null && EssentialAPI.getMinecraftUtil().isHypixel()) {
             if (levelProgress != 9 || !isAboutToLevelUp) {ticks = 0;return;}
             ticks++;
-            if (((ticks % (20 * config.bestiaryMilestoneWarningSeconds)) == 0 && (StringUtils.stripControlCodes(Minecraft.getMinecraft().theWorld.getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName()).contains("SKYBLOCK")))) {
-                if (config.bestiaryMilestoneWarningDeliveryMethod == 1) {
+            if (((ticks % (20 * config.utilitiesBestiaryMilestoneWarningSeconds)) == 0 && (StringUtils.stripControlCodes(Minecraft.getMinecraft().theWorld.getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName()).contains("SKYBLOCK")))) {
+                if (config. utilitiesBestiaryMilestoneWarningDeliveryMethod == 1) {
                     ChatLib.chat(("Here's a friendly reminder that you are very close to reaching Bestiary Milestone " + (config.personalBestiaryLevel+1) + " (currently at Milestone " + (config.personalBestiaryLevel) + " with progress " + (levelProgress) + "/10)."));
-                } else if (config.bestiaryMilestoneWarningDeliveryMethod == 2 && (StringUtils.stripControlCodes(Minecraft.getMinecraft().theWorld.getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName()).contains("SKYBLOCK"))) {
-                    EssentialAPI.getNotifications().push("§dSynthesis", ("Here's a friendly reminder that you are very close to reaching Bestiary Milestone " + (config.personalBestiaryLevel+1) + " (currently at Milestone " + (config.personalBestiaryLevel) + " with progress " + (levelProgress) + "/10)."), config.bestiaryMilestoneWarningDuration);
+                } else if (config. utilitiesBestiaryMilestoneWarningDeliveryMethod == 2 && (StringUtils.stripControlCodes(Minecraft.getMinecraft().theWorld.getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName()).contains("SKYBLOCK"))) {
+                    EssentialAPI.getNotifications().push("§dSynthesis", ("Here's a friendly reminder that you are very close to reaching Bestiary Milestone " + (config.personalBestiaryLevel+1) + " (currently at Milestone " + (config.personalBestiaryLevel) + " with progress " + (levelProgress) + "/10)."), config.utilitiesBestiaryMilestoneWarningDuration);
                 }
                 ticks = 0;
             }

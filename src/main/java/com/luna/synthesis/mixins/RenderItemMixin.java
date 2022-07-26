@@ -60,13 +60,13 @@ public class RenderItemMixin {
                         level = level.split("/")[0];
                     }
                     if (level.equals("1")) return;
-                    drawStringAsStackSize(level, xPosition, yPosition);
+                    drawAsStackSize(level, xPosition, yPosition);
                     ci.cancel();
                 }
             } else if (config.utilitiesBestiaryGlance && (title.equals("Bestiary") || title.contains(" ➜ "))) {
                 if (StringUtils.stripControlCodes(stack.getDisplayName()).startsWith("Bestiary Milestone ")) {
                     String level = StringUtils.stripControlCodes(stack.getDisplayName()).replace("Bestiary Milestone ", "");
-                    drawStringAsStackSize(level, xPosition, yPosition);
+                    drawAsStackSize(level, xPosition, yPosition);
                     ci.cancel();
                 } else if (stack == containerChest.getInventory().get(52)) {
                     ItemStack bestiary = containerChest.getInventory().get(51);
@@ -80,15 +80,15 @@ public class RenderItemMixin {
                         }
                     });
                     if (progress.get().equals("")) return;
-                    drawStringAsStackSize(progress.get(), xPosition, yPosition);
+                    drawAsStackSize(progress.get(), xPosition, yPosition);
                     ci.cancel();
                 }
-            } else if ((title.contains(" Collection"))) {
+            } else if (config.utilitiesShowCollectionStackSize && (title.contains(" Collection"))) {
                 boolean doTheHarlemShake = false;
                 String[] splitName = StringUtils.stripControlCodes(stack.getDisplayName()).split(" ");
                 if (splitName.length < 1) return;
                 String romanNumeral = splitName[(splitName.length - 1)];
-                if (!((romanNumeral.contains("I") && romanNumeral.contains("V") && romanNumeral.contains("X") && romanNumeral.contains("L") && romanNumeral.contains("C") && romanNumeral.contains("D") && romanNumeral.contains("M")))) return;
+                if (!((romanNumeral.contains("I") || romanNumeral.contains("V") || romanNumeral.contains("X") || romanNumeral.contains("L") || romanNumeral.contains("C") || romanNumeral.contains("D") || romanNumeral.contains("M")))) return;
                 List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
                 for (String s : itemLore) if (s.contains("View all your ")) doTheHarlemShake = true;
                 if (!doTheHarlemShake) return;
@@ -96,10 +96,10 @@ public class RenderItemMixin {
                 //BRUTEFORCE CONVERSION.
                 //I SURE AS FUCK GOT NO TIME TO WRITE THAT ROMAN TO ARABIC NUMERAL CONVERSION FUNCTION.
                 //S_A_D ISTG IF YOU SCREENSHOT THIS I WILL COMMIT COPIOUS AMOUNTS OF VIDEO GAME CRIMES -ERY
-                if (romanNumeral.equals("I")) finalResult = 1; else if (romanNumeral.equals("II")) finalResult = 2; else if (romanNumeral.equals("III")) finalResult = 3; else if (romanNumeral.equals("IV")) finalResult = 4; else if (romanNumeral.equals("V")) finalResult = 5; else if (romanNumeral.equals("VI")) finalResult = 6; else if (romanNumeral.equals("VII")) finalResult = 7; else if (romanNumeral.equals("VIII")) finalResult = 8; else if (romanNumeral.equals("IX")) finalResult = 9; else if (romanNumeral.equals("X")) finalResult = 10; else if (romanNumeral.equals("XI")) finalResult = 11; else if (romanNumeral.equals("XII")) finalResult = 12; else if (romanNumeral.equals("XIII")) finalResult = 13; else if (romanNumeral.equals("XIV")) finalResult = 14; else if (romanNumeral.equals("XV")) finalResult = 15; else if (romanNumeral.equals("XVI")) finalResult = 16; else return;
-                drawStringAsStackSize(Integer.toString(finalResult), xPosition, yPosition);
+                if (romanNumeral.equals("I")) finalResult = 1; else if (romanNumeral.equals("II")) finalResult = 2; else if (romanNumeral.equals("III")) finalResult = 3; else if (romanNumeral.equals("IV")) finalResult = 4; else if (romanNumeral.equals("V")) finalResult = 5; else if (romanNumeral.equals("VI")) finalResult = 6; else if (romanNumeral.equals("VII")) finalResult = 7; else if (romanNumeral.equals("VIII")) finalResult = 8; else if (romanNumeral.equals("IX")) finalResult = 9; else if (romanNumeral.equals("X")) finalResult = 10; else if (romanNumeral.equals("XI")) finalResult = 11; else if (romanNumeral.equals("XII")) finalResult = 12; else if (romanNumeral.equals("XIII")) finalResult = 13; else if (romanNumeral.equals("XIV")) finalResult = 14; else if (romanNumeral.equals("XV")) finalResult = 15; else if (romanNumeral.equals("XVI")) finalResult = 16; else if (romanNumeral.equals("XVII")) finalResult = 17; else if (romanNumeral.equals("XVIII")) finalResult = 18; else if (romanNumeral.equals("XIX")) finalResult = 19; else if (romanNumeral.equals("XX")) finalResult = 20; else return;
+                drawAsStackSize(finalResult, xPosition, yPosition);
                 ci.cancel();
-            } else if (title.contains("Crafted Minions")) {
+            } else if (config.utilitiesShowCraftedMinionsStackSize && title.contains("Crafted Minions")) {
                 if (!(stack.getItem() == Items.skull)) return;
                 if (!(stack.getDisplayName().contains(" Minion"))) return;
                 List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
@@ -110,7 +110,31 @@ public class RenderItemMixin {
                     if (s.contains("a")) numTiers++; else if (s.contains("c")) break;
                 }
                 if (!isInMenu) return;
-                drawStringAsStackSize(Integer.toString(numTiers), xPosition, yPosition);
+                drawAsStackSize(numTiers, xPosition, yPosition);
+                ci.cancel();
+            } else if (config.utilitiesShowSkillStackSize && title.equals("Your Skills")) {
+                boolean gangnamStyle = false;
+                String[] splitName = StringUtils.stripControlCodes(stack.getDisplayName()).split(" ");
+                if (splitName.length < 1) return;
+                String skillNumeral = splitName[(splitName.length - 1)];
+                List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+                for (String s : itemLore) if (s.contains("XP") && s.contains("7")) gangnamStyle = true;
+                if (!gangnamStyle) return;
+                drawAsStackSize(skillNumeral, xPosition, yPosition);
+                ci.cancel();
+            } else if (title.equals("SkyBlock Menu")) {
+                if (!(StringUtils.stripControlCodes(stack.getDisplayName()).equals("Your Skills"))) return;
+                String skillAvg = "";
+                List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+                for (String s : itemLore) {
+                    if ((StringUtils.stripControlCodes(s)).contains(" Skill Avg")) {
+                        String[] temp = s.split(" ");
+                        if (temp.length < 1) break; //prevent crash
+                        skillAvg = StringUtils.stripControlCodes(temp[0]);
+                    }
+                }
+                if (skillAvg == "") return;
+                drawAsStackSize(skillAvg, xPosition, yPosition);
                 ci.cancel();
             }
         }
@@ -119,10 +143,10 @@ public class RenderItemMixin {
                 NBTTagCompound tag = stack.getTagCompound();
                 if (tag.hasKey("ExtraAttributes")) {
                     if (tag.getCompoundTag("ExtraAttributes").hasKey("wishing_compass_uses")) {
-                        drawStringAsStackSize(String.valueOf(3 - tag.getCompoundTag("ExtraAttributes").getInteger("wishing_compass_uses")), xPosition, yPosition);
+                        drawAsStackSize((3 - tag.getCompoundTag("ExtraAttributes").getInteger("wishing_compass_uses")), xPosition, yPosition);
                     } else {
                         if (config.utilitiesWishingCompassAlwaysUsesLeft) {
-                            drawStringAsStackSize("3", xPosition, yPosition);
+                            drawAsStackSize(3, xPosition, yPosition);
                         }
                     }
                 }
@@ -130,12 +154,16 @@ public class RenderItemMixin {
         }
     }
 
-    private void drawStringAsStackSize(String text, int xPosition, int yPosition) {
+    private void drawAsStackSize(String text, int xPosition, int yPosition) {
         GlStateManager.disableLighting();
         GlStateManager.disableDepth();
         GlStateManager.disableBlend();
         Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(text, (float)(xPosition + 19 - 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(text)), (float)(yPosition + 6 + 3), 16777215);
         GlStateManager.enableLighting();
         GlStateManager.enableDepth();
+    }
+
+    private void drawAsStackSize(int integer, int xPosition, int yPosition) {
+        drawAsStackSize(Integer.toString(integer), xPosition, yPosition);
     }
 }
