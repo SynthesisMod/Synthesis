@@ -360,7 +360,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Remove pet lore's empty lines in the pet menu",
-            description = "This is a rather self-explanatory feature, but Essential's config menu renderer throws a hissy fit if you leave the description line empty, so now you're forced to read this.",
+            description = "This line intentionally left uninformative.",
             category = "Cleanup",
             subcategory = "Lore"
     )
@@ -369,7 +369,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Remove pet lore's \"§b§lMAX LEVEL§r\" line in the pet menu",
-            description = "This is a rather self-explanatory feature, but Essential's config menu renderer throws a hissy fit if you leave the description line empty, so now you're forced to read this.",
+            description = "This line intentionally left uninformative.",
             category = "Cleanup",
             subcategory = "Lore"
     )
@@ -378,7 +378,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Remove pet lore's \"§eClick to summon!§r\" line in the pet menu",
-            description = "This is a rather self-explanatory feature, but Essential's config menu renderer throws a hissy fit if you leave the description line empty, so now you're forced to read this.",
+            description = "This line intentionally left uninformative.",
             category = "Cleanup",
             subcategory = "Lore"
     )
@@ -387,7 +387,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Remove pet lore's \"§cClick to despawn!§r\" line in the pet menu",
-            description = "This is a rather self-explanatory feature, but Essential's config menu renderer throws a hissy fit if you leave the description line empty, so now you're forced to read this.",
+            description = "This line intentionally left uninformative.",
             category = "Cleanup",
             subcategory = "Lore"
     )
@@ -736,7 +736,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Superpairs IDs",
-            description = "Gives superpairs item rewards SkyBlock IDs so mods like NEU and SBE can display price and resource packs can display custom textures.",
+            description = "Gives superpairs item rewards Skyblock IDs so mods like NEU and SBE can display price and resource packs can display custom textures.",
             category = "Utilities"
     )
     public boolean utilitiesSuperpairsIDs = false;
@@ -1064,7 +1064,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Prevent Voting for Barry",
-        description = "Prevent voting for Barry in Skyblock mayor elections.",
+        description = "Prevent voting for Barry in Skyblock mayor elections. (Sorry not sorry, arithemonkey.)",
         category = "Utilities"
     )
     public boolean utilitiesPreventVotingBarry = false;
@@ -1105,15 +1105,15 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Show Collections as Stack Size",
-        description = "Filler line.",
+        description = "Applies to the collection menus of most Skyblock skills.",
         category = "Utilities"
     )
     public boolean utilitiesShowCollectionStackSize = false;
 
     @Property(
         type = PropertyType.SWITCH,
-        name = "Show Crafted Minions as Stack Size",
-        description = "Filler line.",
+        name = "Show Highest Crafted Minions as Stack Size",
+        description = "Applies to the Crafted Minions menu.",
         category = "Utilities"
     )
     public boolean utilitiesShowCraftedMinionsStackSize = false;
@@ -1121,7 +1121,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Show Skills as Stack Size",
-        description = "Filler line.",
+        description = "This line intentionally left uninformative.",
         category = "Utilities"
     )
     public boolean utilitiesShowSkillStackSize = false;
@@ -1129,7 +1129,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SELECTOR,
         name = "Show Skill Average as Stack Size",
-        description = "Filler line.",
+        description = "(For compatibility reasons, this will only apply to the general SkyBlock Menu.)",
         category = "Utilities",
         options = {"Off", "Rounded", "Exact"}
     )

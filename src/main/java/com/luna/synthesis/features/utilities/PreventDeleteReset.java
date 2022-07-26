@@ -106,7 +106,8 @@ public class PreventDeleteReset {
                             .contains("foxy"))) && (!(slot.getStack().getDisplayName().toLowerCase()
                             .contains("marina"))) && (!(slot.getStack().getDisplayName().toLowerCase()
                             .contains("paul"))) && (!(slot.getStack().getDisplayName().toLowerCase()
-                            .contains("scorpius")))) {
+                            .contains("scorpius"))) && (!(slot.getStack().getDisplayName().toLowerCase()
+                            .contains("technoblade")))) {
                                 preventThatClick(e, "voting an unknown special mayor as", "Skyblock mayor");
                                 isSpecialSus = true;
                         }
