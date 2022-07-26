@@ -1126,6 +1126,15 @@ public class Config extends Vigilant {
     )
     public boolean utilitiesShowSkillStackSize = false;
 
+    @Property(
+        type = PropertyType.SELECTOR,
+        name = "Show Skill Average as Stack Size",
+        description = "Filler line.",
+        category = "Utilities",
+        options = {"Off", "Rounded", "Exact"}
+    )
+    public int utilitiesShowSkillAverageStackSize = 0;
+
     //MISC
 
     @Property(

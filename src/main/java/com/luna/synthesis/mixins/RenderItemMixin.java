@@ -101,15 +101,10 @@ public class RenderItemMixin {
                 ci.cancel();
             } else if (config.utilitiesShowCraftedMinionsStackSize && title.contains("Crafted Minions")) {
                 if (!(stack.getItem() == Items.skull)) return;
-                if (!(stack.getDisplayName().contains(" Minion"))) return;
+                if (!(stack.getDisplayName().endsWith(" Minion"))) return;
                 List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
-                boolean isInMenu = false;
                 int numTiers = 0;
-                for (String s : itemLore) {
-                    if (s.contains("Tier ")) isInMenu = true;
-                    if (s.contains("a")) numTiers++; else if (s.contains("c")) break;
-                }
-                if (!isInMenu) return;
+                for (String s : itemLore) if (s.contains("a")) numTiers++; else if (s.contains("c")) break;
                 drawAsStackSize(numTiers, xPosition, yPosition);
                 ci.cancel();
             } else if (config.utilitiesShowSkillStackSize && title.equals("Your Skills")) {
@@ -122,8 +117,8 @@ public class RenderItemMixin {
                 if (!gangnamStyle) return;
                 drawAsStackSize(skillNumeral, xPosition, yPosition);
                 ci.cancel();
-            } else if (title.equals("SkyBlock Menu")) {
-                if (!(StringUtils.stripControlCodes(stack.getDisplayName()).equals("Your Skills"))) return;
+            } else if ((config.utilitiesShowSkillAverageStackSize != 0) && title.equals("SkyBlock Menu")) {
+                if (!(stack.getDisplayName().contains("Your Skill"))) return;
                 String skillAvg = "";
                 List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
                 for (String s : itemLore) {
@@ -134,7 +129,8 @@ public class RenderItemMixin {
                     }
                 }
                 if (skillAvg == "") return;
-                drawAsStackSize(skillAvg, xPosition, yPosition);
+                if (config.utilitiesShowSkillAverageStackSize == 1) drawAsStackSize(Math.round(Float.valueOf(skillAvg)), xPosition, yPosition);
+                else if (config.utilitiesShowSkillAverageStackSize == 2) drawAsStackSize(skillAvg, xPosition, yPosition);
                 ci.cancel();
             }
         }
