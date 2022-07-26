@@ -15,6 +15,8 @@ However, as part of ARR, this fork does not violate any copyright laws as I have
 
 ![image](https://media.discordapp.net/attachments/728977460737081454/989883710381895700/FOR_GITHUB.png)
 
+(FUCK, I USED THE WRONG PRONOUNS FOR SIRDESCO. KILL ME)
+
 # SirDesco is currently on sabbatical in preparation for the Kotlin rewrite of Synthesis. All the information below this heading is solely for reference purposes only, and may not reflect all of the contents of this specific repository.
 
 Releases and announcements at the official [discord](https://discord.gg/vAUuKSwbp6).
