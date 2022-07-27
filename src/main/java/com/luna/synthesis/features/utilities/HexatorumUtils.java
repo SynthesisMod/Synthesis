@@ -116,6 +116,16 @@ public class HexatorumUtils {
                             floats.add((Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
                         }
                     }
+                    if (s.contains("Silex")) {
+                        String[] sa = s.split(" ");
+                        s = sa[sa.length - 1];
+                        floats.add((Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
+                    }
+                    if (s.contains("Mana Disintegrator")) {
+                        String[] sa = s.split(" ");
+                        s = sa[sa.length - 1];
+                        floats.add((Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
+                    }
                 }
             }
             if (dName.contains("aItem Upgrades")) {
@@ -143,7 +153,7 @@ public class HexatorumUtils {
                     }
                 }
             }
-            if (dName.contains("Gemstones")) {
+            if (dName.contains("aGemstones")) {
                 colorThisSlot = true;
                 itemLore = is.getTooltip(mcgmtp, false);
                 String[] sa = {};
@@ -159,6 +169,34 @@ public class HexatorumUtils {
                     }
                 }
                 compareFloats(filledGemstones, availableGemstones);
+            }
+            if (dName.contains("aBooks")) {
+                colorThisSlot = true;
+                itemLore = is.getTooltip(mcgmtp, false);
+                String[] sa = {};
+                for (String s : itemLore) {
+                    s = StringUtils.stripControlCodes(s);
+                    if (s.contains("✔")) {
+                        floats.add(1F);
+                    } else if (s.contains("✖")) {
+                        floats.add(0F);
+                    }
+                    if (s.contains("Hot Potato Book")) {
+                        sa = s.split(" ");
+                        s = sa[sa.length - 1];
+                        floats.add((Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
+                    }
+                    if (s.contains("Fuming Potato Book")) {
+                        sa = s.split(" ");
+                        s = sa[sa.length - 1];
+                        floats.add((Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
+                    }
+                    if (s.contains("Farming for Dummies")) {
+                        sa = s.split(" ");
+                        s = sa[sa.length - 1];
+                        floats.add((Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
+                    }
+                }
             }
             if (!colorThisSlot) continue;
             if (!(floats.isEmpty())) {
