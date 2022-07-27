@@ -3,6 +3,7 @@ package com.luna.synthesis.features.utilities;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiChest;
@@ -47,21 +48,24 @@ public class OccupancyOverlay {
     private boolean hasFriend, hasGuildmate, alreadyConnected, couldNotConnect = false;
     /* alreadyConnected and couldNotConnect are for debugging purposes in case
     * i ever get back to refining the regex solution */
-    private float r, g, b = 0F;
+    private float r = 0F, g = 0F, b = 0F;
     private Float currentCapacity = 0F;
     private Float maxCapacity = 1F; //prevent ArithmeticExceptions
     private String menuName = "";
     private String hubName = "";
     private List<String> itemLore;
     private List<Slot> slots;
+    private EntityPlayerSP mgmtp = Minecraft.getMinecraft().thePlayer;
     
     @SubscribeEvent
     public void onGuiScreen(GuiScreenEvent.BackgroundDrawnEvent e) {
         if (config.utilitiesOccupancyOverlay) {
-            if (Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
+            if (mgmtp != null && Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
                 menuName = StringUtils.stripControlCodes((((ContainerChest)((GuiChest)(Minecraft.getMinecraft().currentScreen)).inventorySlots).getLowerChestInventory().getDisplayName().getUnformattedText()));
                 if (menuName.toLowerCase().contains("skyblock hub") || menuName.toLowerCase().contains("dungeon hub") || menuName.toLowerCase().startsWith("visit")) {
                     slots = ((GuiChest)(Minecraft.getMinecraft().currentScreen)).inventorySlots.inventorySlots;
+                    int aMagicNumber = (((new ScaledResolution(Minecraft.getMinecraft())).getScaledWidth() - 176) / 2);
+                    int anotherMagicNumber = (((new ScaledResolution(Minecraft.getMinecraft())).getScaledHeight() - 222) / 2);
                     for (Slot s : slots) {
     
                         /* PREVENT CACHING */
@@ -75,7 +79,7 @@ public class OccupancyOverlay {
     
                         if (s.getStack() != null && s.getStack().hasDisplayName() && !(s.getStack().getDisplayName().toLowerCase().contains(" skyblock hub")) && (s.getStack().getDisplayName().toLowerCase().contains("skyblock hub") || s.getStack().getDisplayName().toLowerCase().contains("dungeon hub") || s.getStack().getDisplayName().toLowerCase().contains("visit player "))) {
                             hubName = StringUtils.stripControlCodes(s.getStack().getDisplayName());
-                            itemLore = s.getStack().getTooltip(Minecraft.getMinecraft().thePlayer, false);
+                            itemLore = s.getStack().getTooltip(mgmtp, false);
                             if (itemLore != null) {
                                 for (String line : itemLore) {
                                     if (line != null && line.toLowerCase().contains("online friend")) {
@@ -146,16 +150,16 @@ public class OccupancyOverlay {
                                 System.out.println("[Synthesis — DEBUG] Inside the menu named " + menuName + ", the color " + bgColor + " was selected for the hub named " + hubName + " because it was at a capacity of " + currentCapacity + " / " + maxCapacity + " (" + ((currentCapacity/maxCapacity)*100) + "% full) and hasFriend was " + hasFriend + ", hasGuildmate was " + hasGuildmate + ", couldNotConnect was " + couldNotConnect + ", and alreadyConnected was " + alreadyConnected);
                                 GL11.glTranslated(0, 0, 1);
                                 Gui.drawRect(
-                                    ((((new ScaledResolution(Minecraft.getMinecraft())).getScaledWidth() - 176) / 2) + s.xDisplayPosition),
+                                    ((aMagicNumber) + s.xDisplayPosition),
                                     ((slots.size() != 90) ?
-                                        (((((new ScaledResolution(Minecraft.getMinecraft())).getScaledHeight() - 222) / 2) + s.yDisplayPosition) +
+                                        (((anotherMagicNumber) + s.yDisplayPosition) +
                                             ((6 - (slots.size() - 36) / 9) * 9)) :
-                                        ((((new ScaledResolution(Minecraft.getMinecraft())).getScaledHeight() - 222) / 2) + s.yDisplayPosition)),
-                                    (((((new ScaledResolution(Minecraft.getMinecraft())).getScaledWidth() - 176) / 2) + s.xDisplayPosition) + 16),
+                                        ((anotherMagicNumber) + s.yDisplayPosition)),
+                                    (((aMagicNumber) + s.xDisplayPosition) + 16),
                                     (((slots.size() != 90) ?
-                                        (((((new ScaledResolution(Minecraft.getMinecraft())).getScaledHeight() - 222) / 2) + s.yDisplayPosition) +
+                                        (((anotherMagicNumber) + s.yDisplayPosition) +
                                             ((6 - (slots.size() - 36) / 9) * 9)) :
-                                        ((((new ScaledResolution(Minecraft.getMinecraft())).getScaledHeight() - 222) / 2) + s.yDisplayPosition)) + 16),
+                                        ((anotherMagicNumber) + s.yDisplayPosition)) + 16),
                                     bgColor.getRGB());
                                 GL11.glTranslated(0, 0, -1);
                             }

@@ -65,6 +65,7 @@ public class Synthesis {
         MinecraftForge.EVENT_BUS.register(new HypixelBooksAreStupid());
         MinecraftForge.EVENT_BUS.register(new MilaysWontStopAskingForBurgers());
         MinecraftForge.EVENT_BUS.register(new MasterModeSoulDetector());
+        MinecraftForge.EVENT_BUS.register(new HexatorumUtils());
         config.preload();
         new SynthesisCommand().register();
         new CopyToClipboardCommand().register();
