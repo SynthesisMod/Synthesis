@@ -113,18 +113,24 @@ public class HexatorumUtils {
                         else {
                             String[] sa = s.split(" ");
                             s = sa[sa.length - 1];
-                            floats.add((Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
+                            floats.add((Float.parseFloat(s.substring(0, s.indexOf("/") + 1).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
+                            ChatLib.chat(s);
+                            ChatLib.chat((Float.parseFloat(s.substring(0, s.indexOf("/") + 1).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
                         }
                     }
                     if (s.contains("Silex")) {
                         String[] sa = s.split(" ");
                         s = sa[sa.length - 1];
-                        floats.add((Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
+                        floats.add((Float.parseFloat(s.substring(0, s.indexOf("/") + 1).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
+                        ChatLib.chat(s);
+                        ChatLib.chat((Float.parseFloat(s.substring(0, s.indexOf("/") + 1).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
                     }
                     if (s.contains("Mana Disintegrator")) {
                         String[] sa = s.split(" ");
                         s = sa[sa.length - 1];
-                        floats.add((Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
+                        floats.add((Float.parseFloat(s.substring(0, s.indexOf("/") + 1).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
+                        ChatLib.chat(s);
+                        ChatLib.chat((Float.parseFloat(s.substring(0, s.indexOf("/") + 1).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
                     }
                 }
             }
@@ -184,17 +190,23 @@ public class HexatorumUtils {
                     if (s.contains("Hot Potato Book")) {
                         sa = s.split(" ");
                         s = sa[sa.length - 1];
-                        floats.add((Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
+                        floats.add((Float.parseFloat(s.substring(0, s.indexOf("/") + 1).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
+                        ChatLib.chat(s);
+                        ChatLib.chat((Float.parseFloat(s.substring(0, s.indexOf("/") + 1).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
                     }
                     if (s.contains("Fuming Potato Book")) {
                         sa = s.split(" ");
                         s = sa[sa.length - 1];
-                        floats.add((Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
+                        floats.add(((Float.parseFloat(s.substring(0, s.indexOf("/") + 1).replace("/", ""))) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
+                        ChatLib.chat(s);
+                        ChatLib.chat((Float.parseFloat(s.substring(0, s.indexOf("/") + 1).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
                     }
                     if (s.contains("Farming for Dummies")) {
                         sa = s.split(" ");
                         s = sa[sa.length - 1];
-                        floats.add((Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
+                        floats.add((Float.parseFloat(s.substring(0, s.indexOf("/") + 1).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
+                        ChatLib.chat(s);
+                        ChatLib.chat((Float.parseFloat(s.substring(0, s.indexOf("/") + 1).replace("/", "")) / Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""))));
                     }
                 }
             }
