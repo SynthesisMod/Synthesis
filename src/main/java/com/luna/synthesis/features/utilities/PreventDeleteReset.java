@@ -34,7 +34,18 @@ public class PreventDeleteReset {
 
                 if (slot == null) return;
                 if (!slot.getHasStack()) return;
+
+                List<String> itemLore = slot.getStack().getTooltip(Minecraft.getMinecraft().thePlayer, false);
     
+                if ((StringUtils.stripControlCodes(((ContainerChest)(Minecraft.getMinecraft().thePlayer.openContainer)).getLowerChestInventory().getDisplayName().getUnformattedText()).contains("Auction"))) {
+                    for (String string : itemLore) {
+                        if (string.contains("7Seller: Unknown")) {
+                            preventThatClick(e, "buying an auctioned item from an unknown seller", "");
+                            break;
+                        }
+                    }
+                }
+
                 if (config.utilitiesPreventHOTMReset &&
                     (slot.getStack().getDisplayName().toLowerCase()
                     .contains("reset heart of the mountain"))) {
@@ -49,7 +60,7 @@ public class PreventDeleteReset {
 
                 if (slot.getStack().getDisplayName().toLowerCase()
                     .contains("confirm")) {
-                        for (String string : slot.getStack().getTooltip(Minecraft.getMinecraft().thePlayer, false)) {
+                        for (String string : itemLore) {
                             if (string.contains("portal") && config.utilitiesPreventPortalDestruction) {
                                 preventThatClick(e, "destroying one of", "island's \"Warp to\" portals");
                                 break;
@@ -115,7 +126,6 @@ public class PreventDeleteReset {
 
                 if (config.utilitiesPreventVotingXPerkMayors != 1) {
                     String colorCode = slot.getStack().getDisplayName().substring(0, 2);
-                    List<String> itemLore = slot.getStack().getTooltip(Minecraft.getMinecraft().thePlayer, false);
                     int numPerks = 0;
                     for (String s : itemLore) {
                         s = s.replaceAll("§5§o", "");
@@ -138,6 +148,7 @@ public class PreventDeleteReset {
     private void preventThatClick(GuiScreenEvent.MouseInputEvent.Pre e, String action, String type) {
         e.setCanceled(true);
         Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, ((float)(0.5)));
+        if (type == "" && action == "buying an auctioned item from an unknown seller") {ChatLib.chat("Synthesis has prevented you from buying an auctioned item from an unknown seller, as doing so could cause a loss in coins. There is no config option to disable this."); return;} 
         ChatLib.chat(
             "Synthesis has prevented you from " + action + " your " + type + ". " +
             ((action.equals("voting Dante as")) ?
