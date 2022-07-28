@@ -55,7 +55,6 @@ public class HexatorumUtils {
             if (dName.contains("aEnchantments")) {
                 itemLore = is.getTooltip(mcgmtp, false);
                 float currEnch, maxEnch = 0;
-                colorThisSlot = true;
                 for (String s : itemLore) {
                     if (s.contains("7Enchantments") && !(s.contains("and"))) {
                         s = StringUtils.stripControlCodes(s);
@@ -63,11 +62,11 @@ public class HexatorumUtils {
                         currEnch = Float.parseFloat(s.substring(0, s.indexOf("/") + 1).replace("/", ""));
                         maxEnch = Float.parseFloat(s.substring(s.indexOf("/"), s.length()).replace("/", ""));
                         compareFloats(currEnch, maxEnch);
+                        colorThisSlot = true;
                     }
                 }
             }
             if (dName.contains("aUltimate Enchantments")) {
-                colorThisSlot = true;
                 itemLore = is.getTooltip(mcgmtp, false);
                 for (String s : itemLore) {
                     s = StringUtils.stripControlCodes(s);
@@ -79,11 +78,11 @@ public class HexatorumUtils {
                             r = 255F;
                             g = b = 0F;
                         }
+                        colorThisSlot = true;
                     }
                 }
             }
             if (dName.contains("aReforges")) {
-                colorThisSlot = true;
                 itemLore = is.getTooltip(mcgmtp, false);
                 for (String s : itemLore) {
                     s = StringUtils.stripControlCodes(s);
@@ -95,6 +94,7 @@ public class HexatorumUtils {
                             r = 255F;
                             g = b = 0F;
                         }
+                        colorThisSlot = true;
                     }
                 }
             }
