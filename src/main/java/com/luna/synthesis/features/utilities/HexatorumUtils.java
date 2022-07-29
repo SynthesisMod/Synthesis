@@ -58,7 +58,7 @@ public class HexatorumUtils {
                 for (String s : itemLore) {
                     if (s.contains("7Enchantments") && !(s.contains("and"))) {
                         s = StringUtils.stripControlCodes(s);
-                        givenStringFindFractionComputeFractionAddFractionToFloatsArrayList(s, false);
+                        findFracInStrForFloatArrLst(s, false);
                         colorThisSlot = true;
                     }
                 }
@@ -68,7 +68,7 @@ public class HexatorumUtils {
                 for (String s : itemLore) {
                     s = StringUtils.stripControlCodes(s);
                     if (fractionRegex.matcher(s).find()) {
-                        givenStringFindFractionComputeFractionAddFractionToFloatsArrayList(s, false);
+                        findFracInStrForFloatArrLst(s, false);
                         colorThisSlot = true;
                     }
                 }
@@ -83,15 +83,13 @@ public class HexatorumUtils {
                     }
                 }
             }
-            if (dName.contains("aModifiers")) {
+            if (dName.contains("aModifiers") || dName.contains("aBooks")) {
                 colorThisSlot = true;
                 itemLore = is.getTooltip(mcgmtp, false);
                 for (String s : itemLore) {
                     s = StringUtils.stripControlCodes(s);
                     containsCheckmark(s, true);
-                    if (fractionRegex.matcher(s).find()) {
-                        givenStringFindFractionComputeFractionAddFractionToFloatsArrayList(s, true);
-                    }
+                    findFracInStrForFloatArrLst(s, true);
                 }
             }
             if (dName.contains("aItem Upgrades")) {
@@ -132,18 +130,6 @@ public class HexatorumUtils {
                 }
                 compareFloats(filledGemstones, availableGemstones);
             }
-            if (dName.contains("aBooks")) {
-                colorThisSlot = true;
-                itemLore = is.getTooltip(mcgmtp, false);
-                for (String s : itemLore) {
-                    s = StringUtils.stripControlCodes(s);
-                    if (fractionRegex.matcher(s).find()) {
-                        givenStringFindFractionComputeFractionAddFractionToFloatsArrayList(s, true);
-                    } else {
-                        containsCheckmark(s, true);
-                    }
-                }
-            }
             if (!colorThisSlot) continue;
             if (!(floats.isEmpty())) {
                 for (float f : floats) {
@@ -155,18 +141,7 @@ public class HexatorumUtils {
             Color bgColor = new Color(((int)(r)), ((int)(g)), ((int)(b)));
             if (config.utilitiesHexatorumDebug) {ChatLib.chat(bgColor.toString() + " was selected for item named " + dName);}
             GL11.glTranslated(0, 0, 1);
-            Gui.drawRect(
-                ((aMagicNumber) + sl.xDisplayPosition),
-                ((slots.size() != 90) ?
-                    (((anotherMagicNumber) + sl.yDisplayPosition) +
-                        ((6 - (slots.size() - 36) / 9) * 9)) :
-                    ((anotherMagicNumber) + sl.yDisplayPosition)),
-                (((aMagicNumber) + sl.xDisplayPosition) + 16),
-                (((slots.size() != 90) ?
-                    (((anotherMagicNumber) + sl.yDisplayPosition) +
-                        ((6 - (slots.size() - 36) / 9) * 9)) :
-                    ((anotherMagicNumber) + sl.yDisplayPosition)) + 16),
-                bgColor.getRGB());
+            Gui.drawRect(((aMagicNumber) + sl.xDisplayPosition), ((slots.size() != 90) ? (((anotherMagicNumber) + sl.yDisplayPosition) + ((6 - (slots.size() - 36) / 9) * 9)) : ((anotherMagicNumber) + sl.yDisplayPosition)), (((aMagicNumber) + sl.xDisplayPosition) + 16), (((slots.size() != 90) ? (((anotherMagicNumber) + sl.yDisplayPosition) + ((6 - (slots.size() - 36) / 9) * 9)) : ((anotherMagicNumber) + sl.yDisplayPosition)) + 16), bgColor.getRGB());
             GL11.glTranslated(0, 0, -1);
         }
     }
@@ -181,7 +156,8 @@ public class HexatorumUtils {
         }
     }
 
-    private void givenStringFindFractionComputeFractionAddFractionToFloatsArrayList(String s, boolean isArrayList) {
+    private void findFracInStrForFloatArrLst(String s, boolean isArrayList) {
+        if (!(fractionRegex.matcher(s).find())) return;
         String[] sa = s.split(" ");
         s = sa[sa.length - 1];
         float numerator = Float.parseFloat(s.substring(0, s.indexOf("/") + 1).replace("/", ""));
