@@ -750,6 +750,14 @@ public class Config extends Vigilant {
     public boolean utilitiesTrophyFishingOverlay = false;
 
     @Property(
+        type = PropertyType.SWITCH,
+        name = "Hexatorum Overlay",
+        description = "Displays the progress of your item's individual traits in color form according to the Hex.",
+        category = "Utilities"
+)
+    public boolean utilitiesHexatorumOverlay = false;
+
+    @Property(
             type = PropertyType.TEXT,
             name = "Share held item text",
             description = "Hold an item and type the text to show the item to other Synthesis users.",

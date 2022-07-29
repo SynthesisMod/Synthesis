@@ -76,7 +76,10 @@ public class BestiaryWarning {
         if ((bestiaryFamilyPattern.matcher(event.message.getFormattedText())).find() &&
             event.message.getFormattedText().contains("3") &&
             event.message.getFormattedText().contains("BESTIARY ") &&
-            event.message.getUnformattedText().indexOf("MILESTONE") == -1) {
+            event.message.getUnformattedText().indexOf("MILESTONE") == -1 &&
+            event.message.getUnformattedText().indexOf("Guild >") == -1 && 
+            event.message.getUnformattedText().indexOf("Party >") == -1 && 
+            event.message.getUnformattedText().indexOf("+]") == -1) {
             ChatLib.chat("Level progress updating! Original value was " + levelProgress + "/10.");
             levelProgress++;
             ChatLib.chat("Level progress updated! Updated value should be " + levelProgress + "/10.");
