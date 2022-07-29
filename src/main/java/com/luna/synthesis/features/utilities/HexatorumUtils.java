@@ -32,7 +32,7 @@ public class HexatorumUtils {
     private ArrayList<Float> floats = new ArrayList<Float>();
     private List<Slot> slots;
     private String menuName = "";
-    private float r = 0F, g = 0F, b = 0F, floatForArrayList = 0F;
+    private float r = 0F, g = 0F, floatForArrayList = 0F;
     
     @SubscribeEvent
     public void onHexUI(GuiScreenEvent.BackgroundDrawnEvent e) {
@@ -136,7 +136,7 @@ public class HexatorumUtils {
                 }
                 compareFloats(floatForArrayList, ((float)(floats.size())));
             }
-            Color bgColor = new Color(((int)(r)), ((int)(g)), ((int)(b)));
+            Color bgColor = new Color(((int)(r)), ((int)(g)), (0));
             if (config.utilitiesHexatorumDebug) {ChatLib.chat(bgColor.toString() + " was selected for item named " + dName);}
             GL11.glTranslated(0, 0, 1);
             Gui.drawRect(((aMagicNumber) + sl.xDisplayPosition), ((slots.size() != 90) ? (((anotherMagicNumber) + sl.yDisplayPosition) + ((6 - (slots.size() - 36) / 9) * 9)) : ((anotherMagicNumber) + sl.yDisplayPosition)), (((aMagicNumber) + sl.xDisplayPosition) + 16), (((slots.size() != 90) ? (((anotherMagicNumber) + sl.yDisplayPosition) + ((6 - (slots.size() - 36) / 9) * 9)) : ((anotherMagicNumber) + sl.yDisplayPosition)) + 16), bgColor.getRGB());
@@ -147,10 +147,10 @@ public class HexatorumUtils {
     private void containsCheckmark(String s, boolean isArrayList) {
         if (s.contains("✔")) {
             if (isArrayList){floats.add(1F);}
-            else {g = 255F; r = b = 0F;}
+            else {g = 255F; r = 0F;}
         } else if (s.contains("✖")) {
             if (isArrayList){floats.add(0F);}
-            else {r = 255F; g = b = 0F;}
+            else {r = 255F; g = 0F;}
         }
     }
 
@@ -163,30 +163,25 @@ public class HexatorumUtils {
         if (isArrayList) {
             if (denominator <= numerator) floats.add(1F);
             else floats.add((numerator / denominator));
-        } else {
-            compareFloats(numerator, denominator);
-        }
+        } else compareFloats(numerator, denominator);
     }
 
     private void compareFloats(float f1, float f2) {
         if (f1 >= f2) {
             f1 = f2;
             g = 255F;
-            r = b = 0F;
+            r = 0F;
         } else {
             float tempFloat = (f1 / f2);
             if (tempFloat == 0.5F) {
                 r = g = 255F;
-                b = 0F;
             } else {
                 if (tempFloat > 0.5F) {
                     r = 255 - (tempFloat * 255F);
                     g = 255F;
-                    b = 0F;
                 } else {
                     r = 255F;
                     g = (tempFloat * 255F);
-                    b = 0F;
                 }
             }
         }
