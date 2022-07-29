@@ -45,9 +45,7 @@ public class HexatorumUtils {
         slots = ((GuiChest)(Minecraft.getMinecraft().currentScreen)).inventorySlots.inventorySlots;
         for (Slot sl : slots) {
             boolean colorThisSlot = false;
-            try {
-                if (!(itemLore.isEmpty())) itemLore.clear();
-            } catch (Exception ex) {}
+            try {if (!(itemLore.isEmpty())) itemLore.clear();} catch (Exception ex) {}
             if (!(floats.isEmpty())) floats.clear();
             floatForArrayList = 0F;
             if (sl.getStack() == null || !(sl.getStack().hasDisplayName())) continue;
