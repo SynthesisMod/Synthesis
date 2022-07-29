@@ -758,6 +758,14 @@ public class Config extends Vigilant {
     public boolean utilitiesHexatorumOverlay = false;
 
     @Property(
+        type = PropertyType.SWITCH,
+        name = "Hexatorum Debug",
+        description = "Displays debug information in case the Hexatorum overlay decides to break.\nCan and WILL flood your chat-enable with great caution!",
+        category = "Utilities"
+)
+    public boolean utilitiesHexatorumDebug = false;
+
+    @Property(
             type = PropertyType.TEXT,
             name = "Share held item text",
             description = "Hold an item and type the text to show the item to other Synthesis users.",
@@ -1216,6 +1224,7 @@ public class Config extends Vigilant {
         addDependency("utilitiesOccupancyOverlayFriendAndGuildHighlght", "utilitiesOccupancyOverlay");
         addDependency("utilitiesOccupancyOverlayAlreadyConnectedHighlght", "utilitiesOccupancyOverlay");
         addDependency("miscIgnoreHypixelBooksWarning", "miscIgnoreHypixelBooks");
+        addDependency("utilitiesHexatorumDebug", "utilitiesHexatorumOverlay");
         registerListener("utilitiesColorlessPanes", (z) -> Minecraft.getMinecraft().renderGlobal.loadRenderers());
     }
 }

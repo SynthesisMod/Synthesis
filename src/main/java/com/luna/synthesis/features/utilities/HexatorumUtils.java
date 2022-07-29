@@ -153,7 +153,7 @@ public class HexatorumUtils {
                 compareFloats(floatForArrayList, ((float)(floats.size())));
             }
             Color bgColor = new Color(((int)(r)), ((int)(g)), ((int)(b)));
-            ChatLib.chat(bgColor.toString() + " was selected for item named " + dName);
+            if (config.utilitiesHexatorumDebug) {ChatLib.chat(bgColor.toString() + " was selected for item named " + dName);}
             GL11.glTranslated(0, 0, 1);
             Gui.drawRect(
                 ((aMagicNumber) + sl.xDisplayPosition),
