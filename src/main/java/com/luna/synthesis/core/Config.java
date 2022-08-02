@@ -1145,11 +1145,28 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SELECTOR,
         name = "Show Skill Average as Stack Size",
-        description = "(For compatibility reasons, this will only apply to the general SkyBlock Menu.)",
+        description = "Rounded: Rounds your Skill Average to the nearest integer.\nExact: Embraces the decimal point in your Skill Average.\n(For compatibility reasons, this will only apply to the general SkyBlock Menu.)",
         category = "Utilities",
         options = {"Off", "Rounded", "Exact"}
     )
     public int utilitiesShowSkillAverageStackSize = 0;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Show New Year's Cake Year as Stack Size",
+        description = "This line intentionally left uninformative.",
+        category = "Utilities"
+    )
+    public boolean utilitiesShowNYCakeStackSize = false;
+
+    @Property(
+        type = PropertyType.SELECTOR,
+        name = "Show Spooky Pie Stack Size",
+        description = "SB Year: Shows the SB year the Pie was obtained.\nnth Festival: Shows the nth Spooky Festival the Pie was obtained.\n(For compatibility reasons, this will only apply to the general SkyBlock Menu.)",
+        category = "Utilities",
+        options = {"Off", "SB Year", "nth Festival"}
+    )
+    public int utilitiesShowSpookyPieStackSize = 0;
 
     //MISC
 
