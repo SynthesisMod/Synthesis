@@ -3,13 +3,13 @@ package com.luna.synthesis.commands;
 import gg.essential.api.EssentialAPI;
 import gg.essential.api.commands.*;
 
-import com.google.gson.*;
+// import com.google.gson.*;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import com.luna.synthesis.managers.BackpackManager;
 import com.luna.synthesis.utils.*;
 
-import net.minecraft.client.Minecraft;
+// import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -17,12 +17,12 @@ import net.minecraftforge.fml.common.Loader;
 
 import java.util.*;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
+// import java.io.InputStream;
+// import java.net.HttpURLConnection;
+// import java.net.URL;
+// import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.io.IOUtils;
+// import org.apache.commons.io.IOUtils;
 
 public class SynthesisCommand extends Command {
     public SynthesisCommand() {
@@ -128,100 +128,95 @@ public class SynthesisCommand extends Command {
         }
     }
 
-    @SubCommand("pronouns")
-    public void pronouns(@DisplayName("username") Optional<String> username) {
-        new Thread(() -> {
-            String nameToCheck = "", uuid = "", pronounResult = "", pronounsToBe = "", apostrophe = "'s";
-            if (username.isPresent()) {
-                nameToCheck = username.get();
-            } else {
-                nameToCheck = Minecraft.getMinecraft().thePlayer.getName();
-            }
-            if (!(nameToCheck.contains("-"))) {
-                try {
-                    URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + nameToCheck);
-                    HttpURLConnection http = (HttpURLConnection) url.openConnection();
-                    http.setDoOutput(true);
-                    http.setDoInput(true);
-                    http.setRequestProperty("User-Agent", "Synthesis-NONCANON");
-                    http.setRequestProperty("Accept", "application/json");
-                    http.setRequestProperty("Method", "GET");
-                    http.connect();
-                    try (InputStream instream = http.getInputStream()) {
-                        if (http.getResponseCode() != 200) {
-                            ChatLib.chat("Something went wrong with grabbing this player's Minecraft UUID. Aborting mission.");
-                            return;
-                        }
-                        JsonParser parser = new JsonParser();
-                        JsonObject data = parser.parse(new String(IOUtils.toByteArray(instream), StandardCharsets.UTF_8)).getAsJsonObject();
-                        if (!data.has("id") || !data.has("name")) {
-                            ChatLib.chat("Synthesis failed in getting this player's UUID from Mojang's API. Either their API is down (most likely) or a player with this username doesn't exist. Aborting mission.");
-                            return;
-                        }
+    // @SubCommand("pronouns")
+    // public void pronouns(@DisplayName("username") Optional<String> username) {
+    //     new Thread(() -> {
+    //         String nameToCheck = "", uuid = "", pronounResult = "", pronounsToBe = "", apostrophe = "'s";
+    //         if (username.isPresent()) {
+    //             nameToCheck = username.get();
+    //         } else {
+    //             nameToCheck = Minecraft.getMinecraft().thePlayer.getName();
+    //         }
+    //         if (!(nameToCheck.contains("-"))) {
+    //             try {
+    //                 URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + nameToCheck);
+    //                 HttpURLConnection http = (HttpURLConnection) url.openConnection();
+    //                 http.connect();
+    //                 try (InputStream instream = http.getInputStream()) {
+    //                     if (http.getResponseCode() != 200) {
+    //                         ChatLib.chat("Something went wrong with grabbing this player's Minecraft UUID. Aborting mission.");
+    //                         return;
+    //                     }
+    //                     JsonParser parser = new JsonParser();
+    //                     JsonObject data = parser.parse(new String(IOUtils.toByteArray(instream), StandardCharsets.UTF_8)).getAsJsonObject();
+    //                     if (!data.has("id") || !data.has("name")) {
+    //                         ChatLib.chat("Synthesis failed in getting this player's UUID from Mojang's API. Either their API is down (most likely) or a player with this username doesn't exist. Aborting mission.");
+    //                         return;
+    //                     }
 
-                        String uuidToBe = data.get("id").getAsString();
-                        uuid = uuidToBe.substring(0, 8) + "-" + uuidToBe.substring(8, 12) + "-" + uuidToBe.substring(12, 16) + "-" + uuidToBe.substring(16, 20) + "-" + uuidToBe.substring(20);
-                        nameToCheck = data.get("name").getAsString();
-                    }
-                } catch (Exception e) {
-                    ChatLib.chat("Something went wrong with grabbing this player's Minecraft UUID via Mojang's API. Aborting mission.");
-                    e.printStackTrace();
-                }
-            } else {
-                uuid = nameToCheck;
-            }
-            ChatLib.chat(uuid);
-            //b43d7457-9da4-408b-a9fb-51239022cec9
-            //https://pronoundb.org/api/v1/lookup?platform=minecraft&id=b43d7457-9da4-408b-a9fb-51239022cec9
-            //"https://pronoundb.org/api/v1/lookup?platform=minecraft&id=" + uuid
-            try {
-                URL url = new URL("https://pronoundb.org/api/v1/lookup?platform=minecraft&id=" + uuid);
-                HttpURLConnection http = (HttpURLConnection) url.openConnection();
-                http.setDoOutput(true);
-                http.setDoInput(true);
-                http.setRequestProperty("User-Agent", "Synthesis-NONCANON");
-                http.setRequestProperty("Accept", "application/json");
-                http.setRequestProperty("Method", "GET");
-                http.connect();
-                try (InputStream instream = http.getInputStream()) {
-                    if (http.getResponseCode() != 200) {
-                        ChatLib.chat("Something went wrong with grabbing this player's pronouns from PronounDB. Aborting mission.");
-                        return;
-                    }
-                    JsonParser parser = new JsonParser();
-                    JsonObject data = parser.parse(new String(IOUtils.toByteArray(instream), StandardCharsets.UTF_8)).getAsJsonObject();
-                    if (!data.has("pronouns")) {
-                        ChatLib.chat("Synthesis failed in getting this player's pronouns from PronounDB's API. Either their API is down (most likely) or a player with this UUID doesn't exist. Aborting mission.");
-                        return;
-                    }
+    //                     String uuidToBe = data.get("id").getAsString();
+    //                     uuid = uuidToBe.substring(0, 8) + "-" + uuidToBe.substring(8, 12) + "-" + uuidToBe.substring(12, 16) + "-" + uuidToBe.substring(16, 20) + "-" + uuidToBe.substring(20);
+    //                     nameToCheck = data.get("name").getAsString();
+    //                 }
+    //             } catch (Exception e) {
+    //                 ChatLib.chat("Something went wrong with grabbing this player's Minecraft UUID via Mojang's API. Aborting mission.");
+    //                 e.printStackTrace();
+    //             }
+    //         } else {
+    //             uuid = nameToCheck;
+    //         }
+    //         ChatLib.chat(uuid);
+    //         //b43d7457-9da4-408b-a9fb-51239022cec9
+    //         //https://pronoundb.org/api/v1/lookup?platform=minecraft&id=b43d7457-9da4-408b-a9fb-51239022cec9
+    //         //"https://pronoundb.org/api/v1/lookup?platform=minecraft&id=" + uuid
+    //         try {
+    //             URL url = new URL("https://pronoundb.org/api/v1/lookup?platform=minecraft&id=" + uuid);
+    //             HttpURLConnection http = (HttpURLConnection) url.openConnection();
+    //             http.setDoOutput(true);
+    //             http.setDoInput(true);
+    //             http.setRequestProperty("User-Agent", "Synthesis-NONCANON");
+    //             http.setRequestProperty("Accept", "application/json");
+    //             http.setRequestProperty("Method", "GET");
+    //             http.connect();
+    //             try (InputStream instream = http.getInputStream()) {
+    //                 if (http.getResponseCode() != 200) {
+    //                     ChatLib.chat("Something went wrong with grabbing this player's pronouns from PronounDB. Aborting mission.");
+    //                     return;
+    //                 }
+    //                 JsonParser parser = new JsonParser();
+    //                 JsonObject data = parser.parse(new String(IOUtils.toByteArray(instream), StandardCharsets.UTF_8)).getAsJsonObject();
+    //                 if (!data.has("pronouns")) {
+    //                     ChatLib.chat("Synthesis failed in getting this player's pronouns from PronounDB's API. Either their API is down (most likely) or a player with this UUID doesn't exist. Aborting mission.");
+    //                     return;
+    //                 }
 
-                    pronounsToBe = data.get("pronouns").getAsString();
-                    Pronouns.doTheThingWithPronouns();
-                    pronounsToBe = Pronouns.dict.get(pronounsToBe);
-                }
-            } catch (Exception e) {
-                ChatLib.chat("Something went wrong with grabbing this player's PronounDB data. Aborting mission.");
-                e.printStackTrace();
-                return;
-            }
-            if (nameToCheck.endsWith("s")) apostrophe = "'";
-            if (nameToCheck.contains("-")) pronounResult += ("The player with UUID ");
-            pronounResult += (nameToCheck);
-            if (pronounsToBe == "any") {
-                pronounResult += " doesn't mind what pronouns you use for them.";
-            } else if (pronounsToBe == "other") {
-                pronounResult += " has personal pronoun preferences.";
-            } else if (pronounsToBe == "ask") {
-                pronounResult += " says, \"ask me for my preferred pronouns\".";
-            } else if (pronounsToBe == "avoid") {
-                pronounResult += " says, \"use my name instead of any pronouns\".";
-            } else if (pronounsToBe == "unspecified") {
-                pronounResult += " has yet to set a pronoun preference.";
-            } else {
+    //                 pronounsToBe = data.get("pronouns").getAsString();
+    //                 Pronouns.doTheThingWithPronouns();
+    //                 pronounsToBe = Pronouns.dict.get(pronounsToBe);
+    //             }
+    //         } catch (Exception e) {
+    //             ChatLib.chat("Something went wrong with grabbing this player's PronounDB data. Aborting mission.");
+    //             e.printStackTrace();
+    //             return;
+    //         }
+    //         if (nameToCheck.endsWith("s")) apostrophe = "'";
+    //         if (nameToCheck.contains("-")) pronounResult += ("The player with UUID ");
+    //         pronounResult += (nameToCheck);
+    //         if (pronounsToBe == "any") {
+    //             pronounResult += " doesn't mind what pronouns you use for them.";
+    //         } else if (pronounsToBe == "other") {
+    //             pronounResult += " has personal pronoun preferences.";
+    //         } else if (pronounsToBe == "ask") {
+    //             pronounResult += " says, \"ask me for my preferred pronouns\".";
+    //         } else if (pronounsToBe == "avoid") {
+    //             pronounResult += " says, \"use my name instead of any pronouns\".";
+    //         } else if (pronounsToBe == "unspecified") {
+    //             pronounResult += " has yet to set a pronoun preference.";
+    //         } else {
                 
-                pronounResult += (apostrophe + " preferred pronouns are " + pronounsToBe);
-            }
-            ChatLib.chat(pronounResult);
-        }).start();
-    }
+    //             pronounResult += (apostrophe + " preferred pronouns are " + pronounsToBe);
+    //         }
+    //         ChatLib.chat(pronounResult);
+    //     }).start();
+    // }
 }

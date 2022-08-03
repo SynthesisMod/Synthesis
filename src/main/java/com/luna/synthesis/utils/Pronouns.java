@@ -2,9 +2,34 @@ package com.luna.synthesis.utils;
 
 import java.util.*;
 
+// import javax.net.ssl.*;
+
+// import java.io.InputStream;
+// import java.net.URL;
+// import java.security.KeyStore;
+
 public class Pronouns {
     public static Dictionary<String, String> dict = new Hashtable<String, String>();
     public static boolean dictionaryFilled = false;
+
+    // public InputStream sslConnector(String urlParam) throws Exception {
+    //     KeyStore ks = KeyStore.getInstance("jks");
+    //     ks.load(getClass().getResourceAsStream("/yourkeystore.jks"), "yourkeystorepassword".toCharArray());
+    //     SSLContext ctx = SSLContext.getInstance("TLS");
+    //     KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+    //     TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+    //     kmf.init(ks, null);
+    //     tmf.init(ks);
+    //     ctx.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
+    //     URL url = new URL(urlParam);
+    //     HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+    //     con.setDoOutput(true);
+    //     con.setRequestProperty("User-Agent", "Synthesis-NONCANON");
+    //     con.setRequestProperty("Accept", "application/json");
+    //     con.setRequestProperty("Method", "GET");
+    //     con.setSSLSocketFactory(ctx.getSocketFactory());
+    //     return con.getInputStream();
+    // }
     
     public static void doTheThingWithPronouns() {
         if (dictionaryFilled) {
