@@ -55,12 +55,12 @@ public class OccupancyOverlay {
     private String hubName = "";
     private List<String> itemLore;
     private List<Slot> slots;
-    private EntityPlayerSP mgmtp = Minecraft.getMinecraft().thePlayer;
+    private EntityPlayerSP mcgmtp = Minecraft.getMinecraft().thePlayer;
     
     @SubscribeEvent
     public void onGuiScreen(GuiScreenEvent.BackgroundDrawnEvent e) {
         if (config.utilitiesOccupancyOverlay) {
-            if (mgmtp != null && Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
+            if (mcgmtp != null && Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
                 menuName = StringUtils.stripControlCodes((((ContainerChest)((GuiChest)(Minecraft.getMinecraft().currentScreen)).inventorySlots).getLowerChestInventory().getDisplayName().getUnformattedText()));
                 if (menuName.toLowerCase().contains("skyblock hub") || menuName.toLowerCase().contains("dungeon hub") || menuName.toLowerCase().startsWith("visit")) {
                     slots = ((GuiChest)(Minecraft.getMinecraft().currentScreen)).inventorySlots.inventorySlots;
@@ -79,7 +79,7 @@ public class OccupancyOverlay {
     
                         if (s.getStack() != null && s.getStack().hasDisplayName() && !(s.getStack().getDisplayName().toLowerCase().contains(" skyblock hub")) && (s.getStack().getDisplayName().toLowerCase().contains("skyblock hub") || s.getStack().getDisplayName().toLowerCase().contains("dungeon hub") || s.getStack().getDisplayName().toLowerCase().contains("visit player "))) {
                             hubName = StringUtils.stripControlCodes(s.getStack().getDisplayName());
-                            itemLore = s.getStack().getTooltip(mgmtp, false);
+                            itemLore = s.getStack().getTooltip(mcgmtp, false);
                             if (itemLore != null) {
                                 for (String line : itemLore) {
                                     if (line != null && line.toLowerCase().contains("online friend")) {
