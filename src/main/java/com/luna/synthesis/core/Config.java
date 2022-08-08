@@ -1152,6 +1152,15 @@ public class Config extends Vigilant {
     public int utilitiesShowSkillAverageStackSize = 0;
 
     @Property(
+        type = PropertyType.SELECTOR,
+        name = "Show Dojo Progress as Stack Size",
+        description = "Rank: Shows your Rank on a certain Test at the Dojo.\nScore: Shows what your score for that Test was.",
+        category = "Utilities",
+        options = {"Off", "Rank", "Score"}
+    )
+    public int utilitiesShowDojoProgressStackSize = 0;
+
+    @Property(
         type = PropertyType.SWITCH,
         name = "Show New Year's Cake Year as Stack Size",
         description = "This line intentionally left uninformative.",

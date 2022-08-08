@@ -3,6 +3,7 @@ package com.luna.synthesis.mixins;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import com.luna.synthesis.managers.BackpackManager;
+import com.luna.synthesis.utils.ChatLib;
 import com.luna.synthesis.utils.MixinUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -87,9 +88,9 @@ public class RenderItemMixin {
                     ci.cancel();
                 }
             } else if (config.utilitiesShowCollectionStackSize && (title.contains(" Collection"))) {
-                String[] splitName = StringUtils.stripControlCodes(stack.getDisplayName()).split(" ");
-                if (splitName.length < 1) return;
-                String romanNumeral = splitName[(splitName.length - 1)];
+                String[] splitStr = StringUtils.stripControlCodes(stack.getDisplayName()).split(" ");
+                if (splitStr.length < 1) return;
+                String romanNumeral = splitStr[(splitStr.length - 1)];
                 if (!((romanNumeral.contains("I") || romanNumeral.contains("V") || romanNumeral.contains("X") || romanNumeral.contains("L") || romanNumeral.contains("C") || romanNumeral.contains("D") || romanNumeral.contains("M")))) return;
                 if ((stack.getDisplayName().contains(" Minion"))) return;
                 int finalResult = 0;
@@ -108,12 +109,22 @@ public class RenderItemMixin {
                 drawAsStackSize(numTiers, xPosition, yPosition);
                 ci.cancel();
             } else if (config.utilitiesShowSkillStackSize && (title.equals("Your Skills") || title.equals("Dungeoneering"))) {
-                String[] splitName = StringUtils.stripControlCodes(stack.getDisplayName()).split(" ");
-                if (splitName.length < 2) return;
-                String skillNumeral = splitName[(splitName.length - 1)];
+                String[] splitStr = StringUtils.stripControlCodes(stack.getDisplayName()).split(" ");
+                if (splitStr.length < 2) return;
+                String skillNumeral = splitStr[(splitStr.length - 1)];
                 char c = skillNumeral.charAt(0);
                 if (c < '0' || c > '9') return; //HUGE SHOUTOUT TO Jonas K from StackOverflow for this: https://stackoverflow.com/a/237204
                 drawAsStackSize(skillNumeral, xPosition, yPosition);
+                ci.cancel();
+            } else if (config.utilitiesShowDojoProgressStackSize != 0 && title.equals("Challenges")) {
+                if (!stack.getDisplayName().startsWith("§9Test of ")) return;
+                List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+                String[] splitStr = StringUtils.stripControlCodes(itemLore.get(1)).split(" ");
+                if (splitStr.length < 2) return;
+                String result = "";
+                if (config.utilitiesShowDojoProgressStackSize == 1) result = splitStr[2];
+                if (config.utilitiesShowDojoProgressStackSize == 2) result = splitStr[3].replace("(", "").replace(")", "");
+                drawAsStackSize(result, xPosition, yPosition);
                 ci.cancel();
             }
         }
