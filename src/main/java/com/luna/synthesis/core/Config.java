@@ -1137,7 +1137,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SWITCH,
         name = "Show Skills as Stack Size",
-        description = "This line intentionally left uninformative.",
+        description = "Applies to both the \"Dungeoneering\" and \"Your Skills\" menus\n§e§lCAUTION§r§e: If you enabled Skytils' \"Show Potion Tier\" option, there will be a \"1\" as the stack size for the Healer icon in the \"Dungeoneering\" menu. There is no known solution to this besides building your own copies of Skytils.",
         category = "Utilities"
     )
     public boolean utilitiesShowSkillStackSize = false;

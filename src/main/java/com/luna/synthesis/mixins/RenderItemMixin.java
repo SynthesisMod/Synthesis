@@ -107,12 +107,12 @@ public class RenderItemMixin {
                 for (String s : itemLore) if (s.contains("a")) numTiers++; else if (s.contains("c")) break;
                 drawAsStackSize(numTiers, xPosition, yPosition);
                 ci.cancel();
-            } else if (config.utilitiesShowSkillStackSize && title.equals("Your Skills")) {
+            } else if (config.utilitiesShowSkillStackSize && (title.equals("Your Skills") || title.equals("Dungeoneering"))) {
                 String[] splitName = StringUtils.stripControlCodes(stack.getDisplayName()).split(" ");
                 if (splitName.length < 2) return;
                 String skillNumeral = splitName[(splitName.length - 1)];
                 char c = skillNumeral.charAt(0);
-                if (c < '0' || c > '9') return;
+                if (c < '0' || c > '9') return; //HUGE SHOUTOUT TO Jonas K from StackOverflow for this: https://stackoverflow.com/a/237204
                 drawAsStackSize(skillNumeral, xPosition, yPosition);
                 ci.cancel();
             }
