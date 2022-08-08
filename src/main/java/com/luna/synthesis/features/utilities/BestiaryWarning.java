@@ -73,6 +73,7 @@ public class BestiaryWarning {
     
     @SubscribeEvent
     public void onChatRecievedEvent(ClientChatReceivedEvent event) {
+        if (config.utilitiesBestiaryMilestoneWarningDeliveryMethod == 0) {return;}
         if ((bestiaryFamilyPattern.matcher(event.message.getFormattedText())).find() &&
             event.message.getFormattedText().contains("3") &&
             event.message.getFormattedText().contains("BESTIARY ") &&
@@ -107,9 +108,9 @@ public class BestiaryWarning {
     public void sendTheWarning(TickEvent.ClientTickEvent event) {
         if (Minecraft.getMinecraft().thePlayer == null) {return;}
         if (event.phase != TickEvent.Phase.START){return;}
-        if (config. utilitiesBestiaryMilestoneWarningDeliveryMethod == 0) {return;}
+        if (config.utilitiesBestiaryMilestoneWarningDeliveryMethod == 0) {return;}
         if (config.utilitiesBestiaryMilestoneWarningSeconds < 5 || config.utilitiesBestiaryMilestoneWarningSeconds > 60){config.utilitiesBestiaryMilestoneWarningSeconds = 5;}
-        if (config. utilitiesBestiaryMilestoneWarningDeliveryMethod != 0 && config. utilitiesBestiaryMilestoneWarningDeliveryMethod != 1 && config. utilitiesBestiaryMilestoneWarningDeliveryMethod != 2){config. utilitiesBestiaryMilestoneWarningDeliveryMethod = 0;}
+        if (config.utilitiesBestiaryMilestoneWarningDeliveryMethod != 0 && config.utilitiesBestiaryMilestoneWarningDeliveryMethod != 1 && config. utilitiesBestiaryMilestoneWarningDeliveryMethod != 2){config. utilitiesBestiaryMilestoneWarningDeliveryMethod = 0;}
         if (config.utilitiesBestiaryMilestoneWarningDuration < 5 || config.utilitiesBestiaryMilestoneWarningDuration > 120){config.utilitiesBestiaryMilestoneWarningDuration = 5;}
         if (Minecraft.getMinecraft().thePlayer != null && EssentialAPI.getMinecraftUtil().isHypixel()) {
             if (levelProgress != 9 || !isAboutToLevelUp) {ticks = 0;return;}

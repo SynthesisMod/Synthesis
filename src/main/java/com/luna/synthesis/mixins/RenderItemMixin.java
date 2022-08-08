@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.resources.model.IBakedModel;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.item.Item;
@@ -45,9 +46,8 @@ public class RenderItemMixin {
 
     @Inject(method = "renderItemOverlayIntoGUI", at = @At(value = "JUMP", ordinal = 1, shift = At.Shift.BEFORE), cancellable = true)
     public void renderItemOverlayIntoGUI(FontRenderer fr, ItemStack stack, int xPosition, int yPosition, String text, CallbackInfo ci) {
-        String dName = stack.getDisplayName();
-        List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
         if (Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerChest) {
+            if (stack.getItem() == Item.getItemFromBlock(Blocks.glass_pane)) return;
             ContainerChest containerChest = (ContainerChest) Minecraft.getMinecraft().thePlayer.openContainer;
             String title = StringUtils.stripControlCodes(containerChest.getLowerChestInventory().getDisplayName().getUnformattedText());
             if (config.utilitiesPerkLevelDisplay && title.equals("Heart of the Mountain")) {
@@ -66,6 +66,7 @@ public class RenderItemMixin {
                     ci.cancel();
                 }
             } else if (config.utilitiesBestiaryGlance && (title.equals("Bestiary") || title.contains(" ➜ "))) {
+                String dName = stack.getDisplayName();
                 if (StringUtils.stripControlCodes(dName).startsWith("Bestiary Milestone ")) {
                     String level = StringUtils.stripControlCodes(dName).replace("Bestiary Milestone ", "");
                     drawAsStackSize(level, xPosition, yPosition);
@@ -86,13 +87,11 @@ public class RenderItemMixin {
                     ci.cancel();
                 }
             } else if (config.utilitiesShowCollectionStackSize && (title.contains(" Collection"))) {
-                boolean doTheHarlemShake = false;
-                String[] splitName = StringUtils.stripControlCodes(dName).split(" ");
+                String[] splitName = StringUtils.stripControlCodes(stack.getDisplayName()).split(" ");
                 if (splitName.length < 1) return;
                 String romanNumeral = splitName[(splitName.length - 1)];
                 if (!((romanNumeral.contains("I") || romanNumeral.contains("V") || romanNumeral.contains("X") || romanNumeral.contains("L") || romanNumeral.contains("C") || romanNumeral.contains("D") || romanNumeral.contains("M")))) return;
-                for (String s : itemLore) if (s.contains("View all your ")) doTheHarlemShake = true;
-                if (!doTheHarlemShake) return;
+                if ((stack.getDisplayName().contains(" Minion"))) return;
                 int finalResult = 0;
                 //BRUTEFORCE CONVERSION.
                 //I SURE AS FUCK GOT NO TIME TO WRITE THAT ROMAN TO ARABIC NUMERAL CONVERSION FUNCTION.
@@ -102,38 +101,40 @@ public class RenderItemMixin {
                 ci.cancel();
             } else if (config.utilitiesShowCraftedMinionsStackSize && title.contains("Crafted Minions")) {
                 if (!(stack.getItem() == Items.skull)) return;
-                if (!(dName.endsWith(" Minion"))) return;
+                if (!(stack.getDisplayName().endsWith(" Minion"))) return;
                 int numTiers = 0;
+                List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
                 for (String s : itemLore) if (s.contains("a")) numTiers++; else if (s.contains("c")) break;
                 drawAsStackSize(numTiers, xPosition, yPosition);
                 ci.cancel();
             } else if (config.utilitiesShowSkillStackSize && title.equals("Your Skills")) {
-                boolean gangnamStyle = false;
-                String[] splitName = StringUtils.stripControlCodes(dName).split(" ");
-                if (splitName.length < 1) return;
+                String[] splitName = StringUtils.stripControlCodes(stack.getDisplayName()).split(" ");
+                if (splitName.length < 2) return;
                 String skillNumeral = splitName[(splitName.length - 1)];
-                for (String s : itemLore) if (s.contains("XP") && s.contains("7")) gangnamStyle = true;
-                if (!gangnamStyle) return;
+                char c = skillNumeral.charAt(0);
+                if (c < '0' || c > '9') return;
                 drawAsStackSize(skillNumeral, xPosition, yPosition);
-                ci.cancel();
-            } else if ((config.utilitiesShowSkillAverageStackSize != 0) && title.equals("SkyBlock Menu")) {
-                if (!(dName.contains("Your Skill"))) return;
-                String skillAvg = "";
-                for (String s : itemLore) {
-                    if ((StringUtils.stripControlCodes(s)).contains(" Skill Avg")) {
-                        String[] temp = s.split(" ");
-                        if (temp.length < 1) break; //prevent crash
-                        skillAvg = StringUtils.stripControlCodes(temp[0]);
-                    }
-                }
-                if (skillAvg == "") return;
-                if (config.utilitiesShowSkillAverageStackSize == 1) drawAsStackSize(Math.round(Float.valueOf(skillAvg)), xPosition, yPosition);
-                else if (config.utilitiesShowSkillAverageStackSize == 2) drawAsStackSize(skillAvg, xPosition, yPosition);
                 ci.cancel();
             }
         }
+        if ((config.utilitiesShowSkillAverageStackSize != 0)) {
+            if (!(stack.getDisplayName().contains("Your Skill"))) return;
+            String skillAvg = "";
+            List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+            for (String s : itemLore) {
+                if ((StringUtils.stripControlCodes(s)).contains(" Skill Avg")) {
+                    String[] temp = s.split(" ");
+                    if (temp.length < 1) break; //prevent crash
+                    skillAvg = StringUtils.stripControlCodes(temp[0]);
+                }
+            }
+            if (skillAvg == "") return;
+            if (config.utilitiesShowSkillAverageStackSize == 1) drawAsStackSize(Math.round(Float.valueOf(skillAvg)), xPosition, yPosition);
+            else if (config.utilitiesShowSkillAverageStackSize == 2) drawAsStackSize(skillAvg, xPosition, yPosition);
+            ci.cancel();
+        }
         if (config.utilitiesWishingCompassUsesLeft) {
-            if (stack != null && dName.contains("Wishing Compass")) {
+            if (stack != null && stack.getDisplayName().contains("Wishing Compass")) {
                 NBTTagCompound tag = stack.getTagCompound();
                 if (tag.hasKey("ExtraAttributes")) {
                     if (tag.getCompoundTag("ExtraAttributes").hasKey("wishing_compass_uses")) {
@@ -147,7 +148,7 @@ public class RenderItemMixin {
             }
         }
         if (config.utilitiesShowNYCakeStackSize) {
-            if (stack != null && dName.contains("cNew Year Cake (Year") && dName.contains(")")) {
+            if (stack != null && stack.getDisplayName().contains("cNew Year Cake (Year") && stack.getDisplayName().contains(")")) {
                 NBTTagCompound tag = stack.getTagCompound();
                 if (tag.hasKey("ExtraAttributes") && tag.getCompoundTag("ExtraAttributes").hasKey("new_years_cake")) {
                     drawAsStackSize((tag.getCompoundTag("ExtraAttributes").getInteger("new_years_cake")), xPosition, yPosition);
@@ -155,9 +156,10 @@ public class RenderItemMixin {
             }
         }
         if (config.utilitiesShowSpookyPieStackSize < 3 && config.utilitiesShowSpookyPieStackSize > 0) {
-            if (stack != null && dName.contains("Spooky Pie")) {
+            if (stack != null && stack.getDisplayName().contains("Spooky Pie")) {
                 NBTTagCompound tag = stack.getTagCompound();
                 if (tag.hasKey("ExtraAttributes")) {
+                    List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
                     for (String s : itemLore) {
                         if (s.contains("Obtained during the")) {
                             if (config.utilitiesShowSpookyPieStackSize == 2) {
