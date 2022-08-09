@@ -162,11 +162,11 @@ public class RenderItemMixin {
                 drawAsStackSize(result, xPosition, yPosition);
                 ci.cancel();
             } else if (title.startsWith("SkyBlock Menu")) {
-                if (!stack.getDisplayName().contains("Your Skill") && !stack.getDisplayName().equals("§aRecipe Book")) return;
-                if (config.utilitiesShowSkillAverageStackSize == 0 && config.utilitiesShowUnlockedRecipePercentStackSize == 0) return;
+                if (!stack.getDisplayName().contains("Your Skill") && !stack.getDisplayName().equals("§aRecipe Book") && !stack.getDisplayName().equals("§aCollection")) return;
+                if (config.utilitiesShowSkillAverageStackSize == 0 && config.utilitiesShowUnlockedRecipePercentStackSize == 0 && config.utilitiesShowUnlockedCollectionStackSize == 0) return;
                 String skillAvg = "";
                 List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
-                if (stack.getDisplayName().contains("Your Skill")) {
+                if (stack.getDisplayName().contains("Your Skill") && config.utilitiesShowSkillAverageStackSize != 0) {
                     for (String s : itemLore) {
                         if ((StringUtils.stripControlCodes(s)).contains(" Skill Avg")) {
                             String[] temp = s.split(" ");
@@ -179,32 +179,78 @@ public class RenderItemMixin {
                     if (config.utilitiesShowSkillAverageStackSize == 1) drawAsStackSize(Math.round(Float.valueOf(skillAvg)), xPosition, yPosition);
                     else if (config.utilitiesShowSkillAverageStackSize == 2) drawAsStackSize(skillAvg, xPosition, yPosition);
                     ci.cancel();
-                } else if (stack.getDisplayName().equals("§aRecipe Book")) {
+                } else if (stack.getDisplayName().equals("§aRecipe Book") && config.utilitiesShowUnlockedRecipePercentStackSize != 0) {
                     String[] splitStr = StringUtils.stripControlCodes(itemLore.get(6)).split(" ");
                     if (splitStr.length < 1) return;
                     String result = splitStr[3].replace("%", "");
                     if (config.utilitiesShowUnlockedRecipePercentStackSize == 1) drawAsStackSize(Math.round(Float.valueOf(result)), xPosition, yPosition);
                     else if (config.utilitiesShowUnlockedRecipePercentStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
                     ci.cancel();
+                } else if (stack.getDisplayName().equals("§aCollection") && config.utilitiesShowUnlockedCollectionStackSize != 0) {
+                    String[] splitStr = StringUtils.stripControlCodes(itemLore.get(7)).split(" ");
+                    if (splitStr.length < 1) return;
+                    String result = splitStr[2].replace("%", "");
+                    char c = result.charAt(0);
+                    if (c < '0' || c > '9') result = splitStr[3].replace("%", ""); //HUGE SHOUTOUT TO Jonas K from StackOverflow for this: https://stackoverflow.com/a/237204
+                    result = result.replace("100", "§a✔");
+                    if (config.utilitiesShowUnlockedCollectionStackSize == 1) {
+                        try {
+                            drawAsStackSize(Math.round(Float.valueOf(result)), xPosition, yPosition);
+                        } catch (Exception why) {
+                            drawAsStackSize(result, xPosition, yPosition);
+                        }
+                    }
+                    else if (config.utilitiesShowUnlockedCollectionStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
+                    ci.cancel();
                 }
-            } else if (config.utilitiesShowUnlockedSpecificRecipePercentStackSize != 0 && (title.startsWith("Recipe ") || title.endsWith(" Recipes"))) {
+            } else if ((title.startsWith("Recipe ") || title.endsWith(" Recipes"))) {
                 if (!stack.getDisplayName().startsWith("§a") || !stack.getDisplayName().endsWith(" Recipes")) return;
+                if (config.utilitiesShowUnlockedRecipePercentStackSize == 0 && config.utilitiesShowUnlockedSpecificRecipePercentStackSize == 0) return;
                 List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
-                String[] splitStr = StringUtils.stripControlCodes(itemLore.get(4)).split(" ");
+                if (stack.getDisplayName().equals("§aRecipe Book")) {
+                    String[] splitStr = StringUtils.stripControlCodes(itemLore.get(6)).split(" ");
+                    if (splitStr.length < 1) return;
+                    String result = splitStr[3].replace("%", "");
+                    if (config.utilitiesShowUnlockedRecipePercentStackSize == 1) drawAsStackSize(Math.round(Float.valueOf(result)), xPosition, yPosition);
+                    else if (config.utilitiesShowUnlockedRecipePercentStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
+                    ci.cancel();
+                } else {
+                    String[] splitStr = StringUtils.stripControlCodes(itemLore.get(4)).split(" ");
+                    if (splitStr.length < 1) return;
+                    String result = splitStr[2].replace("%", "");
+                    char c = result.charAt(0);
+                    if (c < '0' || c > '9') result = splitStr[3].replace("%", ""); //HUGE SHOUTOUT TO Jonas K from StackOverflow for this: https://stackoverflow.com/a/237204
+                    result = result.replace("100", "§a✔");
+                    if (config.utilitiesShowUnlockedSpecificRecipePercentStackSize == 1) {
+                        try {
+                            drawAsStackSize(Math.round(Float.valueOf(result)), xPosition, yPosition);
+                        } catch (Exception why) {
+                            drawAsStackSize(result, xPosition, yPosition);
+                        }
+                    }
+                    else if (config.utilitiesShowUnlockedSpecificRecipePercentStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
+                    ci.cancel();
+                }
+            } else if (title.equals("Collection")) {
+                if (!stack.getDisplayName().startsWith("§a") || !stack.getDisplayName().endsWith("Collection")) return;
+                if (config.utilitiesShowUnlockedCollectionStackSize == 0) return;
+                List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+                String[] splitStr = {};
+                if (stack.getDisplayName().equals("§aCollection")) splitStr = StringUtils.stripControlCodes(itemLore.get(7)).split(" ");
+                else splitStr = StringUtils.stripControlCodes(itemLore.get(3)).split(" ");
                 if (splitStr.length < 1) return;
                 String result = splitStr[2].replace("%", "");
                 char c = result.charAt(0);
                 if (c < '0' || c > '9') result = splitStr[3].replace("%", ""); //HUGE SHOUTOUT TO Jonas K from StackOverflow for this: https://stackoverflow.com/a/237204
                 result = result.replace("100", "§a✔");
-                if (config.utilitiesShowUnlockedSpecificRecipePercentStackSize == 1) {
+                if (config.utilitiesShowUnlockedCollectionStackSize == 1) {
                     try {
                         drawAsStackSize(Math.round(Float.valueOf(result)), xPosition, yPosition);
                     } catch (Exception why) {
                         drawAsStackSize(result, xPosition, yPosition);
                     }
                 }
-                else if (config.utilitiesShowUnlockedSpecificRecipePercentStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
-                ci.cancel();
+                else if (config.utilitiesShowUnlockedCollectionStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
             }
         }
         if (config.utilitiesWishingCompassUsesLeft) {
