@@ -1178,7 +1178,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SELECTOR,
         name = "Show Overall Unlocked Recipes Percent as Stack Size",
-        description = "Rounded: Rounds this value to the nearest integer.\nExact: Embraces the decimal point of this value.",
+        description = "Rounded: Rounds this value to the nearest integer.\nExact: Embraces the decimal point of this value.\nFor compatibility reasons, this is limited to the \"SkyBlock Menu\".",
         category = "Utilities",
         options = {"Off", "Rounded", "Exact"}
     )
@@ -1196,7 +1196,7 @@ public class Config extends Vigilant {
     @Property(
         type = PropertyType.SELECTOR,
         name = "Show Overall Unlocked Collections Percent as Stack Size",
-        description = "Rounded: Rounds this value to the nearest integer.\nExact: Embraces the decimal point of this value.\nFor compatibility reasons, this is limited to the overall \"Collection\" menu.",
+        description = "Rounded: Rounds this value to the nearest integer.\nExact: Embraces the decimal point of this value.",
         category = "Utilities",
         options = {"Off", "Rounded", "Exact"}
     )

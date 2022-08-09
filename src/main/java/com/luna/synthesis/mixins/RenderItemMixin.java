@@ -203,34 +203,24 @@ public class RenderItemMixin {
                     else if (config.utilitiesShowUnlockedCollectionStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
                     ci.cancel();
                 }
-            } else if ((title.startsWith("Recipe ") || title.endsWith(" Recipes"))) {
+            } else if (config.utilitiesShowUnlockedSpecificRecipePercentStackSize == 0 && (title.equals("Recipe Book") || title.endsWith(" Recipes"))) {
                 if (!stack.getDisplayName().startsWith("§a") || !stack.getDisplayName().endsWith(" Recipes")) return;
-                if (config.utilitiesShowUnlockedRecipePercentStackSize == 0 && config.utilitiesShowUnlockedSpecificRecipePercentStackSize == 0) return;
                 List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
-                if (stack.getDisplayName().equals("§aRecipe Book")) {
-                    String[] splitStr = StringUtils.stripControlCodes(itemLore.get(6)).split(" ");
-                    if (splitStr.length < 1) return;
-                    String result = splitStr[3].replace("%", "");
-                    if (config.utilitiesShowUnlockedRecipePercentStackSize == 1) drawAsStackSize(Math.round(Float.valueOf(result)), xPosition, yPosition);
-                    else if (config.utilitiesShowUnlockedRecipePercentStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
-                    ci.cancel();
-                } else {
-                    String[] splitStr = StringUtils.stripControlCodes(itemLore.get(4)).split(" ");
-                    if (splitStr.length < 1) return;
-                    String result = splitStr[2].replace("%", "");
-                    char c = result.charAt(0);
-                    if (c < '0' || c > '9') result = splitStr[3].replace("%", ""); //HUGE SHOUTOUT TO Jonas K from StackOverflow for this: https://stackoverflow.com/a/237204
-                    result = result.replace("100", "§a✔");
-                    if (config.utilitiesShowUnlockedSpecificRecipePercentStackSize == 1) {
-                        try {
-                            drawAsStackSize(Math.round(Float.valueOf(result)), xPosition, yPosition);
-                        } catch (Exception why) {
-                            drawAsStackSize(result, xPosition, yPosition);
-                        }
+                String[] splitStr = StringUtils.stripControlCodes(itemLore.get(4)).split(" ");
+                if (splitStr.length < 1) return;
+                String result = splitStr[2].replace("%", "");
+                char c = result.charAt(0);
+                if (c < '0' || c > '9') result = splitStr[3].replace("%", ""); //HUGE SHOUTOUT TO Jonas K from StackOverflow for this: https://stackoverflow.com/a/237204
+                result = result.replace("100", "§a✔");
+                if (config.utilitiesShowUnlockedSpecificRecipePercentStackSize == 1) {
+                    try {
+                        drawAsStackSize(Math.round(Float.valueOf(result)), xPosition, yPosition);
+                    } catch (Exception why) {
+                        drawAsStackSize(result, xPosition, yPosition);
                     }
-                    else if (config.utilitiesShowUnlockedSpecificRecipePercentStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
-                    ci.cancel();
                 }
+                else if (config.utilitiesShowUnlockedSpecificRecipePercentStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
+                ci.cancel();
             } else if (title.equals("Collection")) {
                 if (!stack.getDisplayName().startsWith("§a") || !stack.getDisplayName().endsWith("Collection")) return;
                 if (config.utilitiesShowUnlockedCollectionStackSize == 0) return;
