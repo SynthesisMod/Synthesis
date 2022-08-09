@@ -108,16 +108,33 @@ public class RenderItemMixin {
                 for (String s : itemLore) if (s.contains("a")) numTiers++; else if (s.contains("c")) break;
                 drawAsStackSize(numTiers, xPosition, yPosition);
                 ci.cancel();
-            } else if (config.utilitiesShowSkillStackSize && (title.equals("Your Skills") || title.equals("Dungeoneering") || title.equals("Dungeon Classes"))) {
-                String[] splitStr = StringUtils.stripControlCodes(stack.getDisplayName()).split(" ");
-                if (splitStr.length < 2) return;
-                String skillNumeral = splitStr[(splitStr.length - 1)];
-                if (title.equals("Dungeon Classes")) skillNumeral = splitStr[1];
-                char c = skillNumeral.charAt(0);
-                if (c < '0' || c > '9') return; //HUGE SHOUTOUT TO Jonas K from StackOverflow for this: https://stackoverflow.com/a/237204
-                skillNumeral = skillNumeral.replace("[", "").replace("]", "").replace("(", "").replace(")", "");
-                drawAsStackSize(skillNumeral, xPosition, yPosition);
-                ci.cancel();
+            } else if ((title.equals("Your Skills") || title.equals("Dungeoneering") || title.equals("Dungeon Classes"))) {
+                if (config.utilitiesShowSkillAverageStackSize != 0 && stack.getDisplayName().contains("Your Skill")) {
+                    List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+                    String skillAvg = "";
+                    for (String s : itemLore) {
+                        if ((StringUtils.stripControlCodes(s)).contains(" Skill Avg")) {
+                            String[] temp = s.split(" ");
+                            if (temp.length < 1) break; //prevent crash
+                            skillAvg = StringUtils.stripControlCodes(temp[0]);
+                            break;
+                        }
+                    }
+                    if (skillAvg == "") return;
+                    if (config.utilitiesShowSkillAverageStackSize == 1) drawAsStackSize(Math.round(Float.valueOf(skillAvg)), xPosition, yPosition);
+                    else if (config.utilitiesShowSkillAverageStackSize == 2) drawAsStackSize(skillAvg, xPosition, yPosition);
+                    ci.cancel();
+                } else if (config.utilitiesShowSkillStackSize) {
+                    String[] splitStr = StringUtils.stripControlCodes(stack.getDisplayName()).split(" ");
+                    if (splitStr.length < 2) return;
+                    String skillNumeral = splitStr[(splitStr.length - 1)];
+                    if (title.equals("Dungeon Classes")) skillNumeral = splitStr[1];
+                    char c = skillNumeral.charAt(0);
+                    if (c < '0' || c > '9') return; //HUGE SHOUTOUT TO Jonas K from StackOverflow for this: https://stackoverflow.com/a/237204
+                    skillNumeral = skillNumeral.replace("[", "").replace("]", "").replace("(", "").replace(")", "");
+                    drawAsStackSize(skillNumeral, xPosition, yPosition);
+                    ci.cancel();
+                }
             } else if (config.utilitiesShowDojoProgressStackSize && title.equals("Challenges")) {
                 if (!stack.getDisplayName().startsWith("§9Test of ") && !stack.getDisplayName().equals("§6Rank")) return;
                 List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
@@ -129,23 +146,66 @@ public class RenderItemMixin {
                 if (stack.getDisplayName().equals("§6Rank")) result = result.substring(0, 3);
                 drawAsStackSize(result, xPosition, yPosition);
                 ci.cancel();
-            }
-        }
-        if ((config.utilitiesShowSkillAverageStackSize != 0)) {
-            if (!(stack.getDisplayName().contains("Your Skill"))) return;
-            String skillAvg = "";
-            List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
-            for (String s : itemLore) {
-                if ((StringUtils.stripControlCodes(s)).contains(" Skill Avg")) {
-                    String[] temp = s.split(" ");
-                    if (temp.length < 1) break; //prevent crash
-                    skillAvg = StringUtils.stripControlCodes(temp[0]);
+            } else if (config.utilitiesShowCompletedQuestCountStackSize && title.equals("Quest Log")) {
+                if (!stack.getDisplayName().equals("§aCompleted Quests")) return;
+                List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+                String[] splitStr = StringUtils.stripControlCodes(itemLore.get(5)).split(" ");
+                if (splitStr.length < 1) return;
+                String result = splitStr[1];
+                drawAsStackSize(result, xPosition, yPosition);
+                ci.cancel();
+            } else if (config.utilitiesShowWardrobeSlotStackSize && title.startsWith("Wardrobe")) {
+                if (!stack.getDisplayName().startsWith("§7Slot ")) return;
+                String[] splitStr = StringUtils.stripControlCodes(stack.getDisplayName()).split(" ");
+                if (splitStr.length < 1) return;
+                String result = splitStr[1].replace(":", "");
+                drawAsStackSize(result, xPosition, yPosition);
+                ci.cancel();
+            } else if (title.startsWith("SkyBlock Menu")) {
+                if (!stack.getDisplayName().contains("Your Skill") && !stack.getDisplayName().equals("§aRecipe Book")) return;
+                if (config.utilitiesShowSkillAverageStackSize == 0 && config.utilitiesShowUnlockedRecipePercentStackSize == 0) return;
+                String skillAvg = "";
+                List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+                if (stack.getDisplayName().contains("Your Skill")) {
+                    for (String s : itemLore) {
+                        if ((StringUtils.stripControlCodes(s)).contains(" Skill Avg")) {
+                            String[] temp = s.split(" ");
+                            if (temp.length < 1) break; //prevent crash
+                            skillAvg = StringUtils.stripControlCodes(temp[0]);
+                            break;
+                        }
+                    }
+                    if (skillAvg == "") return;
+                    if (config.utilitiesShowSkillAverageStackSize == 1) drawAsStackSize(Math.round(Float.valueOf(skillAvg)), xPosition, yPosition);
+                    else if (config.utilitiesShowSkillAverageStackSize == 2) drawAsStackSize(skillAvg, xPosition, yPosition);
+                    ci.cancel();
+                } else if (stack.getDisplayName().equals("§aRecipe Book")) {
+                    String[] splitStr = StringUtils.stripControlCodes(itemLore.get(6)).split(" ");
+                    if (splitStr.length < 1) return;
+                    String result = splitStr[3].replace("%", "");
+                    if (config.utilitiesShowUnlockedRecipePercentStackSize == 1) drawAsStackSize(Math.round(Float.valueOf(result)), xPosition, yPosition);
+                    else if (config.utilitiesShowUnlockedRecipePercentStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
+                    ci.cancel();
                 }
+            } else if (config.utilitiesShowUnlockedSpecificRecipePercentStackSize != 0 && (title.startsWith("Recipe ") || title.endsWith(" Recipes"))) {
+                if (!stack.getDisplayName().startsWith("§a") || !stack.getDisplayName().endsWith(" Recipes")) return;
+                List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+                String[] splitStr = StringUtils.stripControlCodes(itemLore.get(4)).split(" ");
+                if (splitStr.length < 1) return;
+                String result = splitStr[2].replace("%", "");
+                char c = result.charAt(0);
+                if (c < '0' || c > '9') result = splitStr[3].replace("%", ""); //HUGE SHOUTOUT TO Jonas K from StackOverflow for this: https://stackoverflow.com/a/237204
+                result = result.replace("100", "§a✔");
+                if (config.utilitiesShowUnlockedSpecificRecipePercentStackSize == 1) {
+                    try {
+                        drawAsStackSize(Math.round(Float.valueOf(result)), xPosition, yPosition);
+                    } catch (Exception why) {
+                        drawAsStackSize(result, xPosition, yPosition);
+                    }
+                }
+                else if (config.utilitiesShowUnlockedSpecificRecipePercentStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
+                ci.cancel();
             }
-            if (skillAvg == "") return;
-            if (config.utilitiesShowSkillAverageStackSize == 1) drawAsStackSize(Math.round(Float.valueOf(skillAvg)), xPosition, yPosition);
-            else if (config.utilitiesShowSkillAverageStackSize == 2) drawAsStackSize(skillAvg, xPosition, yPosition);
-            ci.cancel();
         }
         if (config.utilitiesWishingCompassUsesLeft) {
             if (stack != null && stack.getDisplayName().contains("Wishing Compass")) {
