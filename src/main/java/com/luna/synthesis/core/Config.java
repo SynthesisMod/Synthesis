@@ -1211,6 +1211,14 @@ public class Config extends Vigilant {
     public boolean utilitiesShowNYCakeStackSize = false;
 
     @Property(
+        type = PropertyType.SWITCH,
+        name = "Show Active Effects count as Stack Size",
+        description = "This line intentionally left uninformative.",
+        category = "Utilities"
+    )
+    public boolean utilitiesShowActiveEffectsStackSize = false;
+
+    @Property(
         type = PropertyType.SELECTOR,
         name = "Show Spooky Pie Stack Size",
         description = "SB Year: Shows the SB year the Pie was obtained.\nnth Festival: Shows the nth Spooky Festival the Pie was obtained.\n(For compatibility reasons, this will only apply to the general SkyBlock Menu.)",

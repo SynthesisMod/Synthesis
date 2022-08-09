@@ -162,7 +162,7 @@ public class RenderItemMixin {
                 drawAsStackSize(result, xPosition, yPosition);
                 ci.cancel();
             } else if (title.startsWith("SkyBlock Menu")) {
-                if (!stack.getDisplayName().contains("Your Skill") && !stack.getDisplayName().equals("§aRecipe Book") && !stack.getDisplayName().equals("§aCollection")) return;
+                if (!stack.getDisplayName().contains("Your Skill") && !stack.getDisplayName().equals("§aRecipe Book") && !stack.getDisplayName().equals("§aCollection") && !stack.getDisplayName().equals("§a§aActive Effects")) return;
                 if (config.utilitiesShowSkillAverageStackSize == 0 && config.utilitiesShowUnlockedRecipePercentStackSize == 0 && config.utilitiesShowUnlockedCollectionStackSize == 0) return;
                 String skillAvg = "";
                 List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
@@ -201,6 +201,14 @@ public class RenderItemMixin {
                         }
                     }
                     else if (config.utilitiesShowUnlockedCollectionStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
+                    ci.cancel();
+                } else if (config.utilitiesShowActiveEffectsStackSize && stack.getDisplayName().equals("§a§aActive Effects")) {
+                    String[] splitStr = StringUtils.stripControlCodes(itemLore.get(7)).split(" ");
+                    if (splitStr.length < 1) return;
+                    String result = splitStr[splitStr.length - 1].replace("%", "");
+                    char c = result.charAt(0);
+                    if (c < '0' || c > '9') return; //HUGE SHOUTOUT TO Jonas K from StackOverflow for this: https://stackoverflow.com/a/237204
+                    drawAsStackSize(result, xPosition, yPosition);
                     ci.cancel();
                 }
             } else if ((title.equals("Recipe Book") || title.endsWith(" Recipes"))) {
