@@ -203,8 +203,9 @@ public class RenderItemMixin {
                     else if (config.utilitiesShowUnlockedCollectionStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
                     ci.cancel();
                 }
-            } else if (config.utilitiesShowUnlockedSpecificRecipePercentStackSize == 0 && (title.equals("Recipe Book") || title.endsWith(" Recipes"))) {
+            } else if ((title.equals("Recipe Book") || title.endsWith(" Recipes"))) {
                 if (!stack.getDisplayName().startsWith("§a") || !stack.getDisplayName().endsWith(" Recipes")) return;
+                if (config.utilitiesShowUnlockedRecipePercentStackSize == 0 && config.utilitiesShowUnlockedSpecificRecipePercentStackSize == 0) return;
                 List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
                 String[] splitStr = StringUtils.stripControlCodes(itemLore.get(4)).split(" ");
                 if (splitStr.length < 1) return;
