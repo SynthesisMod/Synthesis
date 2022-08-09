@@ -1152,13 +1152,12 @@ public class Config extends Vigilant {
     public int utilitiesShowSkillAverageStackSize = 0;
 
     @Property(
-        type = PropertyType.SELECTOR,
+        type = PropertyType.SWITCH,
         name = "Show Dojo Progress as Stack Size",
-        description = "Rank: Shows your Rank on a certain Test at the Dojo.\nScore: Shows what your score for that Test was.",
-        category = "Utilities",
-        options = {"Off", "Rank", "Score"}
+        description = "Rank: Shows your Rank on a certain Test at the Dojo.",
+        category = "Utilities"
     )
-    public int utilitiesShowDojoProgressStackSize = 0;
+    public boolean utilitiesShowDojoProgressStackSize = false;
 
     @Property(
         type = PropertyType.SWITCH,

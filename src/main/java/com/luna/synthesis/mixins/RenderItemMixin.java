@@ -118,14 +118,15 @@ public class RenderItemMixin {
                 skillNumeral = skillNumeral.replace("[", "").replace("]", "").replace("(", "").replace(")", "");
                 drawAsStackSize(skillNumeral, xPosition, yPosition);
                 ci.cancel();
-            } else if (config.utilitiesShowDojoProgressStackSize != 0 && title.equals("Challenges")) {
-                if (!stack.getDisplayName().startsWith("§9Test of ")) return;
+            } else if (config.utilitiesShowDojoProgressStackSize && title.equals("Challenges")) {
+                if (!stack.getDisplayName().startsWith("§9Test of ") && !stack.getDisplayName().equals("§6Rank")) return;
                 List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
-                String[] splitStr = StringUtils.stripControlCodes(itemLore.get(1)).split(" ");
+                String[] splitStr = {};
+                if (stack.getDisplayName().equals("§6Rank")) splitStr = itemLore.get(3).split(" ");
+                if (stack.getDisplayName().startsWith("§9Test of ")) splitStr = itemLore.get(1).split(" ");
                 if (splitStr.length < 2) return;
-                String result = "";
-                if (config.utilitiesShowDojoProgressStackSize == 1) result = splitStr[2];
-                if (config.utilitiesShowDojoProgressStackSize == 2) result = splitStr[3].replace("(", "").replace(")", "");
+                String result = splitStr[2];
+                if (stack.getDisplayName().equals("§6Rank")) result = result.substring(0, 3);
                 drawAsStackSize(result, xPosition, yPosition);
                 ci.cancel();
             }
