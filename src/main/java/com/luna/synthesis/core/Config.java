@@ -1203,6 +1203,15 @@ public class Config extends Vigilant {
     public int utilitiesShowUnlockedCollectionStackSize = 0;
 
     @Property(
+        type = PropertyType.SELECTOR,
+        name = "Show Museum Donated Percent as Stack Size",
+        description = "Rounded: Rounds this value to the nearest integer.\nExact: Embraces the decimal point of this value.",
+        category = "Utilities",
+        options = {"Off", "Rounded", "Exact"}
+    )
+    public int utilitiesShowMuseumPercentagesStackSize = 0;
+
+    @Property(
         type = PropertyType.SWITCH,
         name = "Show New Year's Cake Year as Stack Size",
         description = "This line intentionally left uninformative.",

@@ -227,8 +227,7 @@ public class RenderItemMixin {
                     } catch (Exception why) {
                         drawAsStackSize(result, xPosition, yPosition);
                     }
-                }
-                else if (config.utilitiesShowUnlockedSpecificRecipePercentStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
+                } else if (config.utilitiesShowUnlockedSpecificRecipePercentStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
                 ci.cancel();
             } else if (title.equals("Collection")) {
                 if (!stack.getDisplayName().startsWith("§a") || !stack.getDisplayName().endsWith("Collection")) return;
@@ -248,8 +247,26 @@ public class RenderItemMixin {
                     } catch (Exception why) {
                         drawAsStackSize(result, xPosition, yPosition);
                     }
-                }
-                else if (config.utilitiesShowUnlockedCollectionStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
+                } else if (config.utilitiesShowUnlockedCollectionStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
+            } else if (title.contains("Museum") && config.utilitiesShowMuseumPercentagesStackSize != 0) {
+                if (!stack.getDisplayName().startsWith("§a") && !stack.getDisplayName().startsWith("§9")) return;
+                if (stack.getItem() == Items.sign || stack.getItem() == Items.name_tag) return;
+                List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+                String result = "";
+                if (stack.getDisplayName().equals("§9Museum")) result = StringUtils.stripControlCodes(itemLore.get(11)).split(" ")[2].replace("%", "");
+                if (stack.getDisplayName().equals("§aRarities") || stack.getDisplayName().equals("§aArmor Sets") || stack.getDisplayName().equals("§aWeapons")) result = StringUtils.stripControlCodes(itemLore.get(5)).split(" ")[2].replace("%", "");
+                if (stack.getDisplayName().equals("§aSpecial Items")) result = StringUtils.stripControlCodes(itemLore.get(13)).split(" ")[2].replace("%", "");
+                if (result == "") return;
+                char c = result.charAt(0);
+                if (c < '0' || c > '9') return; //HUGE SHOUTOUT TO Jonas K from StackOverflow for this: https://stackoverflow.com/a/237204
+                result = result.replace("100", "§a✔");
+                if (config.utilitiesShowMuseumPercentagesStackSize == 1) {
+                    try {
+                        drawAsStackSize(Math.round(Float.valueOf(result)), xPosition, yPosition);
+                    } catch (Exception why) {
+                        drawAsStackSize(result, xPosition, yPosition);
+                    }
+                } else if (config.utilitiesShowMuseumPercentagesStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
             }
         }
         if (config.utilitiesWishingCompassUsesLeft) {
