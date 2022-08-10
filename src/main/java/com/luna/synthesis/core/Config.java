@@ -1167,6 +1167,14 @@ public class Config extends Vigilant {
     public boolean utilitiesShowWardrobeSlotStackSize = false;
 
     @Property(
+        type = PropertyType.SWITCH,
+        name = "Show Bank Tier as Stack Size",
+        description = "This line intentionally left uninformative.",
+        category = "Utilities"
+    )
+    public boolean utilitiesShowBankTierStackSize = false;
+
+    @Property(
         type = PropertyType.SELECTOR,
         name = "Show Skill Average as Stack Size",
         description = "Rounded: Rounds this value to the nearest integer.\nExact: Embraces the decimal point of this value.",

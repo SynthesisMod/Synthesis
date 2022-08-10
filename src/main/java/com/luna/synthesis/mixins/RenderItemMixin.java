@@ -267,6 +267,12 @@ public class RenderItemMixin {
                         drawAsStackSize(result, xPosition, yPosition);
                     }
                 } else if (config.utilitiesShowMuseumPercentagesStackSize == 2) drawAsStackSize(result, xPosition, yPosition);
+            } else if (config.utilitiesShowBankTierStackSize && title.equals("Bank")) {
+                if (!stack.getDisplayName().equals("§6Bank Upgrades")) return;
+                if (stack.getItem() != Item.getItemFromBlock(Blocks.gold_block)) return;
+                List<String> itemLore = stack.getTooltip(Minecraft.getMinecraft().thePlayer, false);
+                String result = itemLore.get(4).split(" ")[2].substring(0, 3);
+                drawAsStackSize(result, xPosition, yPosition);
             }
         }
         if (config.utilitiesWishingCompassUsesLeft) {
