@@ -15,10 +15,11 @@ buildscript {
         }
     }
     dependencies {
-        classpath "com.github.RayDeeUx:ForgeGradle:6f5327"
+        // classpath "com.github.RayDeeUx:ForgeGradle:6f5327"
         // classpath "com.github.Skytils:ForgeGradle:6f5327"
         // classpath "com.github.ReplayMod:ForgeGradle:ceb83c0"
         // classpath "net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT"
+        classpath "com.github.DJtheRedstoner:ForgeGradle:8708bf3"
         classpath "com.github.jengelman.gradle.plugins:shadow:6.1.0"
         classpath "com.github.xcfrg:MixinGradle:0.6-SNAPSHOT"
     }
