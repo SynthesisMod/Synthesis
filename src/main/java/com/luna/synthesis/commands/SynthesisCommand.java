@@ -133,12 +133,14 @@ public class SynthesisCommand extends Command {
 
     @SubCommand("wtf")
     public void wtf() {
-        ChatLib.chat("config.utilitiesOccupancyOverlay: " + config.utilitiesOccupancyOverlay);
-        ChatLib.chat("Minecraft.getMinecraft().currentScreen instanceof GuiChest: " + (boolean)(Minecraft.getMinecraft().currentScreen instanceof GuiChest));
-        String menuName = StringUtils.stripControlCodes((((ContainerChest)((GuiChest)(Minecraft.getMinecraft().currentScreen)).inventorySlots).getLowerChestInventory().getDisplayName().getUnformattedText()));
-        ChatLib.chat("menuName: " + menuName);
-        ChatLib.chat("menuName.endsWith(\" Hub Selector\") || menuName.startsWith(\"Visit\"): " + (menuName.endsWith(" Hub Selector") || menuName.startsWith("Visit")));
-        ChatLib.chat("Minecraft.getMinecraft().thePlayer != null: " + (Minecraft.getMinecraft().thePlayer != null));
+        try {
+            ChatLib.chat("config.utilitiesOccupancyOverlay: " + config.utilitiesOccupancyOverlay);
+            ChatLib.chat("Minecraft.getMinecraft().currentScreen instanceof GuiChest: " + (boolean)(Minecraft.getMinecraft().currentScreen instanceof GuiChest));
+            String menuName = StringUtils.stripControlCodes((((ContainerChest)((GuiChest)(Minecraft.getMinecraft().currentScreen)).inventorySlots).getLowerChestInventory().getDisplayName().getUnformattedText()));
+            ChatLib.chat("menuName: " + menuName);
+            ChatLib.chat("menuName.endsWith(\" Hub Selector\") || menuName.startsWith(\"Visit\"): " + (menuName.endsWith(" Hub Selector") || menuName.startsWith("Visit")));
+            ChatLib.chat("Minecraft.getMinecraft().thePlayer != null: " + (Minecraft.getMinecraft().thePlayer != null));
+        } catch (Exception ex) {}
     }
 
     // @SubCommand("pronouns")

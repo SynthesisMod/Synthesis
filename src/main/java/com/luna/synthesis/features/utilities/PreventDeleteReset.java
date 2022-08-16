@@ -132,7 +132,8 @@ public class PreventDeleteReset {
                         if (s.startsWith(colorCode) &&
                             !(s.contains("You voted for this candidate!")) &&
                             !(s.contains("Leading in votes!")) &&
-                            !(s.contains("Click to vote for "))) {
+                            !(s.contains("Click to vote for ")) && 
+                            !(s.startsWith(colorCode + "§"))) {
                                 numPerks++;
                         }
                     }
