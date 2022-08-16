@@ -9,10 +9,13 @@ import com.luna.synthesis.core.Config;
 import com.luna.synthesis.managers.BackpackManager;
 import com.luna.synthesis.utils.*;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.inventory.ContainerChest;
 // import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-
+import net.minecraft.util.StringUtils;
 import net.minecraftforge.fml.common.Loader;
 
 import java.util.*;
@@ -126,6 +129,16 @@ public class SynthesisCommand extends Command {
                 }
                 break;
         }
+    }
+
+    @SubCommand("wtf")
+    public void wtf() {
+        ChatLib.chat("config.utilitiesOccupancyOverlay: " + config.utilitiesOccupancyOverlay);
+        ChatLib.chat("Minecraft.getMinecraft().currentScreen instanceof GuiChest: " + (boolean)(Minecraft.getMinecraft().currentScreen instanceof GuiChest));
+        String menuName = StringUtils.stripControlCodes((((ContainerChest)((GuiChest)(Minecraft.getMinecraft().currentScreen)).inventorySlots).getLowerChestInventory().getDisplayName().getUnformattedText()));
+        ChatLib.chat("menuName: " + menuName);
+        ChatLib.chat("menuName.endsWith(\" Hub Selector\") || menuName.startsWith(\"Visit\"): " + (menuName.endsWith(" Hub Selector") || menuName.startsWith("Visit")));
+        ChatLib.chat("Minecraft.getMinecraft().thePlayer != null: " + (Minecraft.getMinecraft().thePlayer != null));
     }
 
     // @SubCommand("pronouns")
