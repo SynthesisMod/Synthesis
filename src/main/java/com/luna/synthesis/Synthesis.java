@@ -59,7 +59,6 @@ public class Synthesis {
         MinecraftForge.EVENT_BUS.register(new LoreCleanup());
         MinecraftForge.EVENT_BUS.register(new AncestralSpade());
         MinecraftForge.EVENT_BUS.register(new BestiaryWarning());
-        MinecraftForge.EVENT_BUS.register(new FindSomeonesSkyblockInfo());
         MinecraftForge.EVENT_BUS.register(new PreventDeleteReset());
         MinecraftForge.EVENT_BUS.register(new TrophyFishingMoment());
         MinecraftForge.EVENT_BUS.register(new HypixelBooksAreStupid());

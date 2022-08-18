@@ -45,7 +45,6 @@ public class Share {
     @SubscribeEvent
     public void onMessageSent(MessageSentEvent event) {
         String message = event.message;
-        if (event.message.startsWith("[weight") || event.message.startsWith("[stats")) {return;}
         if (message.endsWith(config.utilitiesShareText)) {
             event.setCanceled(true);
             doTheMagic(Minecraft.getMinecraft().thePlayer.getHeldItem(), message, config.utilitiesShareText);
