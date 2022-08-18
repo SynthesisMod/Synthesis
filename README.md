@@ -46,7 +46,6 @@ Features that help the game feel more clean.
   - Option to remove the last 2 lines from the tablist footer
 - Chat cleanup (0.3.0+)
   - Option to remove old reforge messages when a new one is received
-  - 
     
 </details>
 
