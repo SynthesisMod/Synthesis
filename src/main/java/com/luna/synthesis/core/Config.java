@@ -360,7 +360,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Remove pet lore's empty lines in the pet menu",
-            description = "This is a rather self-explanatory feature, but Essential's config menu renderer throws a hissy fit if you leave the description line empty, so now you're forced to read this.",
+            description = "This line intentionally left uninformative.",
             category = "Cleanup",
             subcategory = "Lore"
     )
@@ -369,7 +369,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Remove pet lore's \"§b§lMAX LEVEL§r\" line in the pet menu",
-            description = "This is a rather self-explanatory feature, but Essential's config menu renderer throws a hissy fit if you leave the description line empty, so now you're forced to read this.",
+            description = "This line intentionally left uninformative.",
             category = "Cleanup",
             subcategory = "Lore"
     )
@@ -378,7 +378,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Remove pet lore's \"§eClick to summon!§r\" line in the pet menu",
-            description = "This is a rather self-explanatory feature, but Essential's config menu renderer throws a hissy fit if you leave the description line empty, so now you're forced to read this.",
+            description = "This line intentionally left uninformative.",
             category = "Cleanup",
             subcategory = "Lore"
     )
@@ -387,7 +387,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Remove pet lore's \"§cClick to despawn!§r\" line in the pet menu",
-            description = "This is a rather self-explanatory feature, but Essential's config menu renderer throws a hissy fit if you leave the description line empty, so now you're forced to read this.",
+            description = "This line intentionally left uninformative.",
             category = "Cleanup",
             subcategory = "Lore"
     )
@@ -455,6 +455,8 @@ public class Config extends Vigilant {
             category = "Future features"
     )
     public boolean futureChunkBorders = false;
+
+    //UTILITIES
 
     @Property(
             type = PropertyType.SWITCH,
@@ -567,6 +569,51 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
+            name = "Server occupancy glance",
+            description = "Draws a background around any item representing the occupancy of a lobby or player island.\nDepending on the occupancy level of a server or island, the highlight's color can range from something near §athis highight§r (empty lobby/island) to something near §cthis highight§r (full lobby/island), with the occasional highlight of somewhere near §ethis color in particular§r (half-empty/half-full lobby/island).",
+            category = "Utilities",
+            subcategory = "Server occupancy overlay"
+    )
+    public boolean utilitiesOccupancyOverlay = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "§9Friend§r highlight",
+            description = "Uses §9this unique color§r for lobbies with at least one Hypixel friend.\n§e§lNOTE: §r§eThis highlight does not apply when a lobby\n§eis at or over its maximum capacity.",
+            category = "Utilities",
+            subcategory = "Server occupancy overlay"
+    )
+    public boolean utilitiesOccupancyOverlayFriendHighlght = false;
+    
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "§2Guildmate§r highlight",
+            description = "Uses §2this unique color§r for lobbies with at least one Hypixel guildmate.\n§e§lNOTE: §r§eThis highlight does not apply when a lobby\n§eis at or over its maximum capacity.",
+            category = "Utilities",
+            subcategory = "Server occupancy overlay"
+    )
+    public boolean utilitiesOccupancyOverlayGuildHighlght = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "§dFriend(s) §land§r§d guildmate(s)§r highlight",
+            description = "Uses §dthis unique color§r for lobbies with both at least one Hypixel friend and one Hypixel guildmate.\nIf this is disabled, then either §9the friend highlight§r or §2the guildmate highlight§r takes priority, depending on your settings.\n§e§lNOTE: §r§eThis highlight does not apply when a lobby\n§eis at or over its maximum capacity.",
+            category = "Utilities",
+            subcategory = "Server occupancy overlay"
+    )
+    public boolean utilitiesOccupancyOverlayFriendAndGuildHighlght = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "§bCurrently connected§r highlight",
+            description = "Uses §bthis unique color§r for lobbies you're already connected to.\nIf this is disabled, then at least one of the above settings (§9friend§r, §2guildmate§r, or §dboth§r) takes priority.\n§e§lNOTE: §r§eBecause of how Hypixel's hub selector tooltips work,\n§ethis highlight still applies even if a lobby is at or over its maximum capacity.",
+            category = "Utilities",
+            subcategory = "Server occupancy overlay"
+    )
+    public boolean utilitiesOccupancyOverlayAlreadyConnectedHighlght = true;
+
+    @Property(
+            type = PropertyType.SWITCH,
             name = "Armadillo fix",
             description = "Stops armadillo blocking the screen when trying to mine blocks.",
             category = "Utilities"
@@ -591,7 +638,7 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "WishingCompass waypoints",
+            name = "Wishing Compass waypoints",
             description = "Sets a waypoint at the location calculated by triangulation. Uses Skytils' waypoints.",
             category = "Utilities"
     )
@@ -600,7 +647,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "AncestralSpade helper",
-            description = "Triangulates the location ancestral spade points to. §cLook straight up or down§r, se the item once, wait until the particle trail has disappeared, move away a bit and use it again. Make sure /pq is NOT \"off\".",
+            description = "Triangulates the location ancestral spade points to. §cLook straight up or down§r, use the item once, wait until the particle trail has disappeared, move away a bit and use it again. Make sure /pq is NOT \"off\".",
             category = "Utilities"
     )
     public boolean utilitiesAncestralSpade = false;
@@ -625,7 +672,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Parse burrow arrow",
-            description = "Saves the direction arrow from a burrow, making it only require an extra use of Ancestral Spade. If waypoints are in the opposite direction, lower /pq values are recommended.",
+            description = "Saves the direction arrow from a burrow, making it only require an extra use of Ancestral Spade.",
             category = "Utilities"
     )
     public boolean utilitiesAncestralSpadeArrow = false;
@@ -689,19 +736,79 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Superpairs IDs",
-            description = "Gives superpairs item rewards SkyBlock IDs so mods like NEU and SBE can display price and resource packs can display custom textures.",
+            description = "Gives superpairs item rewards Skyblock IDs so mods like NEU and SBE can display price and resource packs can display custom textures.",
             category = "Utilities"
     )
     public boolean utilitiesSuperpairsIDs = false;
 
     @Property(
+        type = PropertyType.SWITCH,
+        name = "Trophy Fishing Overlay",
+        description = "Colors a trophy fish in Odger's menu with the highest tier of it that you've caught.",
+        category = "Utilities"
+)
+    public boolean utilitiesTrophyFishingOverlay = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Hexatorum Overlay",
+        description = "Displays the progress of your item's individual traits in color form according to the Hex.",
+        category = "Utilities"
+)
+    public boolean utilitiesHexatorumOverlay = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Hexatorum Debug",
+        description = "Displays debug information in case the Hexatorum overlay decides to break.\nCan and WILL flood your chat-enable with great caution!",
+        category = "Utilities"
+)
+    public boolean utilitiesHexatorumDebug = false;
+
+    @Property(
             type = PropertyType.TEXT,
-            name = "Share text",
+            name = "Share held item text",
             description = "Hold an item and type the text to show the item to other Synthesis users.",
             category = "Utilities",
             subcategory = "Share"
     )
     public String utilitiesShareText = "[item]";
+
+    @Property(
+            type = PropertyType.TEXT,
+            name = "Share helmet text",
+            description = "Type the text to show your helmet slot to other Synthesis users.",
+            category = "Utilities",
+            subcategory = "Share"
+    )
+    public String utilitiesShareHelmetText = "[helmet]";
+
+    @Property(
+            type = PropertyType.TEXT,
+            name = "Share chestplate text",
+            description = "Type the text to show your chestplate slot to other Synthesis users.",
+            category = "Utilities",
+            subcategory = "Share"
+    )
+    public String utilitiesShareChestplateText = "[chestplate]";
+
+    @Property(
+            type = PropertyType.TEXT,
+            name = "Share leggings text",
+            description = "Type the text to show your leggings slot to other Synthesis users.",
+            category = "Utilities",
+            subcategory = "Share"
+    )
+    public String utilitiesShareLeggingsText = "[leggings]";
+
+    @Property(
+            type = PropertyType.TEXT,
+            name = "Share boots text",
+            description = "Type the text to show your boots slot to other Synthesis users.",
+            category = "Utilities",
+            subcategory = "Share"
+    )
+    public String utilitiesShareBootsText = "[boots]";
 
     @Property(
             type = PropertyType.SWITCH,
@@ -845,6 +952,324 @@ public class Config extends Vigilant {
     )
     public boolean utilitiesOptifineHideHats = false;
 
+    @Property(
+            type = PropertyType.NUMBER,
+            name = "Bestiary Level",
+            description = "If you're somehow reading this in-game, something isn't right.",
+            category = "Advanced",
+            max = 10000,
+            hidden = true
+    )
+    public int personalBestiaryLevel = 0;
+
+    @Property(
+            type = PropertyType.SELECTOR,
+            name = "Bestiary Milestone Warning",
+            description = "Specify how (if at all) you want your Bestiary Milestone warning to be delivered.\n§cIn order for this to work, you need to view the \"Bestiary Milestone\" item tooltip via §r/be §cfirst.",
+            category = "Utilities",
+            subcategory = "Bestiary",
+            options = {"Off", "Chat", "Notification"}
+    )
+    public int utilitiesBestiaryMilestoneWarningDeliveryMethod = 0;
+
+    @Property(
+            type = PropertyType.NUMBER,
+            name = "Bestiary Milestone Frequency (in seconds)",
+            description = "Specify how frequently (in units of \"every X seconds\") Synthesis will (notify you via chat/send notifications) if you're close to reaching a Bestiary Milestone that rewards combat experience.",
+            category = "Utilities",
+            subcategory = "Bestiary",
+            min = 5, max = 60
+    )
+    public int utilitiesBestiaryMilestoneWarningSeconds = 5;
+
+    @Property(
+            type = PropertyType.NUMBER,
+            name = "Bestiary Milestone Notification Duration (in seconds)",
+            description = "Specify how long (in units of \"X seconds\") Synthesis' Bestiary Milestone notification will last.\n§cFor an optimal experience, it is recommended to keep this value lower than what you have for \"Bestiary Milestone Frequency (in seconds)\".",
+            category = "Utilities",
+            subcategory = "Bestiary",
+            min = 5, max = 120
+    )
+    public int utilitiesBestiaryMilestoneWarningDuration = 5;
+
+    @Property(
+            type = PropertyType.SELECTOR,
+            name = "Show Item UUID at Item Lore",
+            description = "Displays the item's UUID (if there is one) at the end of an item's tooltip.\n§cFor compatibility reasons, UUIDs for all pets will not be displayed while viewing the pet menu.",
+            category = "Utilities",
+            subcategory = "Item Lore",
+            options = {"Off", "With \"-\"s", "Without \"-\"s"}
+    )
+    public int utilitiesLoreItemUUID = 0;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Show Item Origin at Item Lore",
+            description = "Displays the item's origin (if there is one) at the end of an item's tooltip.\n§cFor compatibility reasons, item origins for all pets will not be displayed while viewing the pet menu.",
+            category = "Utilities",
+            subcategory = "Item Lore"
+    )
+    public boolean utilitiesLoreOriginTag = false;
+
+    @Property(
+            type = PropertyType.SELECTOR,
+            name = "Master Star Display Options",
+            description = "Choose how you want master stars in item names to be displayed.\n§eWill affect output provided by SkyblockAddons' §r/sba dev §ecommand.\n§cMay not apply to items renamed via NEU.",
+            category = "Utilities",
+            options = {"Whatever Hypixel has right now (§6✪§6✪§6✪§6✪§6✪§c➍§r)", "Go old school (§c✪§c✪§c✪§c✪§6✪§r)", "Append to previous stars (§6✪§6✪§6✪§6✪§6✪§c✪§c✪§c✪§c✪§r)"}
+    )
+    public int utilitiesMasterStarDisplay = 0;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Master Mode Soul Detection per Item",
+        description = "Check if an item is filled §aexclusively§r or §epartially§r of Master Mode souls.\nAdditionally indicates which souls are from Master Mode on item tooltips.",
+        category = "Utilities"
+)
+    public boolean utilitiesMasterModeSoulDetection = true;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Enable Senither and Lily weight search",
+            description = "The toggle to enable/disable checking exclusively for someone's weights in both the Senither calculation system and the Lily calculation system. §e(Type \"[weight <username>]\" in chat to check someone's weight calculations, or \"[weight]\" to check your own.)\n§c§lEnable with caution!",
+            category = "Utilities"
+    )
+    public boolean utilitiesCheckWeight = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Enable checking for Player's SkyCrypt Stats",
+            description = "The toggle to enable/disable checking for someone's stats in the SkyCrypt API. §e(Type \"[stats <username>]\" in chat to check someone's SkyCrypt stats, or \"[stats]\" to check your own. Additionally, this also activates when sending trade requests to someone.)\n§c§lEnable with caution!",
+            category = "Utilities"
+    )
+    public boolean utilitiesCheckStats = false;
+
+    @Property(
+            type = PropertyType.SELECTOR,
+            name = "SkyCrypt Stats Level of Detail (§dLOD§r)",
+            description = "Choose how much detail you should see when checking someone's SkyCrypt info.\n§eApplies to all players without exception regardless of your choice; choose wisely!\n§cDoes not influence load time of SkyCrypt player data.\nGo experiment!",
+            category = "Utilities",
+            options = {"\"give me the bare minimum\"", "\"Maybe a bit of extra info would be nice.\"", "\"I DEMAND TO KNOW EVERY SINGLE DETAIL!\""}
+    )
+    public int utilitiesCheckStatsLvlOfDetail = 0;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Prevent HOTM Reset",
+        description = "Prevent clicking on that one button which resets your HOTM tree.",
+        category = "Utilities"
+    )
+    public boolean utilitiesPreventHOTMReset = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Prevent Profile Deletion",
+        description = "Prevent clicking on that one button which deletes your profiles.",
+        category = "Utilities"
+    )
+    public boolean utilitiesPreventProfileDeletion = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Prevent Portal Destruction",
+        description = "Prevent destroying portals on your private island.",
+        category = "Utilities"
+)
+    public boolean utilitiesPreventPortalDestruction = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Prevent Voting for Barry",
+        description = "Prevent voting for Barry in Skyblock mayor elections. (Sorry not sorry, arithemonkey.)",
+        category = "Utilities"
+    )
+    public boolean utilitiesPreventVotingBarry = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Prevent Voting for Diaz",
+        description = "Prevent voting for Diaz in Skyblock mayor elections.",
+        category = "Utilities"
+    )
+    public boolean utilitiesPreventVotingDiaz = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Prevent Voting for Dante",
+        description = "Prevent voting for Dante in Skyblock mayor elections.",
+        category = "Utilities"
+    )
+    public boolean utilitiesPreventVotingDante = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Prevent Voting for Unknown Special Mayors",
+        description = "Prevent voting for new special mayors besides Derpy, Jerry, or Scorpius in Skyblock mayor elections. Enabling this will prevent voting for Dante as well.",
+        category = "Utilities"
+    )
+    public boolean utilitiesPreventVotingSusSpecialMayors = false;
+
+    @Property(
+        type = PropertyType.NUMBER,
+        name = "Prevent Voting for Mayors with Less Than [number] Perks",
+        description = "If left at the default value of \"1\", Synthesis will not prevent you from voting for any mayors.\nHowever, if you chose \"2\", Synthesis would prevent you from voting for mayors with only one perk (as one is less than two).", //\"
+        category = "Utilities",
+        min = 1, max = 3
+    )
+    public int utilitiesPreventVotingXPerkMayors = 1;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Show Collections as Stack Size",
+        description = "Applies to the collection menus of most Skyblock skills.",
+        category = "Utilities"
+    )
+    public boolean utilitiesShowCollectionStackSize = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Show Highest Crafted Minions as Stack Size",
+        description = "Applies to the Crafted Minions menu.",
+        category = "Utilities"
+    )
+    public boolean utilitiesShowCraftedMinionsStackSize = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Show Skills as Stack Size",
+        description = "Applies to both the \"Dungeoneering\" and \"Your Skills\" menus\n§e§lCAUTION§r§e: If you enabled Skytils' \"Show Potion Tier\" option, there will be a \"1\" as the stack size for the Healer icon in the \"Dungeoneering\" menu. There is no known solution to this besides building your own copies of Skytils.",
+        category = "Utilities"
+    )
+    public boolean utilitiesShowSkillStackSize = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Show Dojo Progress as Stack Size",
+        description = "Shows your Rank on all attempted §9Tests§r at the Dojo as well as your overall §6Rank§r.",
+        category = "Utilities"
+    )
+    public boolean utilitiesShowDojoProgressStackSize = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Show §aCompleted Quest§r count as Stack Size",
+        description = "This line intentionally left uninformative.",
+        category = "Utilities"
+    )
+    public boolean utilitiesShowCompletedQuestCountStackSize = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Show Wardrobe Slot # as Stack Size",
+        description = "This line intentionally left uninformative.",
+        category = "Utilities"
+    )
+    public boolean utilitiesShowWardrobeSlotStackSize = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Show Bank Tier as Stack Size",
+        description = "This line intentionally left uninformative.",
+        category = "Utilities"
+    )
+    public boolean utilitiesShowBankTierStackSize = false;
+
+    @Property(
+        type = PropertyType.SELECTOR,
+        name = "Show Skill Average as Stack Size",
+        description = "Rounded: Rounds this value to the nearest integer.\nExact: Embraces the decimal point of this value.",
+        category = "Utilities",
+        options = {"Off", "Rounded", "Exact"}
+    )
+    public int utilitiesShowSkillAverageStackSize = 0;
+
+    @Property(
+        type = PropertyType.SELECTOR,
+        name = "Show Overall Unlocked Recipes Percent as Stack Size",
+        description = "Rounded: Rounds this value to the nearest integer.\nExact: Embraces the decimal point of this value.\nFor compatibility reasons, this is limited to the \"SkyBlock Menu\".",
+        category = "Utilities",
+        options = {"Off", "Rounded", "Exact"}
+    )
+    public int utilitiesShowUnlockedRecipePercentStackSize = 0;
+    
+    @Property(
+        type = PropertyType.SELECTOR,
+        name = "Show Categorized Unlocked Recipes Percent as Stack Size",
+        description = "Rounded: Rounds this value to the nearest integer.\nExact: Embraces the decimal point of this value.",
+        category = "Utilities",
+        options = {"Off", "Rounded", "Exact"}
+    )
+    public int utilitiesShowUnlockedSpecificRecipePercentStackSize = 0;
+
+    @Property(
+        type = PropertyType.SELECTOR,
+        name = "Show Overall Unlocked Collections Percent as Stack Size",
+        description = "Rounded: Rounds this value to the nearest integer.\nExact: Embraces the decimal point of this value.",
+        category = "Utilities",
+        options = {"Off", "Rounded", "Exact"}
+    )
+    public int utilitiesShowUnlockedCollectionStackSize = 0;
+
+    @Property(
+        type = PropertyType.SELECTOR,
+        name = "Show Museum Donated Percent as Stack Size",
+        description = "Rounded: Rounds this value to the nearest integer.\nExact: Embraces the decimal point of this value.",
+        category = "Utilities",
+        options = {"Off", "Rounded", "Exact"}
+    )
+    public int utilitiesShowMuseumPercentagesStackSize = 0;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Show New Year's Cake Year as Stack Size",
+        description = "This line intentionally left uninformative.",
+        category = "Utilities"
+    )
+    public boolean utilitiesShowNYCakeStackSize = false;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Show Active Effects count as Stack Size",
+        description = "This line intentionally left uninformative.",
+        category = "Utilities"
+    )
+    public boolean utilitiesShowActiveEffectsStackSize = false;
+
+    @Property(
+        type = PropertyType.SELECTOR,
+        name = "Show Spooky Pie Stack Size",
+        description = "SB Year: Shows the SB year the Pie was obtained.\nnth Festival: Shows the nth Spooky Festival the Pie was obtained.\n(For compatibility reasons, this will only apply to the general SkyBlock Menu.)",
+        category = "Utilities",
+        options = {"Off", "SB Year", "nth Festival"}
+    )
+    public int utilitiesShowSpookyPieStackSize = 0;
+
+    //MISC
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Ignore Hypixel's Books GUIs",
+            description = "Automatically close any book GUI in all Hypixel lobbies. Originally designed to automate ignoring all those books about Hypixel's seasonal sales on their online store, but §efalse positives CAN and WILL happen.\n§c§lEnable with caution, and disable when in doubt!",
+            category = "Miscellaneous"
+    )
+    public boolean miscIgnoreHypixelBooks = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Send Notifications When Book GUIs are ignored",
+            description = "Sends a notification if Synthesis ignores a book GUI. Only turn this off if you know what you're doing.",
+            category = "Miscellaneous"
+    )
+    public boolean miscIgnoreHypixelBooksWarning = true;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "More burger",
+            description = "WHY WOULD YOU ENABLE THIS WHY.",
+            category = "Miscellaneous"
+    )
+    public boolean miscMoreBurgers = false;
+
     //PATCHER
 
     @Property(
@@ -873,18 +1298,26 @@ public class Config extends Vigilant {
     public String patcherCustomDomains = "";
 
     public Config() {
-        super(new File(Synthesis.configLocation), "§dSynthesis", new JVMAnnotationPropertyCollector(), new CustomSortingBehavior());
+        super(new File(Synthesis.configLocation), "§dSynthesis§r - §bNON-CANON EDITION BY ERYMANTHUS", new JVMAnnotationPropertyCollector(), new CustomSortingBehavior());
         initialize();
+        setSubcategoryDescription("Utilities", "Server occupancy overlay", "Ever wondered how full a lobby is?\nEver wanted a visual indicator of that metric?\nHere you go!");
         setSubcategoryDescription("Utilities", "Share", "A simple way to show your items to other people using the mod. Hold the item, type whatever \"Share text\" is and a preview for your item will be sent.");
         hidePropertyIf("patcherCompactChatFix", () -> !Loader.isModLoaded("patcher"));
         hidePropertyIf("patcherCustomImagePreviewer", () -> !Loader.isModLoaded("patcher"));
         hidePropertyIf("utilitiesShareScroll", () -> !Loader.isModLoaded("text_overflow_scroll"));
         hidePropertyIf("utilitiesWishingCompassWaypoint", () -> !Loader.isModLoaded("skytils"));
+        hidePropertyIf("miscMoreBurgers", () -> (!(Minecraft.getMinecraft().getSession().getPlayerID().equalsIgnoreCase("1f20d60f1bc242dd82669a173a7af77c")) && !(Minecraft.getMinecraft().getSession().getPlayerID().equalsIgnoreCase("b43d74579da4408ba9fb51239022cec9"))));
         addDependency("utilitiesWishingCompassWaypoint", "utilitiesWishingCompass");
         addDependency("utilitiesBlockWishingCompass", "utilitiesWishingCompass");
         addDependency("utilitiesContainerControl", "utilitiesContainerChat");
         addDependency("cleanupDungeonBlessingMessages", "cleanupDungeonBlessingStatMessages");
         addDependency("utilitiesWitherImpactPerspectiveGlobal", "utilitiesWitherImpactPerspective");
+        addDependency("utilitiesOccupancyOverlayFriendHighlght", "utilitiesOccupancyOverlay");
+        addDependency("utilitiesOccupancyOverlayGuildHighlght", "utilitiesOccupancyOverlay");
+        addDependency("utilitiesOccupancyOverlayFriendAndGuildHighlght", "utilitiesOccupancyOverlay");
+        addDependency("utilitiesOccupancyOverlayAlreadyConnectedHighlght", "utilitiesOccupancyOverlay");
+        addDependency("miscIgnoreHypixelBooksWarning", "miscIgnoreHypixelBooks");
+        addDependency("utilitiesHexatorumDebug", "utilitiesHexatorumOverlay");
         registerListener("utilitiesColorlessPanes", (z) -> Minecraft.getMinecraft().renderGlobal.loadRenderers());
     }
 }

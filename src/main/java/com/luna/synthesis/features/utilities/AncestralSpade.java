@@ -17,8 +17,6 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.awt.*;
-
 public class AncestralSpade {
 
     private final Config config = Synthesis.getInstance().getConfig();

@@ -3,7 +3,6 @@ package com.luna.synthesis.features.cleanup;
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
 import com.luna.synthesis.events.packet.PacketReceivedEvent;
-import com.luna.synthesis.utils.ChatLib;
 import com.luna.synthesis.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.event.HoverEvent;

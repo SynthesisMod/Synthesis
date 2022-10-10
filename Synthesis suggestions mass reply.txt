@@ -1,0 +1,128 @@
+Erymanthus' catch-all reply to the Synthesis #mod-suggestions limbo [AS OF JUNE 24TH, 2022]
+(Warning: some responses may be too snarky/sassy/blunt for your taste. Read with caution.)
+
+Suggestions 10 / 11: ...SmoothFont mod? I know it ain't the best solution, but why do you think Synthesis of all mods deserves to have this feature?
+
+Suggestion 13: VanillaHUD by W-OVERFLOW.
+
+Suggestion 15: The point of Synthesis is to provide features absolutely absent from other mods. Your suggestion invalidates itself the minute you mention SBA. Even Antonio32A said no to this.
+
+Suggestion 17: I'm aware the suggestion came at a different point in time where SBE was the only mod to have chat-based title alerts, but hopefully you found your solution now. If not: Skytils.
+
+Suggestion 20: Not a feature suggestion, but hopefully Desco gets around to doing that on the Kotlin rewrite.
+
+Suggestion 21: Is a chat bridge not enough?
+
+Suggestion 24: Hytils-Reborn by W-OVERFLOW does a better job at this without sacrificing any informativeness. Not sure if the original feature was already in Hytilities by Sk1er but my point is, another mod beat you to the punch when I typed this.
+
+Suggestion 25: Moot suggestion. Use the search bar in config menu.
+
+Suggestion 27: "the number created from museum", as you call it, is constantly changing as more people submit items to the museum. And the point is to keep it within your museum because that's where you flex how old your items are.
+
+Suggestion 28: NoScamSpam by meyi/symt. Or as an alternative, open private messages but keep party invites closed to friends/guildmates at minimum.
+
+Suggestion 31: HOW DARE YOU CALL NEU REDUN—*clears throat* sorry there. Point is, you already invalidated your suggestion from word one, much like a friend of yours did earlier in suggestion 15. The point of Synthesis is to provide features absolutely absent from other mods.
+
+Suggestion 32: Grandma Wolf pet was released before you made that suggestion (January 2022). Lots of other mods already had this feature by then.
+
+Suggestion 33: `https://sky.shiiyu.moe/api/v2/profile/<username>` is a good start... I'll look into it. Update: DONE
+
+Suggestion 38: Skyclient Updater should provide similar features for a much wider range of mods.
+
+Suggestion 39: Considering how heavily the game relies on leather armor and skulls for portraying items, this is probably not the wisest idea.
+
+Suggestion 40: Skytils now has a "Hide Cheap Coins" feature. Not sure what led up to that, but there you go.
+
+Suggestion 41: ...there's a mod named after the feature you just suggested.
+
+Suggestion 43: See the first two sentences of my response to suggestion 15, but replace SBA with SoopyAddons instead.
+
+Suggestion 44: Considering finding the source code to NEU's Builder Wand Overlay is already challenging enough of a task... yeah no. Doesn't fit the theme that Synthesis' current features set at the moment.
+
+Suggestion 45: ...is this some Floor 7 slang I'm too underleveled to understand?
+
+Suggestion 48: Dungeons Guide by syeyoung.
+
+Suggestion 49: Chatting by W-OVERFLOW.
+
+Suggestion 51: That would be rejecting packets sent from Hypixel, which violates mod guidelines.
+
+Suggestion 52: See Desco and Antonio32A's comments. Also, from this point on anything related to the chat bridge or Discord integration is not going to be addressed from my perspective.
+
+Suggestion 53: Chatting by W-OVERFLOW and Skytils by Lily (my-name-is-jeff) and Sychic.
+
+Suggestion 54: Chatting by W-OVERFLOW or Cowlection by Cow.
+
+Suggestion 55: /patcher sounds from Patcher by Sk1er LLC.
+
+Suggestion 56: Antonio32A explains why this is a bad idea regardless of how it's implemented. Not gonna repeat his words here.
+
+Suggestion 57: Hypixel staff beat you to the punch as of June 2022. Could this change? Sure. When? Who knows.
+
+Suggestion 58: Chatting by W-OVERFLOW.
+
+Suggestion 60: Seems like it's been implemented. GG!
+
+Suggestion 62: Just tab the person's username.
+
+Suggestion 63: Sounds interesting... but the only solution at the time is for the user to keep the bestiary stuff up to date via item tooltip tracking because Hypixel API is terrible with being informative. I'll look into it. Update: DONE
+
+Suggestion 65: Patcher by Sk1er LLC.
+
+Suggestion 66: The reason why is because no one wants their mod to DDoS Hypixel's API and burn it down. Also, I swear I've seen this suggestion elsewhere—but for my sake and due to the unpopularity of your suggestion, I'll save myself from growing more gray hairs and not look into it deeper.
+
+Suggestion 69: Actually sounds interesting and fairly simple to accomplish based on code Desco already wrote. My only concern is where the item lore line would end up, since all mod that tout a feature to add item lore lines with certain info end up conflicting with each other. I'll look into it. UPDATE: DONE
+
+Suggestion 70: Way to be rankist, even this far into Hypixel Skyblock's existence as a video game. If NoScamSpam has shown us anything, it's that accounts with any rank will spam party you. SBE won't solve shit. (Sorry ilo for being harsh.)
+
+Suggestion 71: Nope. Nope. Nope. No way am I going to enable the recent and rampant behavioral pattern common among today's teens where all they do is perpetuate the month's latest joke in every format possible to the point where its comedic value plummets faster than the American stock market did back in 1929. No thanks. Stick to SBE.
+
+Suggestion 72: Hytilis-Reborn by W-OVERFLOW.
+
+Suggestion 73: NotEnoughUpdates by Moulberry for item renaming and why do you want to change an item's rarity color? Use Photoshop, I'm not going to enable any item forgeries on my watch.
+
+Suggestion 75: See the first five sentences of my response to suggestion 71 for more info.
+
+Suggestion 77: ...is this some Floor 6 slang I'm too underleveled to understand?
+
+Suggestion 79: wait people still do dragons to this day (february 2022)? impossible. Also Hypixel player list info spacing is very inconsistent.
+
+Suggestion 80: ...do you not have a phone to do this?
+
+Suggestion 82: "auto send specific message in party chat after server sends specific message for it." So if the server has already sent the message for it, why repeat it in party chat?
+
+Suggestion 83: Sure, but where though? Grabbing the info is easy enough, but with NEU's custom trade menu in the equation... (I guess sending it to chat and leaving it up to user to find it via Container Chat is the best option. I'll look into it.) Update: DONE
+
+Suggestion 84: Given how many edits I've made to pet item lore for Synthesis, my best option is to edit an item tooltip line noting the percentage situation. I will need around 20 million coins to test this, though. Update: ALMOST THERE
+
+Suggestion 86: Ah yes, let's hide vital information. I'm sure nothing will go wrong!
+
+Suggestion 87: Skytils by Lily (my-name-is-jeff) and Sychic.
+
+Suggestion 88: Every mod that has a dungeons map feature + Dungeons Room Mod by Quantizr for room names.
+
+Suggestion 89: SkyblockHUD by ThatGravyBoat.
+
+Suggestion 90: Nope.
+
+Suggestion 92: See my response to suggestion 55.
+
+Suggestion 93: Chatting by W-OVERFLOW, and no to the keyboard shortcuts.
+
+Suggestion 94: Cowlection by Cow.
+
+Suggestion 95: Get the fuck out of this house.
+
+Suggestion 96: Hypixel commands are generally short enough that this is unnecessary. Longest command I can think of that I've ever used while on Hypixel is usually from a mod whose config I change once every time Technoblade uploads.
+
+Suggestion 97: Actually a decent suggestion and I hope this isn't a problem in v0.3.1 or the upcoming v0.4.0. I'll look into it. UPDATE: DONE.
+
+Suggestion 98: IS IT THAT HARD TO PRESS THE 'T' KEY???
+
+Suggestion 99: Decent suggestion but much like my earlier ventures with pet names in the pet menu, this COULD fuck with Skytils again. Probably not but eh. I'll look into it. UPDATE: DONE.
+
+Suggestion 100: Already implemented.
+
+Suggestion 101: I'll look into it.
+
+Suggestion 102: ...no.

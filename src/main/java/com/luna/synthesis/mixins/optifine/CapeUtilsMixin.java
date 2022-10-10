@@ -2,7 +2,6 @@ package com.luna.synthesis.mixins.optifine;
 
 import com.luna.synthesis.Synthesis;
 import com.luna.synthesis.core.Config;
-import com.luna.synthesis.utils.ChatLib;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Dynamic;
 import org.spongepowered.asm.mixin.Mixin;
