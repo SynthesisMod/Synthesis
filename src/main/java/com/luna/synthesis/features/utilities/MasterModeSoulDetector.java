@@ -31,6 +31,7 @@ public class MasterModeSoulDetector {
         if (e.toolTip == null) return;
         ItemStack itemStack = e.itemStack;
         List<String> tooltip = e.toolTip;
+        try {
         for (String s : tooltip) {
             if (s.contains("Absorbed Souls")) {
                 findSouls(itemStack);
@@ -38,6 +39,7 @@ public class MasterModeSoulDetector {
                 for (int h = 0; h < numSouls; h++) if (whichOnesAreMasterSouls.get(h)) tooltip.set(h + 1 + anchor, tooltip.get(h + 1 + anchor) + " §d(from Master Mode)");
             }
         }
+        } catch (Exception e) {}
     }
 
     @SubscribeEvent
